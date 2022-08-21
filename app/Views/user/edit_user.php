@@ -23,110 +23,42 @@
 			        <div class="panel-body">
 			            <div class="row">
 			                <div class="col-lg-12">
-			                    <form role="form">
+			                    <form role="form" method="POST" action="<?php echo base_url('user/edit'); ?>">
 			                        <div class="form-group">
-			                            <label>Text Input</label>
-			                            <input class="form-control">
-			                            <p class="help-block">Example block-level help text here.</p>
+			                            <label>Nama Lengkap</label>
+			                            <input name="nama_lengkap" class="form-control" placeholder="Isi dengan nama lengkap Anda" value="<?= $user->nama_lengkap ?>" />
+			                            <input type="hidden" name="user_id" class="form-control" placeholder="Isi dengan nama lengkap Anda" value="<?= $user->user_id ?>" />
 			                        </div>
 			                        <div class="form-group">
-			                            <label>Text Input with Placeholder</label>
-			                            <input class="form-control" placeholder="Enter text">
+			                            <label>Username</label>
+			                            <input name="username" class="form-control" placeholder="Isi dengan username Anda" value="<?= $user->username ?>">
 			                        </div>
 			                        <div class="form-group">
-			                            <label>Static Control</label>
-			                            <p class="form-control-static">email@example.com</p>
+			                            <label>E-Mail</label>
+			                            <input name="email" class="form-control" placeholder="Isi dengan e-mail Anda" value="<?= $user->email ?>">
 			                        </div>
 			                        <div class="form-group">
-			                            <label>File input</label>
-			                            <input type="file">
+			                            <label>Password</label>
+			                            <input type="password" name="password" class="form-control" placeholder="Isi dengan password Anda" value="<?= $user->password ?>">
 			                        </div>
 			                        <div class="form-group">
-			                            <label>Text area</label>
-			                            <textarea class="form-control" rows="3"></textarea>
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Checkboxes</label>
-			                            <div class="checkbox">
-			                                <label>
-			                                    <input type="checkbox" value="">Checkbox 1
-			                                </label>
-			                            </div>
-			                            <div class="checkbox">
-			                                <label>
-			                                    <input type="checkbox" value="">Checkbox 2
-			                                </label>
-			                            </div>
-			                            <div class="checkbox">
-			                                <label>
-			                                    <input type="checkbox" value="">Checkbox 3
-			                                </label>
-			                            </div>
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Inline Checkboxes</label>
-			                            <label class="checkbox-inline">
-			                                <input type="checkbox">1
-			                            </label>
-			                            <label class="checkbox-inline">
-			                                <input type="checkbox">2
-			                            </label>
-			                            <label class="checkbox-inline">
-			                                <input type="checkbox">3
-			                            </label>
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Radio Buttons</label>
-			                            <div class="radio">
-			                                <label>
-			                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>Radio 1
-			                                </label>
-			                            </div>
-			                            <div class="radio">
-			                                <label>
-			                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Radio 2
-			                                </label>
-			                            </div>
-			                            <div class="radio">
-			                                <label>
-			                                    <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">Radio 3
-			                                </label>
-			                            </div>
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Inline Radio Buttons</label>
-			                            <label class="radio-inline">
-			                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline1" value="option1" checked>1
-			                            </label>
-			                            <label class="radio-inline">
-			                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline2" value="option2">2
-			                            </label>
-			                            <label class="radio-inline">
-			                                <input type="radio" name="optionsRadiosInline" id="optionsRadiosInline3" value="option3">3
-			                            </label>
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Selects</label>
-			                            <select class="form-control">
-			                                <option>1</option>
-			                                <option>2</option>
-			                                <option>3</option>
-			                                <option>4</option>
-			                                <option>5</option>
+			                            <label>Jenis Akun</label>
+			                            <select name="account_type" class="form-control">
+			                                <option <?php if ($user->account_type == "superadmin") { echo "selected"; } ?> value="superadmin">superadmin</option>
+			                                <option <?php if ($user->account_type == "owner") { echo "selected"; } ?> value="owner">owner</option>
+			                                <option <?php if ($user->account_type == "kepala_cabang") { echo "selected"; } ?> value="kepala_cabang">kepala cabang</option>
+			                                <option <?php if ($user->account_type == "operator") { echo "selected"; } ?> value="operator">operator</option>
 			                            </select>
 			                        </div>
 			                        <div class="form-group">
-			                            <label>Multiple Selects</label>
-			                            <select multiple class="form-control">
-			                                <option>1</option>
-			                                <option>2</option>
-			                                <option>3</option>
-			                                <option>4</option>
-			                                <option>5</option>
+			                            <label>Status Akun</label>
+			                            <select name="user_status" class="form-control">
+			                                <option <?php if ($user->user_status == "active") { echo "selected"; } ?> value="active">active</option>
+			                                <option <?php if ($user->user_status == "inactive") { echo "selected"; } ?> value="inactive">inactive</option>
 			                            </select>
 			                        </div>
-			                        <button type="submit" class="btn btn-default">Submit Button</button>
-			                        <button type="reset" class="btn btn-default">Reset Button</button>
+			                        <input type="submit" class="btn btn-primary" value="Submit" />
+			                        <input type="reset" class="btn btn-danger" value="Cancel" />
 			                    </form>
 			                </div>
 			                <!-- /.col-lg-6 (nested) -->

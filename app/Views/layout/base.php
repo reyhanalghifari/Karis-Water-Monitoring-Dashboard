@@ -1,3 +1,9 @@
+<?php
+
+$session = \Config\Services::session();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -82,7 +88,7 @@
                     </li> -->
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-user fa-fw"></i> Reyhan Al Ghifari <b class="caret"></b>
+                            <i class="fa fa-user fa-fw"></i><?php echo $session->get('nama_lengkap'); ?><b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu dropdown-user">
                             <li><a href="<?php echo base_url('user-profile'); ?>"><i class="fa fa-user fa-fw"></i> User Profile</a>
@@ -91,7 +97,7 @@
                             </li>
                              -->
                              <li class="divider"></li>
-                            <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                            <li><a href="<?php echo base_url('logout'); ?>"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -112,27 +118,42 @@
                                         </span>
                                 </div>
                             </li> -->
+
+                            <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "kepala_cabang" || $session->get('account_type') == "owner") { ?>
                             <li>
                                 <a href="<?php echo base_url(''); ?>" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
+                            <?php } ?>
+
+                            <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "operator") { ?>
                             <li>
                                 <a href="<?php echo base_url('penjualan/add'); ?>"><i class="fa fa-dashboard fa-fw"></i> Form Penjualan</a>
                             </li>
+                            <?php } ?>
+
+                            <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "operator" || $session->get('account_type') == "kepala_cabang") { ?>
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Data Master<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
+                                    <?php if ($session->get('account_type') == "superadmin") { ?>
                                     <li>
                                         <a href="<?php echo base_url('barang'); ?>">Barang</a>
                                     </li>
                                     <li>
                                         <a href="<?php echo base_url('cabang'); ?>">Cabang Distribusi</a>
                                     </li>
+                                    <?php } ?>
+                            
+                                    <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "operator") { ?>
                                     <li>
                                         <a href="<?php echo base_url('pelanggan'); ?>">Pelanggan</a>
                                     </li>
+                                    <?php } ?>
+
                                     <li>
                                         <a href="<?php echo base_url('penjualan'); ?>">Riwayat Penjualan</a>
                                     </li>
+                                    
                                     <!-- <li>
                                         <a href="#">Third Level <span class="fa arrow"></span></a>
                                         <ul class="nav nav-third-level">
@@ -143,6 +164,9 @@
                                     </li> -->
                                 </ul>
                             </li>
+                            <?php } ?>
+
+                            <?php if ($session->get('account_type') == "superadmin") { ?>
                             <li>
                                 <a href="#"><i class="fa fa-sitemap fa-fw"></i> Administrasi<span class="fa arrow"></span></a>
                                 <ul class="nav nav-second-level">
@@ -151,6 +175,8 @@
                                     </li>
                                 </ul>
                             </li>
+                            <?php } ?>
+
                         </ul>
 
                     </div>
@@ -178,6 +204,15 @@
         <script src="<?php echo base_url('assets/js/dataTables/jquery.dataTables.min.js') ?>"></script>
         <script src="<?php echo base_url('assets/js/dataTables/dataTables.bootstrap.min.js') ?>"></script>
 
+
+        <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+        <script>
+            $(document).ready(function() {
+                $('#dataTables-karis-water').DataTable({
+                        responsive: true
+                });
+            });
+        </script>
 
     </body>
 </html>

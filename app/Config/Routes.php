@@ -39,10 +39,9 @@ $routes->get('/', 'MyHome::index');
 
 $routes->get('/login', 'Auth::index');
 $routes->post('/login', 'Auth::login');
-$routes->post('/logout', 'Auth::logout');
+$routes->get('/logout', 'Auth::logout');
 $routes->get('/registration', 'Auth::registration');
 $routes->post('/registration', 'Auth::process_registration');
-$routes->get('/user-profile', 'Auth::user_profile');
 
 $routes->get('/barang', 'Barang::index');
 $routes->get('/barang/add', 'Barang::add');
@@ -72,9 +71,12 @@ $routes->post('/penjualan/add', 'Penjualan::process_add');
 $routes->get('/user', 'User::index');
 $routes->get('/user/add', 'User::add');
 $routes->post('/user/add', 'User::process_add');
-$routes->get('/user/edit', 'User::edit');
+$routes->get('/user/edit/(:num)', 'User::edit/$1');
 $routes->post('/user/edit', 'User::process_edit');
-$routes->delete('/user/delete', 'User::delete');
+$routes->get('/user/delete/(:num)', 'User::delete/$1');
+$routes->get('/user-profile', 'User::user_profile');
+$routes->post('/user-profile', 'User::edit_user_profile');
+
 
 /*
  * --------------------------------------------------------------------
