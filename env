@@ -20,14 +20,13 @@ CI_ENVIRONMENT = development
 # APP
 #--------------------------------------------------------------------
 
-app.baseURL = 'http://localhost:8888/karis-water-monitoring/public/'
 # If you have trouble with `.`, you could also use `_`.
-# app_baseURL = ''
 # app.forceGlobalSecureRequests = false
+app.baseURL = 'http://localhost:8888/karis-water-monitoring/public/'
 
-# app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
-# app.sessionCookieName = 'ci_session'
-# app.sessionExpiration = 7200
+app.sessionDriver = 'CodeIgniter\Session\Handlers\FileHandler'
+app.sessionCookieName = 'ci_session'
+app.sessionExpiration = 7200
 # app.sessionSavePath = null
 # app.sessionMatchIP = false
 # app.sessionTimeToUpdate = 300
@@ -54,6 +53,14 @@ app.baseURL = 'http://localhost:8888/karis-water-monitoring/public/'
 # database.tests.DBDriver = MySQLi
 # database.tests.DBPrefix =
 # database.tests.port = 3306
+
+database.default.hostname = localhost
+database.default.database = karis_water_penjualan
+database.default.username = root
+database.default.password = root
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
 
 #--------------------------------------------------------------------
 # CONTENT SECURITY POLICY

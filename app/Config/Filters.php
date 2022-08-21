@@ -8,6 +8,7 @@ use CodeIgniter\Filters\DebugToolbar;
 use CodeIgniter\Filters\Honeypot;
 use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\SecureHeaders;
+use App\Filters\AuthFilter;
 
 class Filters extends BaseConfig
 {
@@ -23,6 +24,7 @@ class Filters extends BaseConfig
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
         'secureheaders' => SecureHeaders::class,
+        'auth_filter' => AuthFilter::class
     ];
 
     /**
@@ -35,7 +37,7 @@ class Filters extends BaseConfig
         'before' => [
             // 'honeypot',
             // 'csrf',
-            // 'invalidchars',
+            // 'invalidchars'
         ],
         'after' => [
             'toolbar',
@@ -68,5 +70,16 @@ class Filters extends BaseConfig
      *
      * @var array
      */
-    public $filters = [];
+    public $filters = [
+        'auth_filter' => [
+            'before'=>[
+                '/',
+                'barang*',
+                'user*',
+                'cabang*',
+                'pelanggan*',
+                'penjualan*',
+            ]
+        ]
+    ];
 }
