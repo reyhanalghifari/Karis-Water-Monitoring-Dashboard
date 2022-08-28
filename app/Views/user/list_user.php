@@ -23,6 +23,9 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
+                            <a href="<?php echo base_url('user/add'); ?>" class="btn btn-info">Tambah Pengguna Baru</a>
+                            <br />
+                            <br />
                             <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water"> 
                                 <thead>
                                     <tr>

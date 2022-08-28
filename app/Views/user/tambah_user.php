@@ -60,8 +60,9 @@
 			                                <option value="inactive">inactive</option>
 			                            </select>
 			                        </div>
-			                        <input type="submit" class="btn btn-primary" value="Submit" />
-			                        <input type="reset" class="btn btn-danger" value="Cancel" />
+			                        <input type="submit" class="btn btn-primary" value="Simpan" />
+			                        <input type="reset" class="btn btn-warning" value="Reset" />
+			                        <a href="<?php echo base_url('user'); ?>" class="btn btn-danger">Batal </a>
 			                    </form>
 			                </div>
 			                <!-- /.col-lg-6 (nested) -->
