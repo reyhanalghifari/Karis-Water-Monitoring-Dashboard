@@ -23,6 +23,9 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
+                            <a href="<?php echo base_url('cabang/add'); ?>" class="btn btn-info">Tambah Cabang Baru</a>
+                            <br />
+                            <br />
                             <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water">
                                 <thead>
                                     <tr>
