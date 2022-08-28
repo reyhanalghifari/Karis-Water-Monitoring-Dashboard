@@ -17,7 +17,7 @@ class User extends Model
 
     public function authenticate($username, $password)
     {
-    	$query_stmt = 'SELECT * FROM user WHERE username="'.$username.'" AND password="'.hash('sha256', $password).'"';
+        $query_stmt = 'SELECT * FROM user WHERE username="'.$username.'" AND password="'.hash('sha256', $password).'" AND user_status="active"';
     	$query   = $this->db->query($query_stmt);
         $result = $query->getRow();
 
