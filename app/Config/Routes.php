@@ -10,7 +10,7 @@ $routes = Services::routes();
 if (is_file(SYSTEMPATH . 'Config/Routes.php')) {
     require SYSTEMPATH . 'Config/Routes.php';
 }
-
+ 
 /*
  * --------------------------------------------------------------------
  * Router Setup
@@ -36,7 +36,7 @@ $routes->set404Override();
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'MyHome::index');
-
+ 
 $routes->get('/login', 'Auth::index');
 $routes->post('/login', 'Auth::login');
 $routes->get('/logout', 'Auth::logout');
@@ -46,23 +46,23 @@ $routes->post('/registration', 'Auth::process_registration');
 $routes->get('/barang', 'Barang::index');
 $routes->get('/barang/add', 'Barang::add');
 $routes->post('/barang/add', 'Barang::process_add');
-$routes->get('/barang/edit', 'Barang::edit');
+$routes->get('/barang/edit/(:num)', 'Barang::edit/$1');
 $routes->post('/barang/edit', 'Barang::process_edit');
-$routes->delete('/barang/delete', 'Barang::delete');
+$routes->get('/barang/delete/(:num)', 'Barang::delete/$1');
 
 $routes->get('/cabang', 'CabangDistribusi::index');
 $routes->get('/cabang/add', 'CabangDistribusi::add');
 $routes->post('/cabang/add', 'CabangDistribusi::process_add');
-$routes->get('/cabang/edit', 'CabangDistribusi::edit');
+$routes->get('/cabang/edit/(:num)', 'CabangDistribusi::edit/$1');
 $routes->post('/cabang/edit', 'CabangDistribusi::process_edit');
-$routes->delete('/cabang/delete', 'CabangDistribusi::delete');
+$routes->get('/cabang/delete/(:num)', 'CabangDistribusi::delete/$1');
 
 $routes->get('/pelanggan', 'Pelanggan::index');
 $routes->get('/pelanggan/add', 'Pelanggan::add');
 $routes->post('/pelanggan/add', 'Pelanggan::process_add');
-$routes->get('/pelanggan/edit', 'Pelanggan::edit');
+$routes->get('/pelanggan/edit/(:num)', 'Pelanggan::edit/$1');
 $routes->post('/pelanggan/edit', 'Pelanggan::process_edit');
-$routes->delete('/pelanggan/delete', 'Pelanggan::delete');
+$routes->get('/pelanggan/delete/(:num)', 'Pelanggan::delete/$1');
 
 $routes->get('/penjualan', 'Penjualan::index');
 $routes->get('/penjualan/add', 'Penjualan::add');

@@ -1,32 +1,71 @@
 <?php
-
+ 
 namespace App\Controllers;
-
+ 
 class Pelanggan extends BaseController
 {
+    public function __construct()
+    {
+        $this->session = \Config\Services::session();
+        $this->request = \Config\Services::request();
+    
+        $this->pelanggan_model = new \App\Models\Pelanggan();
+    }
+
     public function index()
     {
-        return view('pelanggan/list_pelanggan');
+        $datapelanggan = $this->pelanggan_model->getDataPelanggan();
+        return view('pelanggan/list_pelanggan', ['datapelanggan' => $datapelanggan]);
     }
 
     public function add()
     {
-    	// 1. Query heula ti database tabel X
-
-    	// 2. looping hasil queryna didieu jadi array PHP
-
-    	// 3. kirim array barangna ka form_tambah_barang. Engke edit diditu
-        
         return view('pelanggan/tambah_pelanggan');
     }
 
-    public function edit()
+    public function process_add()
     {
-        return view('pelanggan/edit_pelanggan');
+        $pelanggan_data = [
+            'nama_pelanggan' => $this->request->getVar('nama_pelanggan'),
+            'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
+            'no_telepon' => $this->request->getVar('no_telepon'),
+            'email' => $this->request->getVar('email'),
+            
+        ];
+
+        $result = $this->pelanggan_model->insert($pelanggan_data);
+
+        return redirect()->to('/pelanggan');    
     }
 
-    public function delete()
+    public function edit($pelanggan_id)
     {
-        // redirect halaman ke Barang/Index
+        $pelanggan = $this->pelanggan_model->getPelanggan($pelanggan_id);
+
+        return view('pelanggan/edit_pelanggan', ['pelanggan' => $pelanggan]);
+    }
+
+    public function process_edit()
+    {
+        $pelanggan_id = $this->request->getVar('pelanggan_id');
+
+        $pelanggan_data = [
+            'nama_pelanggan' => $this->request->getVar('nama_pelanggan'),
+            'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
+            'no_telepon' => $this->request->getVar('no_telepon'),
+            'email' => $this->request->getVar('email'),
+            
+        ];
+
+        $result = $this->pelanggan_model->update($pelanggan_id, $pelanggan_data);
+
+        return redirect()->to('/pelanggan');    
+    }
+
+    public function delete($pelanggan_id)
+    {
+        $pelanggan = $this->pelanggan_model->delete($pelanggan_id);
+
+           return redirect()->to('/pelanggan');
     }
 }

@@ -8,7 +8,7 @@ class User extends Model
 {
 	protected $table = 'user';
 	protected $primaryKey = 'user_id';
-	protected $allowedFields = ['nama_lengkap', 'username', 'password', 'email', 'account_type', 'user_status'];
+	protected $allowedFields = ['nama_lengkap', 'username', 'password', 'email', 'no_telp', 'account_type', 'user_status'];
 
 	public function __construct()
     {
@@ -26,7 +26,7 @@ class User extends Model
 
     public function getUsers()
     {
-        $query_stmt = 'SELECT user_id, nama_lengkap, username, email, account_type, user_status FROM user ORDER BY user_id DESC';
+        $query_stmt = 'SELECT user_id, nama_lengkap, username, email, no_telp, account_type, user_status FROM user ORDER BY user_id DESC';
         $query   = $this->db->query($query_stmt);
         $result = $query->getResult();
 
@@ -41,7 +41,7 @@ class User extends Model
 
         return $result;
     }
-
+ 
     public function changeUserProfile($id, $nama_lengkap, $username)
     {
         $data = [

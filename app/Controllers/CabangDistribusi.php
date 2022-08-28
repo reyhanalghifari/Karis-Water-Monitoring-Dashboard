@@ -4,29 +4,71 @@ namespace App\Controllers;
 
 class CabangDistribusi extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->session = \Config\Services::session();
+        $this->request = \Config\Services::request();
+    
+        $this->cabang_model = new \App\Models\Cabang();
+    }
+ 
     public function index()
     {
-        return view('cabang_distribusi/list_cabang_distribusi');
+        $datacabang = $this->cabang_model->getDataCabang();
+        return view('cabang_distribusi/list_cabang_distribusi', ['datacabang' => $datacabang]);
     }
 
     public function add()
     {
-    	// 1. Query heula ti database tabel X
-
-    	// 2. looping hasil queryna didieu jadi array PHP
-
-    	// 3. kirim array barangna ka form_tambah_barang. Engke edit diditu
-        
-        return view('cabang_distribusi/tambah_cabang_distribusi');
+    	return view('cabang_distribusi/tambah_cabang_distribusi');
     }
 
-    public function edit()
+    public function process_add()
     {
-        return view('cabang_distribusi/edit_cabang_distribusi');
+        $cabang_data = [
+            'nama_cabang' => $this->request->getVar('nama_cabang'),
+            'kepala_cabang' => $this->request->getVar('kepala_cabang'),
+            'alamat_cabang' => $this->request->getVar('alamat_cabang'),
+            'email' => $this->request->getVar('email'),
+            'no_telp' => $this->request->getVar('no_telp'),
+             
+        ];
+
+        $result = $this->cabang_model->insert($cabang_data);
+
+        return redirect()->to('/cabang');    
     }
 
-    public function delete()
+    public function edit($cabang_id)
     {
-        // redirect halaman ke Barang/Index
+        $cabang = $this->cabang_model->getCabang($cabang_id);
+
+        return view('cabang_distribusi/edit_cabang_distribusi', ['cabang' => $cabang]);
+    }
+
+    public function process_edit()
+    {
+        $cabang_id = $this->request->getVar('cabang_id');
+
+        $cabang_data = [
+            'nama_cabang' => $this->request->getVar('nama_cabang'),
+            'kepala_cabang' => $this->request->getVar('kepala_cabang'),
+            'alamat_cabang' => $this->request->getVar('alamat_cabang'),
+            'email' => $this->request->getVar('email'),
+            'no_telp' => $this->request->getVar('no_telp'),
+            
+        ];
+
+        $result = $this->cabang_model->update($cabang_id, $cabang_data);
+
+        return redirect()->to('/cabang');    
+    }
+
+    public function delete($cabang_id)
+    {
+        $cabang = $this->cabang_model->delete($cabang_id);
+
+           return redirect()->to('/cabang');
     }
 }

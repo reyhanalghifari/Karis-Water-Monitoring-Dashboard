@@ -1,7 +1,7 @@
 <?php
 
 $session = \Config\Services::session();
-
+ 
 ?>
 
 <!DOCTYPE html>
@@ -203,8 +203,8 @@ $session = \Config\Services::session();
         <!-- DataTables JavaScript -->
         <script src="<?php echo base_url('assets/js/dataTables/jquery.dataTables.min.js') ?>"></script>
         <script src="<?php echo base_url('assets/js/dataTables/dataTables.bootstrap.min.js') ?>"></script>
-
-
+ 
+ 
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script>
             $(document).ready(function() {
@@ -213,7 +213,5 @@ $session = \Config\Services::session();
                 });
             });
         </script>
-
     </body>
 </html>
-s

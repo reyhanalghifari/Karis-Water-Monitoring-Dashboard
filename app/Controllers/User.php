@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class User extends BaseController
 {
-
+ 
     public function __construct()
     {
         $this->session = \Config\Services::session();
@@ -12,7 +12,7 @@ class User extends BaseController
     
         $this->user_model = new \App\Models\User();
     }
-
+  
     public function index()
     {
         $users = $this->user_model->getUsers();
@@ -31,6 +31,7 @@ class User extends BaseController
             'nama_lengkap' => $this->request->getVar('nama_lengkap'),
             'password' => hash('sha256', $this->request->getVar('password')),
             'email' => $this->request->getVar('email'),
+            'no_telp' => $this->request->getVar('no_telp'),
             'account_type' => $this->request->getVar('account_type'),
             'user_status' => $this->request->getVar('user_status'),
         ];
@@ -56,6 +57,7 @@ class User extends BaseController
             'nama_lengkap' => $this->request->getVar('nama_lengkap'),
             'password' => hash('sha256', $this->request->getVar('password')),
             'email' => $this->request->getVar('email'),
+            'no_telp' => $this->request->getVar('no_telp'),
             'account_type' => $this->request->getVar('account_type'),
             'user_status' => $this->request->getVar('user_status'),
         ];
