@@ -1,23 +1,43 @@
 <?php
-
+ 
 namespace App\Controllers;
 
 class Penjualan extends BaseController
 {
+
+    public function __construct()
+    {
+        $this->session = \Config\Services::session();
+        $this->request = \Config\Services::request();
+    
+        $this->penjualan_model = new \App\Models\Penjualan();
+    }
+
     public function index()
     {
-        return view('penjualan/list_penjualan');
+        $datapenjualan = $this->penjualan_model->getDataPenjualan();
+        return view('penjualan/list_penjualan', ['datapenjualan' => $datapenjualan]);
     }
 
     public function add()
     {
-    	// 1. Query heula ti database tabel X
+       return view('penjualan/tambah_penjualan');
+    }
 
-    	// 2. looping hasil queryna didieu jadi array PHP
+    public function process_add()
+    {
+        $penjualan_data = [
+            'pelanggan_id' => $this->request->getVar('pelanggan_id'),
+            'barang_id' => $this->request->getVar('barang_id'),
+            'tanggal_penjualan' => $this->request->getVar('tanggal_penjualan'),
+            'harga_saat_dibeli' => $this->request->getVar('harga_saat_dibeli'),
+            'jumlah' => $this->request->getVar('jumlah'),
+            
+        ];
 
-    	// 3. kirim array barangna ka form_tambah_barang. Engke edit diditu
-        
-        return view('penjualan/tambah_penjualan');
+        $result = $this->penjualan_model->insert($penjualan_data);
+
+        return redirect()->to('/penjualan');    
     }
 
     public function edit()

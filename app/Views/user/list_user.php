@@ -1,7 +1,7 @@
 <?= $this->extend('layout/base') ?>
 
 <?= $this->section('content') ?>
-
+ 
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -23,16 +23,17 @@
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water"> 
                                 <thead>
                                     <tr>
                                         <th>No.</th>
                                         <th>Username</th>
                                         <th>Nama Lengkap</th>
                                         <th>Email</th>
+                                        <th>No Telepon</th>
                                         <th>Tipe Akun</th>
                                         <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -44,6 +45,7 @@
                                         <td><?= $user->username ?></td>
                                         <td><?= $user->nama_lengkap ?></td>
                                         <td><?= $user->email ?></td>
+                                        <td><?= $user->no_telp ?></td>
                                         <td><?= $user->account_type ?></td>
                                         <td class="center"><?= $user->user_status ?></td>
                                         <td class="center">

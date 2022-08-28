@@ -1,7 +1,7 @@
 <?= $this->extend('layout/base') ?>
 
 <?= $this->section('content') ?>
-
+  
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -11,7 +11,7 @@
                 <h1 class="page-header">Data Master - Tambah User</h1>
             </div>
         </div>
-
+ 
         <!-- ... Your content goes here ... -->   
 
 		<div class="row">
@@ -35,6 +35,10 @@
 			                        <div class="form-group">
 			                            <label>E-Mail</label>
 			                            <input name="email" class="form-control" placeholder="Isi dengan e-mail Anda">
+			                        </div>
+			                        <div class="form-group">
+			                            <label>No Telepon</label>
+			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon Anda">
 			                        </div>
 			                        <div class="form-group">
 			                            <label>Password</label>
