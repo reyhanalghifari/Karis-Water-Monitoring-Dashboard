@@ -45,8 +45,8 @@
 			                            <label>No Telepon</label>
 			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon cabang" value="<?= $cabang->no_telp ?>"/> 
 			                        </div>     
-			                       <input type="submit" class="btn btn-primary" value="Submit" />
-			                        <input type="reset" class="btn btn-danger" value="Cancel" />
+			                       <input type="submit" class="btn btn-primary" value="Simpan" />
+			                       <a href="<?php echo base_url('cabang'); ?>" class="btn btn-danger">Batal </a>
 			                    </form>
 			                </div>
 			                <!-- /.col-lg-6 (nested) -->
