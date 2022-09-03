@@ -26,7 +26,7 @@ class User extends Model
 
     public function getUsers()
     {
-        $query_stmt = 'SELECT user_id, nama_lengkap, username, email, no_telp, account_type, user_status FROM user ORDER BY user_id DESC';
+        $query_stmt = 'SELECT user_id, nama_lengkap, username, email, no_telp, account_type, user_status FROM user WHERE user_status="active" ORDER BY user_id DESC';
         $query   = $this->db->query($query_stmt);
         $result = $query->getResult();
 
