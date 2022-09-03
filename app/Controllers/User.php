@@ -9,7 +9,7 @@ class User extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
-    
+        $this->validation = \Config\Services::validation();
         $this->user_model = new \App\Models\User();
     }
   
@@ -88,15 +88,43 @@ class User extends BaseController
         $username = $this->request->getVar('username');
         $nama_lengkap = $this->request->getVar('nama_lengkap');
 
-        $result = $this->user_model->changeUserProfile($user_id, $nama_lengkap, $username);
+        $this->validation->setRules(
+            [
+                'user_id' => 'required',
+                'username' => 'required|min_length[3]',
+                'nama_lengkap' => 'required|min_length[3]',
+            ],
+            [   // Errors
+                'user_id' => [
+                    'required' => 'User ID tidak boleh kosong',
+                ],
+                'username' => [
+                    'required' => 'Username tidak boleh kosong',
+                    'min_length' => 'Username tidak boleh kurang dari 3 karakter',
+                ],
+                'nama_lengkap' => [
+                    'required' => 'Nama Lengkap tidak boleh kosong',
+                    'min_length' => 'Nama Lengkap tidak boleh kurang dari 3 karakter',
+                ],
+            ]
+        );
 
-        if ($result == 1) {
-            $this->session->set([
-                'username' => $username,
-                'nama_lengkap' => $nama_lengkap
-            ]);
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('login_form_error_message', $this->validation->getErrors());
+            return redirect()->to('/user-profile');
         }
+        else {
+            $result = $this->user_model->changeUserProfile($user_id, $nama_lengkap, $username);
 
-        return redirect()->to('/user-profile');    
+            if ($result == 1) {
+                $this->session->set([
+                    'username' => $username,
+                    'nama_lengkap' => $nama_lengkap
+                ]);
+            }
+
+            $this->session->setFlashdata('login_form_success_message', "Edit profile berhasil!");
+            return redirect()->to('/user-profile');
+        }
     }
 }
