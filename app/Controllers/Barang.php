@@ -8,7 +8,7 @@ class Barang extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
-    
+        $this->validation = \Config\Services::validation();
         $this->barang_model = new \App\Models\Barang();
     }
     public function index()
@@ -25,18 +25,53 @@ class Barang extends BaseController
 
      public function process_add()
     {
-        $barang_data = [
-            'nama_barang' => $this->request->getVar('nama_barang'),
-            'jenis' => $this->request->getVar('jenis'),
-            'ukuran' => $this->request->getVar('ukuran'),
-            'harga' => $this->request->getVar('harga'),
-            'harga_jual' => $this->request->getVar('harga_jual'),
-             
-        ];
+            $this->validation->setRules(
+            [
+                'nama_barang' => 'required',
+                'jenis' => 'required',
+                'harga' => 'required|integer',
+                'harga_jual' => 'required|integer',
+            ],
+            [   // Errors
+                'nama_barang' => [
+                    'required' => 'Nama Barang tidak boleh kosong',
+                    
+                ],
+                'jenis' => [
+                    'required' => 'Jenis Barang tidak boleh kosong',
+                    
+                ],
 
-        $result = $this->barang_model->insert($barang_data);
+                'harga' => [
+                    'required' => 'Harga Barang tidak boleh kosong',
+                    'integer' => 'Harga harus diisi dengan angka'
+                ],
 
-        return redirect()->to('/barang');    
+                'harga_jual' => [
+                    'required' => 'Harga Jual Barang tidak boleh kosong',
+                    'integer' => 'Harga jual harus diisi dengan angka'
+                ],
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_tambah_barang_error_message', $this->validation->getErrors());
+            return redirect()->to('/barang/add');
+        }
+        else {
+            $barang_data = [
+                'nama_barang' => $this->request->getVar('nama_barang'),
+                'jenis' => $this->request->getVar('jenis'),
+                'ukuran' => $this->request->getVar('ukuran'),
+                'harga' => $this->request->getVar('harga'),
+                'harga_jual' => $this->request->getVar('harga_jual'),
+         
+            ];
+            
+            $result = $this->barang_model->insert($barang_data);
+            $this->session->setFlashdata('form_tambah_barang_success_message', 'Tambah barang berhasil');
+            return redirect()->to('/barang');
+        }
     }
 
     public function edit($barang_id)
