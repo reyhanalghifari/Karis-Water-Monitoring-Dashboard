@@ -8,7 +8,7 @@ class Auth extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
-
+        $this->validation = \Config\Services::validation();
         $this->user_model = new \App\Models\User();
     }
 
@@ -22,27 +22,51 @@ class Auth extends BaseController
         $username = $this->request->getVar('username');
         $password = $this->request->getVar('password');
 
-        $result = $this->user_model->authenticate($username, $password);
+        $this->validation->setRules(
+            [
+                'username' => 'required|min_length[3]',
+                'password' => 'required|min_length[5]',
+            ],
+            [   // Errors
+                'username' => [
+                    'required' => 'Username tidak boleh kosong',
+                    'min_length' => 'Username tidak boleh kurang dari 3 karakter',
+                ],
+                'password' => [
+                    'required' => 'Password tidak boleh kosong',
+                    'min_length' => 'Password tidak boleh kurang dari 5 karakter',
+                ],
+            ]
+        );
 
-        if ($result != null) {
-            
-            $user_data = [
-                'username' => $result->username,
-                'nama_lengkap' => $result->nama_lengkap,
-                'account_type' => $result->account_type,
-                'user_status' => $result->user_status,
-                'email' => $result->email,
-                'user_id' => $result->user_id,
-                'logged_in' => true,
-            ];
-
-            $this->session->set($user_data);
-
-            // kalau sukses, redirect ke halaman dashboard
-            return redirect()->to('/');                
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('login_form_error_message', $this->validation->getErrors());
+            return redirect()->to('/login');
         }
         else {
-            return redirect()->to('/login');
+            $result = $this->user_model->authenticate($username, $password);
+
+            if ($result != null) {
+                
+                $user_data = [
+                    'username' => $result->username,
+                    'nama_lengkap' => $result->nama_lengkap,
+                    'account_type' => $result->account_type,
+                    'user_status' => $result->user_status,
+                    'email' => $result->email,
+                    'user_id' => $result->user_id,
+                    'logged_in' => true,
+                ];
+
+                $this->session->set($user_data);
+
+                // kalau sukses, redirect ke halaman dashboard
+                return redirect()->to('/');                
+            }
+            else {
+                $this->session->setFlashdata('login_form_error_message', 'Akun tidak ditemukan. Tidak dapat mengakses sistem!');
+                return redirect()->to('/login');
+            }
         }
     }
 
