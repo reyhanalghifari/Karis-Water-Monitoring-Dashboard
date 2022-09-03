@@ -1,3 +1,9 @@
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -37,6 +43,22 @@
                             <h3 class="panel-title">Karis Water Monitoring Dashboard</h3>
                         </div>
                         <div class="panel-body">
+                            <?php $login_form_error_message = $session->getFlashData('login_form_error_message');
+                            if ($login_form_error_message != NULL) { ?>
+                            <div class="alert alert-danger">
+                                <?php 
+                                if (is_array($login_form_error_message)){
+                                    echo "<ul>";
+                                    foreach ($login_form_error_message as $message){
+                                        echo "<li>$message</li>";
+                                    }
+                                    echo "</ul>";
+                                } else {
+                                    echo $login_form_error_message;
+                                }
+                                ?>
+                            </div>
+                            <?php } ?>
                             <form role="form" method="POST" action="<?php echo base_url('login'); ?>">
                                 <fieldset>
                                     <div class="form-group">
