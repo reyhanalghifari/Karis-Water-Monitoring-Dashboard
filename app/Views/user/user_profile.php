@@ -2,6 +2,11 @@
 
 <?= $this->section('content') ?>
 
+<?php
+
+$session = \Config\Services::session();
+
+?>
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -23,6 +28,29 @@
 			        <div class="panel-body">
 			            <div class="row">
 			                <div class="col-lg-12">
+								<?php $login_form_success_message = $session->getFlashData('login_form_success_message');
+	                            if ($login_form_success_message != NULL) { ?>
+	                            <div class="alert alert-success">
+	                                <?php echo $login_form_success_message; ?>
+	                            </div>
+								<?php } ?>
+
+								<?php $login_form_error_message = $session->getFlashData('login_form_error_message');
+	                            if ($login_form_error_message != NULL) { ?>
+	                            <div class="alert alert-danger">
+	                                <?php
+	                                if (is_array($login_form_error_message)){
+	                                    echo "<ul>";
+	                                    foreach ($login_form_error_message as $message){
+	                                        echo "<li>$message</li>";
+	                                    }
+	                                    echo "</ul>";
+	                                } else {
+	                                    echo $login_form_error_message;
+	                                }
+	                                ?>
+	                            </div>
+	                            <?php } ?>
 			                    <form role="form" method="POST" action="<?php echo base_url('user-profile'); ?>">
 			                        <div class="form-group">
 			                            <label>Nama Lengkap</label>
