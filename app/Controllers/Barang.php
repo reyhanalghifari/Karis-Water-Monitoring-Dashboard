@@ -86,6 +86,40 @@ class Barang extends BaseController
     {
         $barang_id = $this->request->getVar('barang_id');
 
+        $this->validation->setRules(
+            [
+                'nama_barang' => 'required',
+                'jenis' => 'required',
+                'harga' => 'required|integer',
+                'harga_jual' => 'required|integer',
+            ],
+            [   // Errors
+                'nama_barang' => [
+                    'required' => 'Nama Barang tidak boleh kosong',
+                    
+                ],
+                'jenis' => [
+                    'required' => 'Jenis Barang tidak boleh kosong',
+                    
+                ],
+
+                'harga' => [
+                    'required' => 'Harga Barang tidak boleh kosong',
+                    'integer' => 'Harga harus diisi dengan angka'
+                ],
+
+                'harga_jual' => [
+                    'required' => 'Harga Jual Barang tidak boleh kosong',
+                    'integer' => 'Harga jual harus diisi dengan angka'
+                ],
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_edit_barang_error_message', $this->validation->getErrors());
+            return redirect()->to('/barang/edit/15');
+        }
+        else {
         $barang_data = [
             'nama_barang' => $this->request->getVar('nama_barang'),
             'jenis' => $this->request->getVar('jenis'),
@@ -96,8 +130,9 @@ class Barang extends BaseController
         ];
 
         $result = $this->barang_model->update($barang_id, $barang_data);
-
+        $this->session->setFlashdata('form_edit_barang_success_message', 'Edit barang berhasil');
         return redirect()->to('/barang');    
+        }
     }
 
     public function delete($barang_id)
