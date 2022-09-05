@@ -2,6 +2,12 @@
 
 <?= $this->section('content') ?>
 
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
+
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -22,6 +28,12 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
+                        <?php $form_tambah_cabang_success_message = $session->getFlashData('form_tambah_cabang_success_message');
+                            if ($form_tambah_cabang_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $form_tambah_cabang_success_message; ?>
+                            </div>
+                         <?php } ?>
                         <div class="table-responsive">
                             <a href="<?php echo base_url('cabang/add'); ?>" class="btn btn-info">Tambah Cabang Baru</a>
                             <br />
