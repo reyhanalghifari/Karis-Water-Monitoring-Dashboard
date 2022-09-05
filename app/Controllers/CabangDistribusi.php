@@ -9,7 +9,7 @@ class CabangDistribusi extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
-    
+        $this->validation = \Config\Services::validation();
         $this->cabang_model = new \App\Models\Cabang();
     }
  
@@ -26,18 +26,60 @@ class CabangDistribusi extends BaseController
 
     public function process_add()
     {
-        $cabang_data = [
-            'nama_cabang' => $this->request->getVar('nama_cabang'),
-            'kepala_cabang' => $this->request->getVar('kepala_cabang'),
-            'alamat_cabang' => $this->request->getVar('alamat_cabang'),
-            'email' => $this->request->getVar('email'),
-            'no_telp' => $this->request->getVar('no_telp'),
+        $this->validation->setRules(
+            [
+                'nama_cabang' => 'required',
+                'kepala_cabang' => 'required',
+                'alamat_cabang' => 'required',
+                'email' => 'required',
+                'no_telp' => 'required|integer',
+            ],
+            
+            [   // Errors
+                'nama_cabang' => [
+                    'required' => 'Nama cabang tidak boleh kosong',
+                    
+                ],
+                'kepala_cabang' => [
+                    'required' => 'Nama kepala cabang tidak boleh kosong',
+                    
+                ],
+
+                'alamat_cabang' => [
+                    'required' => 'Alamat cabang tidak boleh kosong',
+                    
+                ],
+
+                'email' => [
+                    'required' => 'Email cabang tidak boleh kosong',
+                    
+                ],
+
+                'no_telp' => [
+                    'required' => 'Nomor telepon cabang tidak boleh kosong',
+                    'integer' => 'Nomor telepon cabang harus diisi dengan angka'
+                ],
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_tambah_cabang_error_message', $this->validation->getErrors());
+            return redirect()->to('/cabang/add');
+        }
+        else {
+            $cabang_data = [
+                'nama_cabang' => $this->request->getVar('nama_cabang'),
+                'kepala_cabang' => $this->request->getVar('kepala_cabang'),
+                'alamat_cabang' => $this->request->getVar('alamat_cabang'),
+                'email' => $this->request->getVar('email'),
+                'no_telp' => $this->request->getVar('no_telp'),
              
-        ];
+            ];
 
-        $result = $this->cabang_model->insert($cabang_data);
-
-        return redirect()->to('/cabang');    
+            $result = $this->cabang_model->insert($cabang_data);
+            $this->session->setFlashdata('form_tambah_cabang_success_message', 'Tambah cabang berhasil');
+            return redirect()->to('/cabang');    
+        }
     }
 
     public function edit($cabang_id)
