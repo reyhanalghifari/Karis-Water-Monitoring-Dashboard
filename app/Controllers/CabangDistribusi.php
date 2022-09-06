@@ -93,18 +93,61 @@ class CabangDistribusi extends BaseController
     {
         $cabang_id = $this->request->getVar('cabang_id');
 
-        $cabang_data = [
-            'nama_cabang' => $this->request->getVar('nama_cabang'),
-            'kepala_cabang' => $this->request->getVar('kepala_cabang'),
-            'alamat_cabang' => $this->request->getVar('alamat_cabang'),
-            'email' => $this->request->getVar('email'),
-            'no_telp' => $this->request->getVar('no_telp'),
+        $this->validation->setRules(
+            [
+                'nama_cabang' => 'required',
+                'kepala_cabang' => 'required',
+                'alamat_cabang' => 'required',
+                'email' => 'required',
+                'no_telp' => 'required|integer',
+            ],
             
-        ];
+            [   // Errors
+                'nama_cabang' => [
+                    'required' => 'Nama cabang tidak boleh kosong',
+                    
+                ],
+                'kepala_cabang' => [
+                    'required' => 'Nama kepala cabang tidak boleh kosong',
+                    
+                ],
 
-        $result = $this->cabang_model->update($cabang_id, $cabang_data);
+                'alamat_cabang' => [
+                    'required' => 'Alamat cabang tidak boleh kosong',
+                    
+                ],
 
-        return redirect()->to('/cabang');    
+                'email' => [
+                    'required' => 'Email cabang tidak boleh kosong',
+                    
+                ],
+
+                'no_telp' => [
+                    'required' => 'Nomor telepon cabang tidak boleh kosong',
+                    'integer' => 'Nomor telepon cabang harus diisi dengan angka'
+                ],
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_edit_cabang_error_message', $this->validation->getErrors());
+            return redirect()->to('/cabang/edit/2');
+        }
+        else {
+
+            $cabang_data = [
+                'nama_cabang' => $this->request->getVar('nama_cabang'),
+                'kepala_cabang' => $this->request->getVar('kepala_cabang'),
+                'alamat_cabang' => $this->request->getVar('alamat_cabang'),
+                'email' => $this->request->getVar('email'),
+                'no_telp' => $this->request->getVar('no_telp'),
+            
+            ];
+
+            $result = $this->cabang_model->update($cabang_id, $cabang_data);
+            $this->session->setFlashdata('form_edit_cabang_success_message', 'Edit cabang berhasil');
+            return redirect()->to('/cabang');    
+        }
     }
 
     public function delete($cabang_id)
