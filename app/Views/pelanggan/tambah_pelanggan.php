@@ -1,6 +1,12 @@
 <?= $this->extend('layout/base') ?>
 
 <?= $this->section('content') ?>
+
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
  
 <!-- Page Content -->
 <div id="page-wrapper">
@@ -21,6 +27,22 @@
 			            Form Tambah Pelanggan
 			        </div>
 			        <div class="panel-body">
+			        	<?php $form_tambah_pelanggan_error_message = $session->getFlashData('form_tambah_pelanggan_error_message');
+                            if ($form_tambah_pelanggan_error_message != NULL) { ?>
+                            <div class="alert alert-danger">
+                                <?php 
+                                if (is_array($form_tambah_pelanggan_error_message)){
+                                    echo "<ul>";
+                                    foreach ($form_tambah_pelanggan_error_message as $message){
+                                        echo "<li>$message</li>";
+                                    }
+                                    echo "</ul>";
+                                } else {
+                                    echo $form_tambah_pelanggan_error_message;
+                                }
+                                ?>
+                            </div>
+                         <?php } ?>
 			            <div class="row">
 			                <div class="col-lg-12">
 			                    <form role="form" method="POST" action="<?php echo base_url('pelanggan/add'); ?>">

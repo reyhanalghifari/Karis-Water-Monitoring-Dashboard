@@ -1,6 +1,12 @@
 <?= $this->extend('layout/base') ?>
 
 <?= $this->section('content') ?>
+
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
   
 <!-- Page Content -->
 <div id="page-wrapper">
@@ -22,6 +28,12 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
+                        <?php $form_tambah_pelanggan_success_message = $session->getFlashData('form_tambah_pelanggan_success_message');
+                            if ($form_tambah_pelanggan_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $form_tambah_pelanggan_success_message; ?>
+                            </div>
+                         <?php } ?>
                         <div class="table-responsive">
                             <a href="<?php echo base_url('pelanggan/add'); ?>" class="btn btn-info">Tambah Pelanggan Baru</a>
                             <br />

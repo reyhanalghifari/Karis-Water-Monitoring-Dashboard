@@ -8,7 +8,7 @@ class Pelanggan extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
-    
+        $this->validation = \Config\Services::validation();
         $this->pelanggan_model = new \App\Models\Pelanggan();
     }
 
@@ -25,17 +25,58 @@ class Pelanggan extends BaseController
 
     public function process_add()
     {
-        $pelanggan_data = [
-            'nama_pelanggan' => $this->request->getVar('nama_pelanggan'),
-            'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
-            'no_telepon' => $this->request->getVar('no_telepon'),
-            'email' => $this->request->getVar('email'),
+
+        $this->validation->setRules(
+            [
+                'nama_pelanggan' => 'required',
+                'alamat_pelanggan' => 'required',
+                'no_telepon' => 'required|integer',
+                'email' => 'required',
+                
+            ],
             
-        ];
+            [   // Errors
+                'nama_pelanggan' => [
+                    'required' => 'Nama pelanggan tidak boleh kosong',
+                    
+                ],
+                'alamat_pelanggan' => [
+                    'required' => 'Alamat pelanggan tidak boleh kosong',
+                    
+                ],
 
-        $result = $this->pelanggan_model->insert($pelanggan_data);
+                'no_telepon' => [
+                    'required' => 'Nomor telepon pelanggan tidak boleh kosong',
+                    'integer' => 'Nomor telepon pelanggan harus diisi dengan angka'
+                ],
+                    
+            
+                'email' => [
+                    'required' => 'Email pelanggan tidak boleh kosong',
+                    
+                ],
 
-        return redirect()->to('/pelanggan');    
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_tambah_pelanggan_error_message', $this->validation->getErrors());
+            return redirect()->to('/pelanggan/add');
+        }
+        else {
+
+            $pelanggan_data = [
+                'nama_pelanggan' => $this->request->getVar('nama_pelanggan'),
+                'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
+                'no_telepon' => $this->request->getVar('no_telepon'),
+                'email' => $this->request->getVar('email'),
+            
+            ];
+
+            $result = $this->pelanggan_model->insert($pelanggan_data);
+            $this->session->setFlashdata('form_tambah_pelanggan_success_message', 'Tambah pelanggan berhasil');
+            return redirect()->to('/pelanggan');    
+        }
     }
 
     public function edit($pelanggan_id)
