@@ -90,17 +90,57 @@ class Pelanggan extends BaseController
     {
         $pelanggan_id = $this->request->getVar('pelanggan_id');
 
-        $pelanggan_data = [
-            'nama_pelanggan' => $this->request->getVar('nama_pelanggan'),
-            'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
-            'no_telepon' => $this->request->getVar('no_telepon'),
-            'email' => $this->request->getVar('email'),
+        $this->validation->setRules(
+            [
+                'nama_pelanggan' => 'required',
+                'alamat_pelanggan' => 'required',
+                'no_telepon' => 'required|integer',
+                'email' => 'required',
+                
+            ],
             
-        ];
+            [   // Errors
+                'nama_pelanggan' => [
+                    'required' => 'Nama pelanggan tidak boleh kosong',
+                    
+                ],
+                'alamat_pelanggan' => [
+                    'required' => 'Alamat pelanggan tidak boleh kosong',
+                    
+                ],
 
-        $result = $this->pelanggan_model->update($pelanggan_id, $pelanggan_data);
+                'no_telepon' => [
+                    'required' => 'Nomor telepon pelanggan tidak boleh kosong',
+                    'integer' => 'Nomor telepon pelanggan harus diisi dengan angka'
+                ],
+                    
+            
+                'email' => [
+                    'required' => 'Email pelanggan tidak boleh kosong',
+                    
+                ],
 
-        return redirect()->to('/pelanggan');    
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_edit_pelanggan_error_message', $this->validation->getErrors());
+            return redirect()->to('/pelanggan/edit/4');
+        }
+        else {
+
+            $pelanggan_data = [
+                'nama_pelanggan' => $this->request->getVar('nama_pelanggan'),
+                'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
+                'no_telepon' => $this->request->getVar('no_telepon'),
+                'email' => $this->request->getVar('email'),
+            
+            ];
+
+            $result = $this->pelanggan_model->update($pelanggan_id, $pelanggan_data);
+            $this->session->setFlashdata('form_edit_pelanggan_success_message', 'Edit pelanggan berhasil');
+            return redirect()->to('/pelanggan');    
+        }
     }
 
     public function delete($pelanggan_id)
