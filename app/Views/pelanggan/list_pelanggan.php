@@ -34,6 +34,13 @@ $session = \Config\Services::session();
                                 <?php echo $form_tambah_pelanggan_success_message; ?>
                             </div>
                          <?php } ?>
+
+                         <?php $form_edit_pelanggan_success_message = $session->getFlashData('form_edit_pelanggan_success_message');
+                            if ($form_edit_pelanggan_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $form_edit_pelanggan_success_message; ?>
+                            </div>
+                         <?php } ?>
                         <div class="table-responsive">
                             <a href="<?php echo base_url('pelanggan/add'); ?>" class="btn btn-info">Tambah Pelanggan Baru</a>
                             <br />
