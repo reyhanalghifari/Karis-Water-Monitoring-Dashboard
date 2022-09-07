@@ -90,6 +90,47 @@ class Pelanggan extends BaseController
     {
         $pelanggan_id = $this->request->getVar('pelanggan_id');
 
+        $this->validation->setRules(
+            [
+                'nama_pelanggan' => 'required|alpha',
+                'alamat_pelanggan' => 'required',
+                'no_telepon' => 'required|integer',
+                'email' => 'required|valid_email',
+                
+            ],
+            
+            [   // Errors
+                'nama_pelanggan' => [
+                    'required' => 'Nama pelanggan tidak boleh kosong',
+                    'alpha' => 'Nama pelanggan harus di isi dengan huruf'
+                    
+                ],
+                'alamat_pelanggan' => [
+                    'required' => 'Alamat pelanggan tidak boleh kosong',
+                    
+                ],
+
+                'no_telepon' => [
+                    'required' => 'Nomor telepon pelanggan tidak boleh kosong',
+                    'integer' => 'Nomor telepon pelanggan harus diisi dengan angka'
+                ],
+                    
+            
+                'email' => [
+                    'required' => 'Email pelanggan tidak boleh kosong',
+                    'valid_email' => 'Data email harus berupa alamat email'
+                    
+                ],
+
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_edit_pelanggan_error_message', $this->validation->getErrors());
+            return redirect()->to('/pelanggan/edit/4');
+        }
+        else {
+
         $pelanggan_data = [
             'nama_pelanggan' => $this->request->getVar('nama_pelanggan'),
             'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
@@ -99,8 +140,10 @@ class Pelanggan extends BaseController
         ];
 
         $result = $this->pelanggan_model->update($pelanggan_id, $pelanggan_data);
-
+        $this->session->setFlashdata('form_edit_pelanggan_success_message', 'Edit pelanggan berhasil');
         return redirect()->to('/pelanggan');    
+        }
+
     }
 
     public function delete($pelanggan_id)
