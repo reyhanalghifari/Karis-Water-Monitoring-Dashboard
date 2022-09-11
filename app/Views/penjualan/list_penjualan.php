@@ -30,8 +30,9 @@
                                         <th>Pelanggan</th>
                                         <th>Barang</th>
                                         <th>Tanggal Penjualan</th>
-                                        <th>Harga Saat Dibeli</th>
+                                        <th>Harga Saat Pembelian</th>
                                         <th>Jumlah</th>
+                                        <th>Total Pembelian</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,12 +41,12 @@
                                     foreach ($datapenjualan as $penjualan) { ?>
                                     <tr class="odd gradeX">
                                         <td><?= $i ?></td>
-                                        <td><?= $penjualan->pelanggan_id ?></td>
-                                        <td><?= $penjualan->barang_id ?></td>
+                                        <td><?= $penjualan->nama_pelanggan ?></td>
+                                        <td><?= $penjualan->nama_barang ?></td>
                                         <td><?= $penjualan->tanggal_penjualan ?></td>
-                                        <td><?= $penjualan->harga_saat_dibeli ?></td>
-                                        <td><?= $penjualan->jumlah ?></td> 
-                                        
+                                        <td><?= $penjualan->harga_saat_dibeli ?></td> 
+                                        <td><?= $penjualan->jumlah ?></td>
+                                        <td><?= $penjualan->jumlah * $penjualan->harga_saat_dibeli ?></td>
                                     </tr>
                                     <?php $i++; } ?> 
                                 </tbody>

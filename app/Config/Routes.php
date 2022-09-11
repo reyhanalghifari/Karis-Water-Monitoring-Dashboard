@@ -77,6 +77,8 @@ $routes->get('/user/delete/(:num)', 'User::delete/$1');
 $routes->get('/user-profile', 'User::user_profile');
 $routes->post('/user-profile', 'User::edit_user_profile');
 
+$routes->get('/master/barang/(:num)', 'DataMaster::getBarang/$1');
+
 
 /*
  * --------------------------------------------------------------------
