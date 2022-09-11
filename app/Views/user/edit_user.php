@@ -1,6 +1,12 @@
 <?= $this->extend('layout/base') ?>
 
 <?= $this->section('content') ?>
+
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
  
 <!-- Page Content -->
 <div id="page-wrapper">
@@ -21,6 +27,22 @@
 			            Form Edit User
 			        </div>
 			        <div class="panel-body">
+			        	<?php $form_edit_user_error_message = $session->getFlashData('form_edit_user_error_message');
+                            if ($form_edit_user_error_message != NULL) { ?>
+                            <div class="alert alert-danger">
+                                <?php 
+                                if (is_array($form_edit_user_error_message)){
+                                    echo "<ul>";
+                                    foreach ($form_edit_user_error_message as $message){
+                                        echo "<li>$message</li>";
+                                    }
+                                    echo "</ul>";
+                                } else {
+                                    echo $form_edit_user_error_message;
+                                }
+                                ?>
+                            </div>
+                         <?php } ?>
 			            <div class="row">
 			                <div class="col-lg-12">
 			                    <form role="form" method="POST" action="<?php echo base_url('user/edit'); ?>">
@@ -40,10 +62,6 @@
 			                        <div class="form-group">
 			                            <label>No Telepon</label>
 			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon Anda" value="<?= $user->no_telp ?>">
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Password</label>
-			                            <input type="password" name="password" class="form-control" placeholder="Isi dengan password Anda" value="<?= $user->password ?>">
 			                        </div>
 			                        <div class="form-group">
 			                            <label>Jenis Akun</label>

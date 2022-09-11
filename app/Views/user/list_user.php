@@ -1,6 +1,12 @@
 <?= $this->extend('layout/base') ?>
 
 <?= $this->section('content') ?>
+
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
  
 <!-- Page Content -->
 <div id="page-wrapper">
@@ -22,6 +28,19 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
+                        <?php $form_tambah_user_success_message = $session->getFlashData('form_tambah_user_success_message');
+                            if ($form_tambah_user_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $form_tambah_user_success_message; ?>
+                            </div>
+                         <?php } ?>
+
+                         <?php $form_edit_user_success_message = $session->getFlashData('form_edit_user_success_message');
+                            if ($form_edit_user_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $form_edit_user_success_message; ?>
+                            </div>
+                         <?php } ?>
                         <div class="table-responsive">
                             <a href="<?php echo base_url('user/add'); ?>" class="btn btn-info">Tambah Pengguna Baru</a>
                             <br />
@@ -30,8 +49,8 @@
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Username</th>
                                         <th>Nama Lengkap</th>
+                                        <th>Username</th>
                                         <th>Email</th>
                                         <th>No Telepon</th>
                                         <th>Tipe Akun</th>
@@ -45,8 +64,8 @@
                                     foreach ($users as $user) { ?>
                                     <tr class="odd gradeX">
                                         <td><?= $i ?></td>
-                                        <td><?= $user->username ?></td>
                                         <td><?= $user->nama_lengkap ?></td>
+                                        <td><?= $user->username ?></td>
                                         <td><?= $user->email ?></td>
                                         <td><?= $user->no_telp ?></td>
                                         <td><?= $user->account_type ?></td>

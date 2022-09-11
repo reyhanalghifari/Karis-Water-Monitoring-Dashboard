@@ -1,6 +1,12 @@
 <?= $this->extend('layout/base') ?>
 
 <?= $this->section('content') ?>
+
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
   
 <!-- Page Content -->
 <div id="page-wrapper">
@@ -21,6 +27,22 @@
 			            Form Tambah User
 			        </div>
 			        <div class="panel-body">
+			        	<?php $form_tambah_user_error_message = $session->getFlashData('form_tambah_user_error_message');
+                            if ($form_tambah_user_error_message != NULL) { ?>
+                            <div class="alert alert-danger">
+                                <?php 
+                                if (is_array($form_tambah_user_error_message)){
+                                    echo "<ul>";
+                                    foreach ($form_tambah_user_error_message as $message){
+                                        echo "<li>$message</li>";
+                                    }
+                                    echo "</ul>";
+                                } else {
+                                    echo $form_tambah_user_error_message;
+                                }
+                                ?>
+                                </div>
+                         <?php } ?>
 			            <div class="row">
 			                <div class="col-lg-12">
 			                    <form role="form" method="POST" action="<?php echo base_url('user/add'); ?>">
@@ -33,16 +55,16 @@
 			                            <input name="username" class="form-control" placeholder="Isi dengan username Anda">
 			                        </div>
 			                        <div class="form-group">
+			                            <label>Password</label>
+			                            <input type="password" name="password" class="form-control" placeholder="Isi dengan password Anda">
+			                        </div>
+			                        <div class="form-group">
 			                            <label>E-Mail</label>
 			                            <input name="email" class="form-control" placeholder="Isi dengan e-mail Anda">
 			                        </div>
 			                        <div class="form-group">
 			                            <label>No Telepon</label>
 			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon Anda">
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Password</label>
-			                            <input type="password" name="password" class="form-control" placeholder="Isi dengan password Anda">
 			                        </div>
 			                        <div class="form-group">
 			                            <label>Jenis Akun</label>

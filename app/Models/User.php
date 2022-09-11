@@ -46,7 +46,8 @@ class User extends Model
     {
         $data = [
 		    'username' => $username,
-		    'nama_lengkap'    => $nama_lengkap,
+            'nama_lengkap'    => $nama_lengkap,
+            
 		];
 
 		$result = $this->update($id, $data);

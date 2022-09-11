@@ -50,7 +50,7 @@ $session = \Config\Services::session();
                                     <tr>
                                         <th>No.</th>
                                         <th>Nama Pelanggan</th>
-                                        <th>Alamat Pelanggan</th>
+                                        <th>Alamat</th>
                                         <th>No Telepon</th>
                                         <th>Email</th>
                                         <th>Aksi</th>
