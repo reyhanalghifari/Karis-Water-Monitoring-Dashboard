@@ -11,6 +11,8 @@ class Penjualan extends BaseController
         $this->request = \Config\Services::request();
     
         $this->penjualan_model = new \App\Models\Penjualan();
+        $this->pelanggan_model = new \App\Models\Pelanggan();
+        $this->barang_model = new \App\Models\Barang();
     }
 
     public function index()
@@ -21,7 +23,9 @@ class Penjualan extends BaseController
 
     public function add()
     {
-       return view('penjualan/tambah_penjualan');
+        $data_pelanggan = $this->pelanggan_model->getDataPelanggan();
+        $data_barang = $this->barang_model->getDataBarang();
+        return view('penjualan/tambah_penjualan', ['data_pelanggan' => $data_pelanggan, 'data_barang' => $data_barang]);
     }
 
     public function process_add()

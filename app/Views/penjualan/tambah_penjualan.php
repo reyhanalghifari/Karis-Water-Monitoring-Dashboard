@@ -27,26 +27,26 @@
 			                        <div class="form-group">
 			                            <label>Pelanggan</label>
 			                            <select name="pelanggan_id" class="form-control">
-			                            	<option value="3">test12345</option>
+			                            	<?php foreach ($data_pelanggan as $pelanggan) { ?>
+			                            	<option value="<?= $pelanggan->pelanggan_id?>"><?= $pelanggan->nama_pelanggan ?></option>
+			                            	<?php } ?>
 			                            </select>
 			                        </div>
 			                        <div class="form-group">
 			                            <label>Barang</label>
-			                            <select name="barang_id" class="form-control">
-			                            	<option value="1">Air Mineral Galon</option>
+			                            <select id="barang-id" name="barang_id" class="form-control">
+			                            	<?php foreach ($data_barang as $barang) { ?>
+			                            	<option <?php if (strpos($barang->nama_barang, "alon") !== false ) { echo "selected"; } ?> value="<?= $barang->barang_id?>"><?= $barang->nama_barang ?></option>
+			                            	<?php } ?>
 			                            </select>
-			                        </div>
-			                        <!-- <div class="form-group">
-			                            <label>Tanggal Penjualan</label>
-			                            <input name="tanggal_penjualan" class="form-control" placeholder="Isi dengan tanggal penjualan">
 			                        </div>
 			                        <div class="form-group">
 			                            <label>Harga Saat Dibeli</label>
-			                            <input name="harga_saat_dibeli" class="form-control" placeholder="Isi dengan harga">
-			                        </div> -->
+			                            <input id="harga-saat-dibeli" name="harga_saat_dibeli" class="form-control" value="" />
+			                        </div> 
 			                        <div class="form-group">
 			                            <label>Jumlah</label>
-			                            <input name="jumlah" class="form-control" placeholder="Isi dengan jumlah pembelian">
+			                            <input name="jumlah" class="form-control" placeholder="Isi dengan jumlah pembelian" />
 			                        </div>
 			                        <input type="submit" class="btn btn-primary" value="Simpan" />
 			                        <input type="reset" class="btn btn-warning" value="Reset" />
@@ -67,5 +67,27 @@
 
     </div>
 </div>
+
+<!-- jQuery -->
+<script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
+
+<script type="text/javascript">
+	function changeHargaBarang(barang_id){
+		$.get("<?php echo base_url('master/barang'); ?>/"+barang_id, function(data, status){
+			console.log(data);
+			jsonObj = JSON.parse(data);
+			$("#harga-saat-dibeli").val(jsonObj.harga_jual);
+		});
+	}
+
+	$(function() {
+		let barang_id = $("#barang-id").val();
+		changeHargaBarang(barang_id);
+	});
+
+	$( "#barang-id" ).change(function(){
+		changeHargaBarang(this.value);	
+	});
+</script>
 
 <?= $this->endSection() ?>

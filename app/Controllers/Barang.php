@@ -25,7 +25,7 @@ class Barang extends BaseController
 
      public function process_add()
     {
-            $this->validation->setRules(
+        $this->validation->setRules(
             [
                 'nama_barang' => 'required',
                 'jenis' => 'required',
