@@ -49,8 +49,8 @@ class Auth extends BaseController
             if ($result != null) {
                 
                 $user_data = [
-                    'username' => $result->username,
                     'nama_lengkap' => $result->nama_lengkap,
+                    'username' => $result->username,
                     'account_type' => $result->account_type,
                     'user_status' => $result->user_status,
                     'email' => $result->email,

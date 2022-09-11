@@ -35,6 +35,12 @@ $session = \Config\Services::session();
                             </div>
                          <?php } ?>
 
+                         <?php $form_edit_user_success_message = $session->getFlashData('form_edit_user_success_message');
+                            if ($form_edit_user_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $form_edit_user_success_message; ?>
+                            </div>
+                         <?php } ?>
                         <div class="table-responsive">
                             <a href="<?php echo base_url('user/add'); ?>" class="btn btn-info">Tambah Pengguna Baru</a>
                             <br />

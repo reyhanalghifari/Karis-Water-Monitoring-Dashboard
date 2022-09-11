@@ -29,7 +29,7 @@ class User extends BaseController
 
         $this->validation->setRules(
             [
-                'nama_lengkap' => 'required|alpha',
+                'nama_lengkap' => 'required',
                 'username' => 'required|min_length[3]',
                 'password' => 'required|min_length[5]',
                 'email' => 'required|valid_email',
@@ -40,7 +40,6 @@ class User extends BaseController
             [   // Errors
                 'nama_lengkap' => [
                     'required' => 'Nama lengkap tidak boleh kosong',
-                    'alpha' => 'Nama lengkap harus di isi dengan huruf'
                     
                 ],
 
@@ -58,13 +57,13 @@ class User extends BaseController
             
                 'email' => [
                     'required' => 'Email pelanggan tidak boleh kosong',
-                    'valid_email' => 'Data email harus berupa alamat email'
+                    'valid_email' => 'Data email harus berupa alamat email',
                     
                 ],
 
                 'no_telp' => [
                     'required' => 'Nomor telepon tidak boleh kosong',
-                    'integer' => 'Nomor telepon harus di isi dengan angka'
+                    'integer' => 'Nomor telepon harus di isi dengan angka',
                     
                 ],                
 
@@ -104,19 +103,69 @@ class User extends BaseController
     {
         $user_id = $this->request->getVar('user_id');
 
-        $user_data = [
-            'username' => $this->request->getVar('username'),
-            'nama_lengkap' => $this->request->getVar('nama_lengkap'),
-            'password' => hash('sha256', $this->request->getVar('password')),
-            'email' => $this->request->getVar('email'),
-            'no_telp' => $this->request->getVar('no_telp'),
-            'account_type' => $this->request->getVar('account_type'),
-            'user_status' => $this->request->getVar('user_status'),
-        ];
+        $this->validation->setRules(
+            [
+                'nama_lengkap' => 'required',
+                'username' => 'required|min_length[3]',
+                'password' => 'required|min_length[5]',
+                'email' => 'required|valid_email',
+                'no_telp' => 'required|integer',
+                
+            ],
+            
+            [   // Errors
+                'nama_lengkap' => [
+                    'required' => 'Nama lengkap tidak boleh kosong',
+                    
+                ],
 
-        $result = $this->user_model->update($user_id, $user_data);
+                'username' => [
+                    'required' => 'Username tidak boleh kosong',
+                    'min_length' => 'Username tidak boleh kurang dari 3 karakter',
+                    
+                ],
 
-        return redirect()->to('/user');    
+                'password' => [
+                    'required' => 'Password tidak boleh kosong',
+                    'min_length' => 'Password tidak boleh kurang dari 5 karakter',
+                ],
+                    
+            
+                'email' => [
+                    'required' => 'Email pelanggan tidak boleh kosong',
+                    'valid_email' => 'Data email harus berupa alamat email'
+                    
+                ],
+
+                'no_telp' => [
+                    'required' => 'Nomor telepon tidak boleh kosong',
+                    'integer' => 'Nomor telepon harus di isi dengan angka'
+                    
+                ],                
+
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_edit_user_error_message', $this->validation->getErrors());
+            return redirect()->to('/user/edit/10');
+        }
+        else {
+
+            $user_data = [
+                'nama_lengkap' => $this->request->getVar('nama_lengkap'),
+                'username' => $this->request->getVar('username'),
+                'password' => hash('sha256', $this->request->getVar('password')),
+                'email' => $this->request->getVar('email'),
+                'no_telp' => $this->request->getVar('no_telp'),
+                'account_type' => $this->request->getVar('account_type'),
+                'user_status' => $this->request->getVar('user_status'),
+            ];
+
+            $result = $this->user_model->update($user_id, $user_data);
+            $this->session->setFlashdata('form_edit_user_success_message', 'Edit pengguna berhasil');
+            return redirect()->to('/user');    
+        }
     }
 
     public function delete($user_id)
