@@ -107,7 +107,6 @@ class User extends BaseController
             [
                 'nama_lengkap' => 'required',
                 'username' => 'required|min_length[3]',
-                'password' => 'required|min_length[5]',
                 'email' => 'required|valid_email',
                 'no_telp' => 'required|integer',
                 
@@ -124,13 +123,6 @@ class User extends BaseController
                     'min_length' => 'Username tidak boleh kurang dari 3 karakter',
                     
                 ],
-
-                'password' => [
-                    'required' => 'Password tidak boleh kosong',
-                    'min_length' => 'Password tidak boleh kurang dari 5 karakter',
-                ],
-                    
-            
                 'email' => [
                     'required' => 'Email pelanggan tidak boleh kosong',
                     'valid_email' => 'Data email harus berupa alamat email'
@@ -155,7 +147,6 @@ class User extends BaseController
             $user_data = [
                 'nama_lengkap' => $this->request->getVar('nama_lengkap'),
                 'username' => $this->request->getVar('username'),
-                'password' => hash('sha256', $this->request->getVar('password')),
                 'email' => $this->request->getVar('email'),
                 'no_telp' => $this->request->getVar('no_telp'),
                 'account_type' => $this->request->getVar('account_type'),

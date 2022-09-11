@@ -64,10 +64,6 @@ $session = \Config\Services::session();
 			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon Anda" value="<?= $user->no_telp ?>">
 			                        </div>
 			                        <div class="form-group">
-			                            <label>Password</label>
-			                            <input type="password" name="password" class="form-control" placeholder="Isi dengan password Anda" value="<?= $user->password ?>">
-			                        </div>
-			                        <div class="form-group">
 			                            <label>Jenis Akun</label>
 			                            <select name="account_type" class="form-control">
 			                                <option <?php if ($user->account_type == "superadmin") { echo "selected"; } ?> value="superadmin">superadmin</option>
