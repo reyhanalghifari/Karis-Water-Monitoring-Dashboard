@@ -26,19 +26,71 @@ class User extends BaseController
 
     public function process_add()
     {
-        $user_data = [
-            'username' => $this->request->getVar('username'),
-            'nama_lengkap' => $this->request->getVar('nama_lengkap'),
-            'password' => hash('sha256', $this->request->getVar('password')),
-            'email' => $this->request->getVar('email'),
-            'no_telp' => $this->request->getVar('no_telp'),
-            'account_type' => $this->request->getVar('account_type'),
-            'user_status' => $this->request->getVar('user_status'),
-        ];
 
-        $result = $this->user_model->insert($user_data);
+        $this->validation->setRules(
+            [
+                'nama_lengkap' => 'required|alpha',
+                'username' => 'required|min_length[3]',
+                'password' => 'required|min_length[5]',
+                'email' => 'required|valid_email',
+                'no_telp' => 'required|integer',
+                
+            ],
+            
+            [   // Errors
+                'nama_lengkap' => [
+                    'required' => 'Nama lengkap tidak boleh kosong',
+                    'alpha' => 'Nama lengkap harus di isi dengan huruf'
+                    
+                ],
 
-        return redirect()->to('/user');    
+                'username' => [
+                    'required' => 'Username tidak boleh kosong',
+                    'min_length' => 'Username tidak boleh kurang dari 3 karakter',
+                    
+                ],
+
+                'password' => [
+                    'required' => 'Password tidak boleh kosong',
+                    'min_length' => 'Password tidak boleh kurang dari 5 karakter',
+                ],
+                    
+            
+                'email' => [
+                    'required' => 'Email pelanggan tidak boleh kosong',
+                    'valid_email' => 'Data email harus berupa alamat email'
+                    
+                ],
+
+                'no_telp' => [
+                    'required' => 'Nomor telepon tidak boleh kosong',
+                    'integer' => 'Nomor telepon harus di isi dengan angka'
+                    
+                ],                
+
+            ]
+        );
+
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_tambah_user_error_message', $this->validation->getErrors());
+            return redirect()->to('/user/add');
+        }
+        else {
+
+            $user_data = [
+                'nama_lengkap' => $this->request->getVar('nama_lengkap'),
+                'username' => $this->request->getVar('username'),
+                'password' => hash('sha256', $this->request->getVar('password')),
+                'email' => $this->request->getVar('email'),
+                'no_telp' => $this->request->getVar('no_telp'),
+                'account_type' => $this->request->getVar('account_type'),
+                'user_status' => $this->request->getVar('user_status'),
+            ];
+
+            $result = $this->user_model->insert($user_data);
+            $this->session->setFlashdata('form_tambah_user_success_message', 'Tambah pengguna berhasil');
+            return redirect()->to('/user');    
+        }
     }
 
     public function edit($user_id)
