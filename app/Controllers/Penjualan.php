@@ -9,6 +9,7 @@ class Penjualan extends BaseController
     {
         $this->session = \Config\Services::session();
         $this->request = \Config\Services::request();
+        $this->validation = \Config\Services::validation();
     
         $this->penjualan_model = new \App\Models\Penjualan();
         $this->pelanggan_model = new \App\Models\Pelanggan();
@@ -30,18 +31,42 @@ class Penjualan extends BaseController
 
     public function process_add()
     {
-        $penjualan_data = [
-            'pelanggan_id' => $this->request->getVar('pelanggan_id'),
-            'barang_id' => $this->request->getVar('barang_id'),
-            'tanggal_penjualan' => $this->request->getVar('tanggal_penjualan'),
-            'harga_saat_dibeli' => $this->request->getVar('harga_saat_dibeli'),
-            'jumlah' => $this->request->getVar('jumlah'),
+
+        $this->validation->setRules(
+            [
+                'jumlah' => 'required|integer',
+                
+            ],
             
-        ];
+            [   // Errors
+                
+                'jumlah' => [
+                    'required' => 'Jumlah pembelian tidak boleh kosong',
+                    'integer' => 'Jumlah pembelian harus di isi dengan angka'
+                ],
 
-        $result = $this->penjualan_model->insert($penjualan_data);
+            ]
+        );
 
-        return redirect()->to('/penjualan');    
+        if (! $this->validation->withRequest($this->request)->run()) {
+            $this->session->setFlashdata('form_penjualan_error_message', $this->validation->getErrors());
+            return redirect()->to('/penjualan/add');
+        }
+        else {
+
+            $penjualan_data = [
+                'pelanggan_id' => $this->request->getVar('pelanggan_id'),
+                'barang_id' => $this->request->getVar('barang_id'),
+                'tanggal_penjualan' => $this->request->getVar('tanggal_penjualan'),
+                'harga_saat_dibeli' => $this->request->getVar('harga_saat_dibeli'),
+                'jumlah' => $this->request->getVar('jumlah'),
+            
+            ];
+
+            $result = $this->penjualan_model->insert($penjualan_data);
+            $this->session->setFlashdata('form_penjualan_success_message', 'Tambah pelanggan berhasil');
+            return redirect()->to('/penjualan');    
+        }
     }
 
     public function edit()
