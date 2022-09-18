@@ -149,7 +149,7 @@ class Pelanggan extends BaseController
     public function delete($pelanggan_id)
     {
         $pelanggan = $this->pelanggan_model->delete($pelanggan_id);
-
+        $this->session->setFlashdata('delete_pelanggan_success_message', 'Hapus pelanggan berhasil!');
            return redirect()->to('/pelanggan');
     }
 }
