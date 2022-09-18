@@ -153,7 +153,7 @@ class CabangDistribusi extends BaseController
     public function delete($cabang_id)
     {
         $cabang = $this->cabang_model->delete($cabang_id);
-
+        $this->session->setFlashdata('delete_cabang_success_message', 'Hapus cabang berhasil!');
            return redirect()->to('/cabang');
     }
 }

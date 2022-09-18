@@ -41,10 +41,39 @@ $session = \Config\Services::session();
                                 <?php echo $form_edit_cabang_success_message; ?>
                             </div>
                          <?php } ?>
+
+                         <?php $delete_cabang_success_message = $session->getFlashData('delete_cabang_success_message');
+                            if ($delete_cabang_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $delete_cabang_success_message; ?>
+                            </div>
+                         <?php } ?>
+
                         <div class="table-responsive">
                             <a href="<?php echo base_url('cabang/add'); ?>" class="btn btn-info">Tambah Cabang Baru</a>
                             <br />
                             <br />
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Hapus Cabang</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Apakah Anda yakin akan menghapus cabang distribusi ini?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                            <a id="delete-form-button-yes" href="#" class="btn btn-danger">Ya, hapus cabang ini</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
                             <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water">
                                 <thead>
                                     <tr>
@@ -70,7 +99,7 @@ $session = \Config\Services::session();
                                         <td><?= $cabang->no_telp ?></td>
                                         <td class="center">
                                             <a href="<?php echo base_url('cabang/edit/'.$cabang->cabang_id); ?>" class="btn btn-success">Edit</a>
-                                            <a href="<?php echo base_url('cabang/delete/'.$cabang->cabang_id); ?>" class="btn btn-danger">Delete</a>
+                                            <button data-toggle="modal" data-target="#delete-form" data-url="<?php echo base_url('cabang/delete/'.$cabang->cabang_id); ?>" class="btn btn-danger btn-delete">Hapus</button>
                                         </td>
                                     </tr>
                                     <?php $i++; } ?>
@@ -99,5 +128,13 @@ $session = \Config\Services::session();
 </script>
 
 <?= $this->endSection() ?>
+
+<script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
+
+<script type="text/javascript">
+    // popover demo
+    $("[data-toggle=popover]").popover();
+</script>
 
 
