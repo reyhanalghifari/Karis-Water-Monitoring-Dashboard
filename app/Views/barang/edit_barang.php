@@ -48,7 +48,7 @@ $session = \Config\Services::session();
 			                    <form role="form" method="POST" action="<?php echo base_url('barang/edit'); ?>">
 			                        <div class="form-group">
 			                            <label>Nama Barang</label>
-			                            <input name="nama_barang" class="form-control" placeholder="Isi dengan nama barang" value="<?= $barang->nama_barang ?>"/>
+			                            <input name="nama_barang" class="form-control" placeholder="Isi dengan nama barang" value="<?php echo $barang->nama_barang ?>"/>
 			                            <input type="hidden" name="barang_id" class="form-control" placeholder="Isi dengan nama barang" value="<?= $barang->barang_id ?>"/>
 			                        </div>
 			                        <div class="form-group">

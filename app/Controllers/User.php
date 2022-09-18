@@ -140,7 +140,7 @@ class User extends BaseController
 
         if (! $this->validation->withRequest($this->request)->run()) {
             $this->session->setFlashdata('form_edit_user_error_message', $this->validation->getErrors());
-            return redirect()->to('/user/edit/10');
+            return redirect()->to('/user/edit/'.$user_id);
         }
         else {
 
@@ -154,7 +154,7 @@ class User extends BaseController
             ];
 
             $result = $this->user_model->update($user_id, $user_data);
-            $this->session->setFlashdata('form_edit_user_success_message', 'Edit pengguna berhasil');
+            $this->session->setFlashdata('form_edit_user_success_message', 'Edit pengguna berhasil!');
             return redirect()->to('/user');    
         }
     }
@@ -163,6 +163,7 @@ class User extends BaseController
     {
         $user = $this->user_model->setAsInactive($user_id);
 
+        $this->session->setFlashdata('delete_user_success_message', 'Hapus pengguna berhasil!');
         return redirect()->to('/user');  
     }
 
