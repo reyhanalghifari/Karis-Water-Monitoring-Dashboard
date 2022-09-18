@@ -117,7 +117,7 @@ class Barang extends BaseController
 
         if (! $this->validation->withRequest($this->request)->run()) {
             $this->session->setFlashdata('form_edit_barang_error_message', $this->validation->getErrors());
-            return redirect()->to('/barang/edit/15');
+            return redirect()->to('/barang/edit/'.$barang_id);
         }
         else {
         $barang_data = [
@@ -138,7 +138,7 @@ class Barang extends BaseController
     public function delete($barang_id)
     {
            $barang = $this->barang_model->delete($barang_id);
-
+           $this->session->setFlashdata('delete_barang_success_message', 'Hapus barang berhasil!');
            return redirect()->to('/barang');
         
     }

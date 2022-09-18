@@ -42,10 +42,38 @@ $session = \Config\Services::session();
                             </div>
                          <?php } ?>
 
+                         <?php $delete_barang_success_message = $session->getFlashData('delete_barang_success_message');
+                            if ($delete_barang_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $delete_barang_success_message; ?>
+                            </div>
+                         <?php } ?>
+
                         <div class="table-responsive">
                             <a href="<?php echo base_url('barang/add'); ?>" class="btn btn-info">Tambah Barang Baru</a>
                             <br />
                             <br />
+                            <!-- Modal -->
+                            <div class="modal fade" id="delete-form" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                            <h4 class="modal-title" id="myModalLabel">Hapus Barang</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            Apakah Anda yakin akan menghapus barang ini?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+                                            <a id="delete-form-button-yes" href="#" class="btn btn-danger">Ya, hapus barang ini</a>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
                             <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water">
                                 <thead>
                                     <tr>
@@ -71,7 +99,7 @@ $session = \Config\Services::session();
                                         <td><?= $barang->harga_jual ?></td>
                                         <td class="center">
                                             <a href="<?php echo base_url('barang/edit/'.$barang->barang_id); ?>" class="btn btn-success">Edit</a>
-                                            <a href="<?php echo base_url('barang/delete/'.$barang->barang_id); ?>" class="btn btn-danger">Delete</a>
+                                            <button data-toggle="modal" data-target="#delete-form" data-url="<?php echo base_url('barang/delete/'.$barang->barang_id); ?>" class="btn btn-danger btn-delete">Hapus</button>
                                         </td>
                                     </tr>
                                     <?php $i++; } ?>
@@ -94,3 +122,10 @@ $session = \Config\Services::session();
 <?= $this->endSection() ?>
 
 
+<script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
+
+<script type="text/javascript">
+    // popover demo
+    $("[data-toggle=popover]").popover();
+</script>

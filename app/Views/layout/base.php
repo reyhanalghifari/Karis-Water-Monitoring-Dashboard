@@ -213,5 +213,13 @@ $session = \Config\Services::session();
                 });
             });
         </script>
+
+        <script type="text/javascript">
+            $(".btn.btn-danger.btn-delete").click(function(){
+                console.log($(this).attr('data-url'));
+                $('#delete-form-button-yes').attr('href', $(this).attr('data-url'));
+            });
+        </script>
+
     </body>
 </html>
