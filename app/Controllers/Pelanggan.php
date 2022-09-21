@@ -127,7 +127,7 @@ class Pelanggan extends BaseController
 
         if (! $this->validation->withRequest($this->request)->run()) {
             $this->session->setFlashdata('form_edit_pelanggan_error_message', $this->validation->getErrors());
-            return redirect()->to('/pelanggan/edit/4');
+            return redirect()->to('/pelanggan/edit/'.$pelanggan_id);
         }
         else {
 
