@@ -131,7 +131,7 @@ class CabangDistribusi extends BaseController
 
         if (! $this->validation->withRequest($this->request)->run()) {
             $this->session->setFlashdata('form_edit_cabang_error_message', $this->validation->getErrors());
-            return redirect()->to('/cabang/edit/2');
+            return redirect()->to('/cabang/edit/'.$cabang_id);
         }
         else {
 

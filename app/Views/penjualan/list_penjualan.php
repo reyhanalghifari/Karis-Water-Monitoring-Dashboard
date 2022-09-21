@@ -2,6 +2,12 @@
 
 <?= $this->section('content') ?>
  
+<?php
+
+$session = \Config\Services::session();
+ 
+?>
+ 
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
@@ -22,6 +28,13 @@
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
+                        <?php $form_penjualan_success_message = $session->getFlashData('form_penjualan_success_message');
+                            if ($form_penjualan_success_message != NULL) { ?>
+                            <div class="alert alert-success">
+                                <?php echo $form_penjualan_success_message; ?>
+                            </div>
+                         <?php } ?>
+
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water">
                                 <thead>

@@ -64,7 +64,7 @@ class Penjualan extends BaseController
             ];
 
             $result = $this->penjualan_model->insert($penjualan_data);
-            $this->session->setFlashdata('form_penjualan_success_message', 'Tambah pelanggan berhasil');
+            $this->session->setFlashdata('form_penjualan_success_message', 'Transaksi berhasil');
             return redirect()->to('/penjualan');    
         }
     }
