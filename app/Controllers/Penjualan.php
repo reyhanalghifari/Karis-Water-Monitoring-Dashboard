@@ -18,7 +18,12 @@ class Penjualan extends BaseController
 
     public function index()
     {
-        $datapenjualan = $this->penjualan_model->getDataPenjualan();
+        if ($this->session->get('cabang_id') != ""){
+            $datapenjualan = $this->penjualan_model->getDataPenjualanByCabangID($this->session->get('cabang_id'));
+        } else {
+            $datapenjualan = $this->penjualan_model->getDataPenjualan();   
+        }
+
         return view('penjualan/list_penjualan', ['datapenjualan' => $datapenjualan]);
     }
 
@@ -62,6 +67,8 @@ class Penjualan extends BaseController
         else {
 
             $penjualan_data = [
+                'user_id' => $this->request->getVar('user_id'),
+                'cabang_id' => $this->request->getVar('cabang_id'),
                 'pelanggan_id' => $this->request->getVar('pelanggan_id'),
                 'barang_id' => $this->request->getVar('barang_id'),
                 'tanggal_penjualan' => $this->request->getVar('tanggal_penjualan'),

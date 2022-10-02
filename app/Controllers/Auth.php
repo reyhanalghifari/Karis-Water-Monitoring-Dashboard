@@ -10,6 +10,7 @@ class Auth extends BaseController
         $this->request = \Config\Services::request();
         $this->validation = \Config\Services::validation();
         $this->user_model = new \App\Models\User();
+        $this->user_cabang_model = new \App\Models\UserCabang();
     }
 
     public function index()
@@ -47,7 +48,14 @@ class Auth extends BaseController
             $result = $this->user_model->authenticate($username, $password);
 
             if ($result != null) {
-                
+                $user_cabang = $this->user_cabang_model->getUserCabangByUserId($result->user_id);
+                $tipe_cabang = "";
+                $cabang_id = "";
+                if ( isset($user_cabang->tipe_cabang)){
+                    $tipe_cabang =  $user_cabang->tipe_cabang;
+                    $cabang_id = $user_cabang->cabang_id;
+                }
+
                 $user_data = [
                     'nama_lengkap' => $result->nama_lengkap,
                     'username' => $result->username,
@@ -56,6 +64,8 @@ class Auth extends BaseController
                     'email' => $result->email,
                     'user_id' => $result->user_id,
                     'logged_in' => true,
+                    'tipe_cabang' => $tipe_cabang,
+                    'cabang_id' => $cabang_id
                 ];
 
                 $this->session->set($user_data);

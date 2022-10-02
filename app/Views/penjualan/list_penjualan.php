@@ -47,6 +47,8 @@ $session = \Config\Services::session();
                                         <th>Harga Saat Pembelian</th>
                                         <th>Jumlah</th>
                                         <th>Total Pembelian</th>
+                                        <th>User ID</th>
+                                        <th>Cabang ID</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,6 +64,8 @@ $session = \Config\Services::session();
                                         <td><?= $penjualan->harga_saat_dibeli ?></td> 
                                         <td><?= $penjualan->jumlah ?></td>
                                         <td><?= $penjualan->jumlah * $penjualan->harga_saat_dibeli ?></td>
+                                        <td><?= $penjualan->user_id ?></td>
+                                        <td><?= $penjualan->cabang_id ?></td>
                                     </tr>
                                     <?php $i++; } ?> 
                                 </tbody>

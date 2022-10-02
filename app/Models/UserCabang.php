@@ -32,4 +32,13 @@ class UserCabang extends Model
 
         return $result;
     }
+
+    public function getUserCabangByUserId($user_id)
+    {
+        $query_stmt = 'SELECT u.user_id, u.username, c.nama_cabang, c.tipe_cabang, c.cabang_id FROM user u LEFT JOIN user_cabang uc ON u.user_id = uc.user_id LEFT JOIN cabang c ON uc.cabang_id=c.cabang_id WHERE u.user_status="active" AND c.nama_cabang IS NOT NULL AND u.user_id='.$user_id;
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getRow();
+
+        return $result;
+    }
 }

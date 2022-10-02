@@ -83,6 +83,7 @@ $session = \Config\Services::session();
                                         <th>Alamat Cabang</th>
                                         <th>Email</th>
                                         <th>No Telepon</th>
+                                        <th>Tipe Cabang</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -96,7 +97,7 @@ $session = \Config\Services::session();
                                         <td><?= $cabang->kepala_cabang ?></td>
                                         <td><?= $cabang->alamat_cabang ?></td>
                                         <td><?= $cabang->email ?></td>
-                                        <td><?= $cabang->no_telp ?></td>
+                                        <td><?= $cabang->tipe_cabang ?></td>
                                         <td class="center">
                                             <a href="<?php echo base_url('cabang/edit/'.$cabang->cabang_id); ?>" class="btn btn-success">Edit</a>
                                             <button data-toggle="modal" data-target="#delete-form" data-url="<?php echo base_url('cabang/delete/'.$cabang->cabang_id); ?>" class="btn btn-danger btn-delete">Hapus</button>

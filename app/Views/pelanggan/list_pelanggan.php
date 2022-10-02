@@ -82,6 +82,7 @@ $session = \Config\Services::session();
                                         <th>Alamat</th>
                                         <th>No Telepon</th>
                                         <th>Email</th>
+                                        <th>Jenis Pelanggan</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
@@ -95,6 +96,7 @@ $session = \Config\Services::session();
                                         <td><?= $pelanggan->alamat_pelanggan ?></td>
                                         <td><?= $pelanggan->no_telepon ?></td>
                                         <td><?= $pelanggan->email ?></td> 
+                                        <td><?= $pelanggan->jenis_pelanggan ?></td> 
                                         <td class="center">
                                             <a href="<?php echo base_url('pelanggan/edit/'.$pelanggan->pelanggan_id); ?>" class="btn btn-success">Edit</a>
                                             <button data-toggle="modal" data-target="#delete-form" data-url="<?php echo base_url('pelanggan/delete/'.$pelanggan->pelanggan_id); ?>" class="btn btn-danger btn-delete">Hapus</button>
