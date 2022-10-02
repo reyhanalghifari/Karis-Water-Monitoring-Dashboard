@@ -14,7 +14,7 @@ $session = \Config\Services::session();
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Catat Penjualan</h1>
+                <h1 class="page-header">Catat Penjualan ke Cabang</h1>
             </div>
         </div>
 
@@ -24,7 +24,7 @@ $session = \Config\Services::session();
 			<div class="col-lg-12">
 			    <div class="panel panel-default">
 			        <div class="panel-heading">
-			            Form Penjualan
+			            Form Penjualan untuk Cabang
 			        </div>
 			        <div class="panel-body">
 			        	<?php $form_penjualan_error_message = $session->getFlashData('form_penjualan_error_message');
@@ -105,7 +105,7 @@ $session = \Config\Services::session();
 		$.get("<?php echo base_url('master/barang'); ?>/"+barang_id, function(data, status){
 			console.log(data);
 			jsonObj = JSON.parse(data);
-			$("#harga-saat-dibeli").val(jsonObj.harga_jual);
+			$("#harga-saat-dibeli").val(jsonObj.harga);
 		});
 	}
 

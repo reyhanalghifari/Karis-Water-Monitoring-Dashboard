@@ -8,7 +8,7 @@ class Penjualan extends Model
 {
 	protected $table = 'penjualan';
 	protected $primaryKey = 'penjualan_id';
-	protected $allowedFields = ['pelanggan_id', 'barang_id', 'tanggal_penjualan', 'harga_saat_dibeli', 'jumlah'];
+	protected $allowedFields = ['pelanggan_id', 'barang_id', 'tanggal_penjualan', 'jenis_transaksi', 'harga_saat_dibeli', 'jumlah'];
 
 	public function __construct()
     {
@@ -25,7 +25,7 @@ class Penjualan extends Model
 
     public function getDataPenjualan()
     {
-        $query_stmt = 'SELECT penjualan_id, nama_pelanggan, nama_barang, tanggal_penjualan, harga_saat_dibeli, jumlah FROM penjualan pj LEFT JOIN barang br on pj.barang_id=br.barang_id LEFT JOIN pelanggan pl ON pj.pelanggan_id=pl.pelanggan_id ORDER BY penjualan_id DESC';
+        $query_stmt = 'SELECT penjualan_id, nama_pelanggan, nama_barang, tanggal_penjualan, jenis_transaksi, harga_saat_dibeli, jumlah FROM penjualan pj LEFT JOIN barang br on pj.barang_id=br.barang_id LEFT JOIN pelanggan pl ON pj.pelanggan_id=pl.pelanggan_id ORDER BY penjualan_id DESC';
         $query   = $this->db->query($query_stmt);
         $result = $query->getResult();
 

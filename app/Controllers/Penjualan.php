@@ -29,6 +29,13 @@ class Penjualan extends BaseController
         return view('penjualan/tambah_penjualan', ['data_pelanggan' => $data_pelanggan, 'data_barang' => $data_barang]);
     }
 
+    public function add_cabang()
+    {
+        $data_pelanggan = $this->pelanggan_model->getDataPelanggan();
+        $data_barang = $this->barang_model->getDataBarang();
+        return view('penjualan/tambah_penjualan_cabang', ['data_pelanggan' => $data_pelanggan, 'data_barang' => $data_barang]);
+    }
+
     public function process_add()
     {
 
@@ -58,6 +65,7 @@ class Penjualan extends BaseController
                 'pelanggan_id' => $this->request->getVar('pelanggan_id'),
                 'barang_id' => $this->request->getVar('barang_id'),
                 'tanggal_penjualan' => $this->request->getVar('tanggal_penjualan'),
+                'jenis_transaksi' => $this->request->getVar('jenis_transaksi'),
                 'harga_saat_dibeli' => $this->request->getVar('harga_saat_dibeli'),
                 'jumlah' => $this->request->getVar('jumlah'),
             

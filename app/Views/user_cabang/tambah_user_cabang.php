@@ -14,7 +14,7 @@ $session = \Config\Services::session();
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Administrasi - Tambah User</h1>
+                <h1 class="page-header">Administrasi - Tambah Penempatan Pengguna di Cabang</h1>
             </div>
         </div>
  
@@ -24,7 +24,7 @@ $session = \Config\Services::session();
 			<div class="col-lg-12">
 			    <div class="panel panel-default">
 			        <div class="panel-heading">
-			            Form Tambah User
+			            Form Tambah Penempatan Pengguna di Cabang
 			        </div>
 			        <div class="panel-body">
 			        	<?php $form_tambah_user_error_message = $session->getFlashData('form_tambah_user_error_message');
@@ -45,41 +45,21 @@ $session = \Config\Services::session();
                          <?php } ?>
 			            <div class="row">
 			                <div class="col-lg-12">
-			                    <form role="form" method="POST" action="<?php echo base_url('user/add'); ?>">
+			                    <form role="form" method="POST" action="<?php echo base_url('user-cabang/add'); ?>">
 			                        <div class="form-group">
-			                            <label>Nama Lengkap</label>
-			                            <input name="nama_lengkap" class="form-control" placeholder="Isi dengan nama lengkap Anda">
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Username</label>
-			                            <input name="username" class="form-control" placeholder="Isi dengan username Anda">
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Password</label>
-			                            <input type="password" name="password" class="form-control" placeholder="Isi dengan password Anda">
-			                        </div>
-			                        <div class="form-group">
-			                            <label>E-Mail</label>
-			                            <input name="email" class="form-control" placeholder="Isi dengan e-mail Anda">
-			                        </div>
-			                        <div class="form-group">
-			                            <label>No Telepon</label>
-			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon Anda">
-			                        </div>
-			                        <div class="form-group">
-			                            <label>Jenis Akun</label>
-			                            <select name="account_type" class="form-control">
-			                                <option value="superadmin">superadmin</option>
-			                                <option value="owner">owner</option>
-			                                <option value="kepala_cabang">kepala cabang</option>
-			                                <option value="operator">operator</option>
+			                            <label>Pengguna</label>
+			                            <select name="user_id" class="form-control">
+			                                <?php foreach ($users as $user) { ?>
+			                                <option value="<?= $user->user_id ?>"><?= $user->username ?></option>
+			                            	<?php } ?>
 			                            </select>
 			                        </div>
 			                        <div class="form-group">
-			                            <label>Status Akun</label>
-			                            <select name="user_status" class="form-control">
-			                                <option value="active">active</option>
-			                                <option value="inactive">inactive</option>
+			                            <label>Cabang</label>
+			                            <select name="cabang_id" class="form-control">
+			                            	<?php foreach ($list_cabang as $cabang) { ?>
+			                                <option value="<?= $cabang->cabang_id ?>"><?= $cabang->nama_cabang ?></option>
+			                            	<?php } ?>
 			                            </select>
 			                        </div>
 			                        <input type="submit" class="btn btn-primary" value="Simpan" />

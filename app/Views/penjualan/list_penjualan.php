@@ -43,6 +43,7 @@ $session = \Config\Services::session();
                                         <th>Pelanggan</th>
                                         <th>Barang</th>
                                         <th>Tanggal Penjualan</th>
+                                        <th>Jenis Transaksi</th>
                                         <th>Harga Saat Pembelian</th>
                                         <th>Jumlah</th>
                                         <th>Total Pembelian</th>
@@ -57,6 +58,7 @@ $session = \Config\Services::session();
                                         <td><?= $penjualan->nama_pelanggan ?></td>
                                         <td><?= $penjualan->nama_barang ?></td>
                                         <td><?= $penjualan->tanggal_penjualan ?></td>
+                                        <td><?= $penjualan->jenis_transaksi ?></td> 
                                         <td><?= $penjualan->harga_saat_dibeli ?></td> 
                                         <td><?= $penjualan->jumlah ?></td>
                                         <td><?= $penjualan->jumlah * $penjualan->harga_saat_dibeli ?></td>

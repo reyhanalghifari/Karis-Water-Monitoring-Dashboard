@@ -66,6 +66,7 @@ $routes->get('/pelanggan/delete/(:num)', 'Pelanggan::delete/$1');
 
 $routes->get('/penjualan', 'Penjualan::index');
 $routes->get('/penjualan/add', 'Penjualan::add');
+$routes->get('/penjualan/add_cabang', 'Penjualan::add_cabang');
 $routes->post('/penjualan/add', 'Penjualan::process_add');
 
 $routes->get('/user', 'User::index');
@@ -76,6 +77,11 @@ $routes->post('/user/edit', 'User::process_edit');
 $routes->get('/user/delete/(:num)', 'User::delete/$1');
 $routes->get('/user-profile', 'User::user_profile');
 $routes->post('/user-profile', 'User::edit_user_profile');
+
+$routes->get('/user-cabang', 'UserCabang::index');
+$routes->get('/user-cabang/add', 'UserCabang::add');
+$routes->post('/user-cabang/add', 'UserCabang::process_add');
+$routes->get('/user-cabang/delete/(:num)', 'UserCabang::delete/$1');
 
 $routes->get('/master/barang/(:num)', 'DataMaster::getBarang/$1');
 
