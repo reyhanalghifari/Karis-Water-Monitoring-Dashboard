@@ -29,14 +29,14 @@ class Penjualan extends BaseController
 
     public function add()
     {
-        $data_pelanggan = $this->pelanggan_model->getDataPelanggan();
+        $data_pelanggan = $this->pelanggan_model->getDataPelangganEceran();
         $data_barang = $this->barang_model->getDataBarang();
         return view('penjualan/tambah_penjualan', ['data_pelanggan' => $data_pelanggan, 'data_barang' => $data_barang]);
     }
 
     public function add_cabang()
     {
-        $data_pelanggan = $this->pelanggan_model->getDataPelanggan();
+        $data_pelanggan = $this->pelanggan_model->getDataPelangganCabang();
         $data_barang = $this->barang_model->getDataBarang();
         return view('penjualan/tambah_penjualan_cabang', ['data_pelanggan' => $data_pelanggan, 'data_barang' => $data_barang]);
     }
