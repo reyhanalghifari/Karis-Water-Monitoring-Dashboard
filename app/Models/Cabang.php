@@ -14,18 +14,10 @@ class Cabang extends Model
     {
         $this->db = \Config\Database::connect();
     }
-    public function authenticate($username, $password)
-    {
-    	$query_stmt = 'SELECT * FROM user WHERE username="'.$username.'" AND password="'.hash('sha256', $password).'"';
-    	$query   = $this->db->query($query_stmt);
-        $result = $query->getRow();
-
-        return $result;
-    }
 
     public function getDataCabang()
     {
-        $query_stmt = 'SELECT cabang_id, nama_cabang, kepala_cabang, alamat_cabang, email, no_telp FROM cabang ORDER BY cabang_id DESC';
+        $query_stmt = 'SELECT cabang_id, nama_cabang, kepala_cabang, alamat_cabang, email, no_telp, tipe_cabang FROM cabang ORDER BY cabang_id DESC';
         $query   = $this->db->query($query_stmt);
         $result = $query->getResult();
 

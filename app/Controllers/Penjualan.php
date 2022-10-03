@@ -18,15 +18,27 @@ class Penjualan extends BaseController
 
     public function index()
     {
-        $datapenjualan = $this->penjualan_model->getDataPenjualan();
+        if ($this->session->get('cabang_id') != ""){
+            $datapenjualan = $this->penjualan_model->getDataPenjualanByCabangID($this->session->get('cabang_id'));
+        } else {
+            $datapenjualan = $this->penjualan_model->getDataPenjualan();   
+        }
+
         return view('penjualan/list_penjualan', ['datapenjualan' => $datapenjualan]);
     }
 
     public function add()
     {
-        $data_pelanggan = $this->pelanggan_model->getDataPelanggan();
+        $data_pelanggan = $this->pelanggan_model->getDataPelangganEceran();
         $data_barang = $this->barang_model->getDataBarang();
         return view('penjualan/tambah_penjualan', ['data_pelanggan' => $data_pelanggan, 'data_barang' => $data_barang]);
+    }
+
+    public function add_cabang()
+    {
+        $data_pelanggan = $this->pelanggan_model->getDataPelangganCabang();
+        $data_barang = $this->barang_model->getDataBarang();
+        return view('penjualan/tambah_penjualan_cabang', ['data_pelanggan' => $data_pelanggan, 'data_barang' => $data_barang]);
     }
 
     public function process_add()
@@ -55,9 +67,12 @@ class Penjualan extends BaseController
         else {
 
             $penjualan_data = [
+                'user_id' => $this->request->getVar('user_id'),
+                'cabang_id' => $this->request->getVar('cabang_id'),
                 'pelanggan_id' => $this->request->getVar('pelanggan_id'),
                 'barang_id' => $this->request->getVar('barang_id'),
                 'tanggal_penjualan' => $this->request->getVar('tanggal_penjualan'),
+                'jenis_transaksi' => $this->request->getVar('jenis_transaksi'),
                 'harga_saat_dibeli' => $this->request->getVar('harga_saat_dibeli'),
                 'jumlah' => $this->request->getVar('jumlah'),
             

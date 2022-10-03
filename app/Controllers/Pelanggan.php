@@ -14,7 +14,17 @@ class Pelanggan extends BaseController
 
     public function index()
     {
-        $datapelanggan = $this->pelanggan_model->getDataPelanggan();
+        $tipe_cabang = $this->session->get('tipe_cabang');
+
+        if ($tipe_cabang == "cabang") {
+            $datapelanggan = $this->pelanggan_model->getDataPelangganEceran();
+        } else if ($tipe_cabang == "pusat") {
+            $datapelanggan = $this->pelanggan_model->getDataPelangganCabang();
+        }
+        else {
+            $datapelanggan = $this->pelanggan_model->getDataPelanggan();
+        }
+
         return view('pelanggan/list_pelanggan', ['datapelanggan' => $datapelanggan]);
     }
 

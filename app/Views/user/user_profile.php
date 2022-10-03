@@ -73,6 +73,10 @@ $session = \Config\Services::session();
 			                            <label>User Status</label>
 			                            <p class="form-control-static"><?php echo $user->user_status; ?></p>
 			                        </div>
+			                        <div class="form-group">
+			                            <label>Akun ditempatkan di Cabang?</label>
+			                            <p class="form-control-static"><?php echo ($session->get('tipe_cabang') != null ? "Ya": "Tidak ditempatkan dimanapun"); ?></p>
+			                        </div>
 			                        <input type="submit" class="btn btn-success" value="Simpan" />
 			                    </form>
 			                </div>

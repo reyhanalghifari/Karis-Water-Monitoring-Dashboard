@@ -7,14 +7,14 @@
 $session = \Config\Services::session();
  
 ?>
-
+ 
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Catat Penjualan</h1>
+                <h1 class="page-header">Catat Penjualan ke Cabang</h1>
             </div>
         </div>
 
@@ -24,10 +24,9 @@ $session = \Config\Services::session();
 			<div class="col-lg-12">
 			    <div class="panel panel-default">
 			        <div class="panel-heading">
-			            Form Penjualan
+			            Form Penjualan untuk Cabang
 			        </div>
 			        <div class="panel-body">
-
 			        	<?php $form_penjualan_error_message = $session->getFlashData('form_penjualan_error_message');
                             if ($form_penjualan_error_message != NULL) { ?>
                             <div class="alert alert-danger">
@@ -78,8 +77,6 @@ $session = \Config\Services::session();
 			                            <label>Jumlah</label>
 			                            <input name="jumlah" class="form-control" placeholder="Isi dengan jumlah pembelian" />
 			                        </div>
-			                        <input type="hidden" name="user_id" class="form-control"  value="<?= $session->get('user_id'); ?>" />
-			                        <input type="hidden" name="cabang_id" class="form-control" value="<?= $session->get('cabang_id'); ?>" />
 			                        <input type="submit" class="btn btn-primary" value="Simpan" />
 			                        <input type="reset" class="btn btn-warning" value="Reset" />
 			                        <a href="<?php echo base_url('penjualan'); ?>" class="btn btn-danger">Batal </a>
@@ -108,7 +105,7 @@ $session = \Config\Services::session();
 		$.get("<?php echo base_url('master/barang'); ?>/"+barang_id, function(data, status){
 			console.log(data);
 			jsonObj = JSON.parse(data);
-			$("#harga-saat-dibeli").val(jsonObj.harga_jual);
+			$("#harga-saat-dibeli").val(jsonObj.harga);
 		});
 	}
 

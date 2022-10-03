@@ -14,18 +14,28 @@ class Pelanggan extends Model
     {
         $this->db = \Config\Database::connect();
     }
-    public function authenticate($username, $password)
+
+    public function getDataPelanggan()
     {
-    	$query_stmt = 'SELECT * FROM user WHERE username="'.$username.'" AND password="'.hash('sha256', $password).'"';
-    	$query   = $this->db->query($query_stmt);
-        $result = $query->getRow();
+        $query_stmt = 'SELECT pelanggan_id, nama_pelanggan, alamat_pelanggan, no_telepon, email, jenis_pelanggan FROM pelanggan ORDER BY pelanggan_id DESC';
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getResult();
 
         return $result;
     }
 
-    public function getDataPelanggan()
+    public function getDataPelangganCabang()
     {
-        $query_stmt = 'SELECT pelanggan_id, nama_pelanggan, alamat_pelanggan, no_telepon, email FROM pelanggan ORDER BY pelanggan_id DESC';
+        $query_stmt = "SELECT pelanggan_id, nama_pelanggan, alamat_pelanggan, no_telepon, email, jenis_pelanggan FROM pelanggan WHERE jenis_pelanggan='cabang' ORDER BY pelanggan_id DESC";
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getResult();
+
+        return $result;
+    }
+
+    public function getDataPelangganEceran()
+    {
+        $query_stmt = "SELECT pelanggan_id, nama_pelanggan, alamat_pelanggan, no_telepon, email, jenis_pelanggan FROM pelanggan WHERE jenis_pelanggan='eceran' ORDER BY pelanggan_id DESC";
         $query   = $this->db->query($query_stmt);
         $result = $query->getResult();
 

@@ -14,14 +14,6 @@ class Barang extends Model
     {
         $this->db = \Config\Database::connect();
     }
-    public function authenticate($username, $password)
-    {
-    	$query_stmt = 'SELECT * FROM user WHERE username="'.$username.'" AND password="'.hash('sha256', $password).'"';
-    	$query   = $this->db->query($query_stmt);
-        $result = $query->getRow();
-
-        return $result;
-    }
 
     public function getDataBarang()
     {

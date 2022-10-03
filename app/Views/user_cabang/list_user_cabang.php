@@ -7,14 +7,14 @@
 $session = \Config\Services::session();
  
 ?>
-  
+ 
 <!-- Page Content -->
 <div id="page-wrapper">
     <div class="container-fluid">
 
         <div class="row">
             <div class="col-lg-12">
-                <h1 class="page-header">Data Master - List Pelanggan</h1>
+                <h1 class="page-header">Administrasi - List Penempatan Pengguna di Cabang</h1>
             </div>
         </div>
 
@@ -24,33 +24,32 @@ $session = \Config\Services::session();
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        List Pelanggan
+                        List Penempatan Pengguna di Cabang
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <?php $form_tambah_pelanggan_success_message = $session->getFlashData('form_tambah_pelanggan_success_message');
-                            if ($form_tambah_pelanggan_success_message != NULL) { ?>
+                        <?php $form_tambah_user_success_message = $session->getFlashData('form_tambah_user_success_message');
+                            if ($form_tambah_user_success_message != NULL) { ?>
                             <div class="alert alert-success">
-                                <?php echo $form_tambah_pelanggan_success_message; ?>
+                                <?php echo $form_tambah_user_success_message; ?>
                             </div>
                          <?php } ?>
 
-                         <?php $form_edit_pelanggan_success_message = $session->getFlashData('form_edit_pelanggan_success_message');
-                            if ($form_edit_pelanggan_success_message != NULL) { ?>
+                         <?php $form_edit_user_success_message = $session->getFlashData('form_edit_user_success_message');
+                            if ($form_edit_user_success_message != NULL) { ?>
                             <div class="alert alert-success">
-                                <?php echo $form_edit_pelanggan_success_message; ?>
+                                <?php echo $form_edit_user_success_message; ?>
                             </div>
                          <?php } ?>
 
-                         <?php $delete_pelanggan_success_message = $session->getFlashData('delete_pelanggan_success_message');
-                            if ($delete_pelanggan_success_message != NULL) { ?>
+                         <?php $delete_user_success_message = $session->getFlashData('delete_user_success_message');
+                            if ($delete_user_success_message != NULL) { ?>
                             <div class="alert alert-success">
-                                <?php echo $delete_pelanggan_success_message; ?>
+                                <?php echo $delete_user_success_message; ?>
                             </div>
                          <?php } ?>
-
                         <div class="table-responsive">
-                            <a href="<?php echo base_url('pelanggan/add'); ?>" class="btn btn-info">Tambah Pelanggan Baru</a>
+                            <a href="<?php echo base_url('user-cabang/add'); ?>" class="btn btn-info">Tambah Penempatan Pengguna di Cabang Pengguna</a>
                             <br />
                             <br />
                             <!-- Modal -->
@@ -59,14 +58,14 @@ $session = \Config\Services::session();
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                            <h4 class="modal-title" id="myModalLabel">Hapus Pelanggan</h4>
+                                            <h4 class="modal-title" id="myModalLabel">Cabut Penempatan Pengguna</h4>
                                         </div>
                                         <div class="modal-body">
-                                            Apakah Anda yakin akan menghapus pelanggan ini?
+                                            Apakah Anda yakin akan mencabut penempatan pengguna ini?
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
-                                            <a id="delete-form-button-yes" href="#" class="btn btn-danger">Ya, hapus pelanggan ini</a>
+                                            <a id="delete-form-button-yes" href="#" class="btn btn-danger">Ya, cabut penempatan pengguna ini</a>
                                         </div>
                                     </div>
                                     <!-- /.modal-content -->
@@ -74,32 +73,25 @@ $session = \Config\Services::session();
                                 <!-- /.modal-dialog -->
                             </div>
                             <!-- /.modal -->
-                            <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water"> 
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Nama Pelanggan</th>
-                                        <th>Alamat</th>
-                                        <th>No Telepon</th>
-                                        <th>Email</th>
-                                        <th>Jenis Pelanggan</th>
+                                        <th>Username</th>
+                                        <th>Nama Cabang</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php 
                                     $i = 1;
-                                    foreach ($datapelanggan as $pelanggan) { ?>
+                                    foreach ($users as $user) { ?>
                                     <tr class="odd gradeX">
                                         <td><?= $i ?></td>
-                                        <td><?= $pelanggan->nama_pelanggan ?></td>
-                                        <td><?= $pelanggan->alamat_pelanggan ?></td>
-                                        <td><?= $pelanggan->no_telepon ?></td>
-                                        <td><?= $pelanggan->email ?></td> 
-                                        <td><?= $pelanggan->jenis_pelanggan ?></td> 
+                                        <td><?= $user->username ?></td>
+                                        <td><?= $user->nama_cabang ?></td>
                                         <td class="center">
-                                            <a href="<?php echo base_url('pelanggan/edit/'.$pelanggan->pelanggan_id); ?>" class="btn btn-success">Edit</a>
-                                            <button data-toggle="modal" data-target="#delete-form" data-url="<?php echo base_url('pelanggan/delete/'.$pelanggan->pelanggan_id); ?>" class="btn btn-danger btn-delete">Hapus</button>
+                                            <button data-toggle="modal" data-target="#delete-form" data-url="<?php echo base_url('user-cabang/delete/'.$user->user_cabang_id); ?>" class="btn btn-danger btn-delete">Hapus</button>
                                         </td>
                                     </tr>
                                     <?php $i++; } ?>
@@ -118,17 +110,10 @@ $session = \Config\Services::session();
     </div>
 </div>
 
-<!-- Page-Level Demo Scripts - Tables - Use for reference -->
-<script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-                responsive: true
-        });
-    });
-</script>
-
 <?= $this->endSection() ?>
 
+
+<!-- jQuery -->
 <script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/bootstrap.min.js') ?>"></script>
 
@@ -136,5 +121,4 @@ $session = \Config\Services::session();
     // popover demo
     $("[data-toggle=popover]").popover();
 </script>
-
 
