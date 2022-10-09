@@ -218,7 +218,7 @@ $session = \Config\Services::session();
         <script>
             $(document).ready(function() {
                 $('#dataTables-karis-water').DataTable({
-                        responsive: true
+                    responsive: true
                 });
             });
         </script>

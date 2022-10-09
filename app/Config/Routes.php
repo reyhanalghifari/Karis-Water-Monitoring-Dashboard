@@ -84,6 +84,7 @@ $routes->post('/user-cabang/add', 'UserCabang::process_add');
 $routes->get('/user-cabang/delete/(:num)', 'UserCabang::delete/$1');
 
 $routes->get('/master/barang/(:num)', 'DataMaster::getBarang/$1');
+$routes->get('/master/penjualan-bulanan/(:num)/(:num)', 'DataMaster::getPenjualanPerBulan/$1/$2');
 
 
 /*
