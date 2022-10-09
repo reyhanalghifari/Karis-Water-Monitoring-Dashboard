@@ -40,6 +40,21 @@ class Penjualan extends Model
         $result = $query->getRow();
 
         return $result;
-    }     
+    }
 
+    public function getPenjualanPerBulanByCabang($cabang_id, $tahun)
+    {
+        $query_stmt = 'SELECT 
+        concat(YEAR(tanggal_penjualan), "-", MONTH(tanggal_penjualan)) as bulan_penjualan, 
+        YEAR(tanggal_penjualan) as tahun_penjualan,
+        SUM((harga_saat_dibeli * jumlah)) as total_pembelian FROM `penjualan`
+        WHERE cabang_id='.$cabang_id.' AND YEAR(tanggal_penjualan)='.$tahun.'
+        GROUP BY bulan_penjualan, tahun_penjualan
+        ORDER BY bulan_penjualan ASC;';
+
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getResult();
+
+        return $result;
+    }   
 }
