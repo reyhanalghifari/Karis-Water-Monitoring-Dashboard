@@ -108,6 +108,10 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
+                        	<a target="_blank" href="http://localhost:8888/karis-water-monitoring/public/penjualan/laporan/print/bulanan/6/2021" class="btn btn-primary">Cetak Laporan</a>
+                        	<br />
+                        	<br />
+                        	<br />
                             <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water-bulanan">
                                 <thead>
                                     <tr>

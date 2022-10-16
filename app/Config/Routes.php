@@ -69,6 +69,7 @@ $routes->get('/penjualan/add', 'Penjualan::add');
 $routes->get('/penjualan/add_cabang', 'Penjualan::add_cabang');
 $routes->get('/penjualan/laporan', 'Penjualan::laporan');
 $routes->post('/penjualan/add', 'Penjualan::process_add');
+$routes->get('/penjualan/laporan/print/bulanan/(:num)/(:num)', 'Penjualan::print_laporan_bulanan/$1/$2');
 
 $routes->get('/user', 'User::index');
 $routes->get('/user/add', 'User::add');
