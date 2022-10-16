@@ -67,6 +67,7 @@ $routes->get('/pelanggan/delete/(:num)', 'Pelanggan::delete/$1');
 $routes->get('/penjualan', 'Penjualan::index');
 $routes->get('/penjualan/add', 'Penjualan::add');
 $routes->get('/penjualan/add_cabang', 'Penjualan::add_cabang');
+$routes->get('/penjualan/laporan', 'Penjualan::laporan');
 $routes->post('/penjualan/add', 'Penjualan::process_add');
 
 $routes->get('/user', 'User::index');

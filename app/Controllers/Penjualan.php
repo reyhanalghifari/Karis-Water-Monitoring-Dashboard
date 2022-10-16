@@ -14,6 +14,7 @@ class Penjualan extends BaseController
         $this->penjualan_model = new \App\Models\Penjualan();
         $this->pelanggan_model = new \App\Models\Pelanggan();
         $this->barang_model = new \App\Models\Barang();
+        $this->cabang_model = new \App\Models\Cabang();
     }
 
     public function index()
@@ -92,5 +93,12 @@ class Penjualan extends BaseController
     public function delete()
     {
         // redirect halaman ke Barang/Index
+    }
+
+    public function laporan()
+    {
+        $list_tahun_penjualan = $this->penjualan_model->getTahunPenjualan();
+        $list_cabang = $this->cabang_model->getDataCabang();
+        return view('penjualan/laporan_penjualan', ["list_tahun_penjualan" => $list_tahun_penjualan, "list_cabang" => $list_cabang]);
     }
 }
