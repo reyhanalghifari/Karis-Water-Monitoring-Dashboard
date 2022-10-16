@@ -184,6 +184,9 @@ $session = \Config\Services::session();
                             </li>
                             <?php } ?>
 
+                            <li>
+                                <a href="<?php echo base_url('penjualan/laporan'); ?>" class="active"><i class="fa fa-dashboard fa-fw"></i> Laporan Penjualan</a>
+                            </li>
                         </ul>
 
                     </div>
@@ -216,6 +219,18 @@ $session = \Config\Services::session();
         <script>
             $(document).ready(function() {
                 $('#dataTables-karis-water').DataTable({
+                    responsive: true
+                });
+
+                $('#dataTables-karis-water-bulanan').DataTable({
+                    responsive: true
+                });
+
+                $('#dataTables-karis-water-mingguan').DataTable({
+                    responsive: true
+                });
+
+                $('#dataTables-karis-water-tahunan').DataTable({
                     responsive: true
                 });
             });
