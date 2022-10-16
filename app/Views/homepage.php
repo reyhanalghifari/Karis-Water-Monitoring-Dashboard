@@ -38,27 +38,26 @@ $session = \Config\Services::session();
 	                            </select>
 	                        </div>
 	                        
+	                        <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "owner") { ?>
 	                        <div class="form-group">
 	                            <label>Cabang</label>
 	                            <select id="cabang-id" name="cabang-id" class="form-control">
 	                            	<?php foreach ($list_cabang as $row) { ?>
 	                            	<option 
 	                            	<?php 
-	                            		if ($session->get('cabang_id') == $row->cabang_id) {
-	                            			echo "selected";
-	                            		} else if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "owner") {
-	                            			if ($row->nama_cabang == "Pusat") {
-	                            				echo "selected";
-	                            			}
-	                            		}
+	                            		if ($row->nama_cabang == "Pusat") {
+                            				echo "selected";
+                            			}
 	                            	?>
 	                            	value="<?= $row->cabang_id ?>"><?= $row->nama_cabang ?></option>
 	                            	<?php } ?>
 	                            </select>
 	                        </div>
+	                    	<?php } else { ?>
 
 	                        <input id="cabang-id" type="hidden" value="<?php echo $session->get('cabang_id'); ?>"/>
 
+	                    	<?php } ?>
 	                        <a id="tampilkan-grafik-btn" href="#" class="btn btn-info">Tampilkan </a>
 	                	</form>
                     </div>
@@ -133,57 +132,74 @@ $session = \Config\Services::session();
 		$.get("<?php echo base_url('master/penjualan-bulanan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
 			jsonData = JSON.parse(data);
 			elements = []
-			for (elem in jsonData) {
-				console.log(jsonData[elem])
-				elements.push({y:jsonData[elem].bulan_penjualan, a:jsonData[elem].total_pembelian})
+			if (jsonData.length > 0) {
+				for (elem in jsonData) {
+					elements.push({y:jsonData[elem].bulan_penjualan, a:jsonData[elem].total_pembelian})
+				}
+				console.log(elements);
+				
+				Morris.Bar({
+			        element: 'penjualan-air-galon-per-bulan',
+			        data: elements,
+			        xkey: 'y',
+			        ykeys: ['a',],
+			        labels: ['Penjualan',],
+			        hideHover: 'auto',
+			        resize: true,
+			        barColors: ["#cb4b4b",]
+			    });
+			} else {
+				$("#penjualan-air-galon-per-bulan").append("<p>Data tidak ditemukan...</p>");
 			}
-			Morris.Bar({
-		        element: 'penjualan-air-galon-per-bulan',
-		        data: elements,
-		        xkey: 'y',
-		        ykeys: ['a',],
-		        labels: ['Penjualan',],
-		        hideHover: 'auto',
-		        resize: true,
-		        barColors: ["#cb4b4b",]
-		    });
 		});
 
 		$.get("<?php echo base_url('master/penjualan-tahunan'); ?>/"+cabang_id, function(data, status){
 			jsonData = JSON.parse(data);
 			elements = []
-			for (elem in jsonData) {
-				console.log(jsonData[elem])
-				elements.push({y:jsonData[elem].tahun_penjualan, a:jsonData[elem].total_pembelian})
+			if (jsonData.length > 0) {
+				for (elem in jsonData) {
+					elements.push({y:jsonData[elem].tahun_penjualan, a:jsonData[elem].total_pembelian})
+				}
+				console.log(elements);
+				
+				Morris.Bar({
+			        element: 'penjualan-air-galon-per-tahun',
+			        data: elements,
+			        xkey: 'y',
+			        ykeys: ['a',],
+			        labels: ['Penjualan',],
+			        hideHover: 'auto',
+			        resize: true
+			    });
+			} else {
+				$("#penjualan-air-galon-per-tahun").append("<p>Data tidak ditemukan...</p>");
 			}
-			Morris.Bar({
-		        element: 'penjualan-air-galon-per-tahun',
-		        data: elements,
-		        xkey: 'y',
-		        ykeys: ['a',],
-		        labels: ['Penjualan',],
-		        hideHover: 'auto',
-		        resize: true
-		    });
 		});
 
 		$.get("<?php echo base_url('master/penjualan-mingguan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
 			jsonData = JSON.parse(data);
 			elements = []
-			for (elem in jsonData) {
-				console.log(jsonData[elem])
-				elements.push({y:jsonData[elem].minggu_penjualan, a:jsonData[elem].total_pembelian})
+
+			if (jsonData.length > 0) {
+				for (elem in jsonData) {
+					elements.push({y:jsonData[elem].minggu_penjualan, a:jsonData[elem].total_pembelian})
+				}
+
+				console.log(elements);
+
+				Morris.Bar({
+			        element: 'penjualan-air-galon-per-minggu',
+			        data: elements,
+			        xkey: 'y',
+			        ykeys: ['a',],
+			        labels: ['Penjualan',],
+			        hideHover: 'auto',
+			        resize: true,
+			        barColors: ["#4da74d",]
+			    });
+			} else {
+				$("#penjualan-air-galon-per-minggu").append("<p>Data tidak ditemukan...</p>");
 			}
-			Morris.Bar({
-		        element: 'penjualan-air-galon-per-minggu',
-		        data: elements,
-		        xkey: 'y',
-		        ykeys: ['a',],
-		        labels: ['Penjualan',],
-		        hideHover: 'auto',
-		        resize: true,
-		        barColors: ["#4da74d",]
-		    });
 		});
 	}
 
