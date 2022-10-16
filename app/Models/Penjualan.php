@@ -56,5 +56,50 @@ class Penjualan extends Model
         $result = $query->getResult();
 
         return $result;
-    }   
+    }
+
+    public function getPenjualanPerTahunByCabang($cabang_id)
+    {
+        $query_stmt = 'SELECT 
+        YEAR(tanggal_penjualan) as tahun_penjualan,
+        SUM((harga_saat_dibeli * jumlah)) as total_pembelian FROM `penjualan`
+        WHERE cabang_id='.$cabang_id.' 
+        GROUP BY tahun_penjualan
+        ORDER BY tahun_penjualan ASC;';
+
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getResult();
+
+        return $result;
+    } 
+
+    public function getPenjualanPerMingguByCabang($cabang_id, $tahun)
+    {
+        $query_stmt = 'SELECT 
+        concat(YEAR(tanggal_penjualan), "-", WEEK(tanggal_penjualan)) as minggu_penjualan, 
+        YEAR(tanggal_penjualan) as tahun_penjualan,
+        SUM((harga_saat_dibeli * jumlah)) as total_pembelian FROM `penjualan`
+        WHERE cabang_id='.$cabang_id.' AND YEAR(tanggal_penjualan)='.$tahun.'
+        GROUP BY minggu_penjualan, tahun_penjualan
+        ORDER BY minggu_penjualan ASC;';
+
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getResult();
+
+        return $result;
+    } 
+
+    public function getTahunPenjualan()
+    {
+        $query_stmt = 'SELECT 
+        YEAR(tanggal_penjualan) as tahun_penjualan
+        FROM `penjualan`
+        GROUP BY tahun_penjualan
+        ORDER BY tahun_penjualan ASC;';
+
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getResult();
+
+        return $result;
+    } 
 }

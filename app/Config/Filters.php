@@ -79,6 +79,7 @@ class Filters extends BaseConfig
                 'cabang*',
                 'pelanggan*',
                 'penjualan*',
+                'master*',
             ]
         ]
     ];

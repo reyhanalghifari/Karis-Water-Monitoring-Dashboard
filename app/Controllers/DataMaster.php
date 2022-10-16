@@ -23,4 +23,25 @@ class DataMaster extends BaseController
 
         echo json_encode($penjualan);
     }
+
+    public function getPenjualanPerTahun($cabang_id)
+    {
+        $penjualan = $this->penjualan_model->getPenjualanPerTahunByCabang($cabang_id);
+
+        echo json_encode($penjualan);
+    }
+
+    public function getPenjualanPerMinggu($cabang_id, $tahun)
+    {
+        $penjualan = $this->penjualan_model->getPenjualanPerMingguByCabang($cabang_id, $tahun);
+
+        echo json_encode($penjualan);
+    }
+
+    public function getTahunPenjualan()
+    {
+        $penjualan = $this->penjualan_model->getTahunPenjualan();
+
+        echo json_encode($penjualan);
+    }
 }
