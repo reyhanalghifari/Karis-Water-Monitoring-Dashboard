@@ -80,7 +80,7 @@ $session = \Config\Services::session();
                                         <th>No.</th>
                                         <th>Nama Cabang</th>
                                         <th>Kepala Cabang</th>
-                                        <th>Alamat Cabang</th>
+                                        <th>Alamat</th>
                                         <th>Email</th>
                                         <th>No Telepon</th>
                                         <th>Tipe Cabang</th>
@@ -97,6 +97,7 @@ $session = \Config\Services::session();
                                         <td><?= $cabang->kepala_cabang ?></td>
                                         <td><?= $cabang->alamat_cabang ?></td>
                                         <td><?= $cabang->email ?></td>
+                                        <td><?= $cabang->no_telp ?></td>
                                         <td><?= $cabang->tipe_cabang ?></td>
                                         <td class="center">
                                             <a href="<?php echo base_url('cabang/edit/'.$cabang->cabang_id); ?>" class="btn btn-success">Edit</a>

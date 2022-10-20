@@ -66,6 +66,13 @@ $session = \Config\Services::session();
 			                            <label>No Telepon</label>
 			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon cabang">
 			                        </div>
+			                        <div class="form-group">
+			                            <label>Tipe Cabang</label>
+			                            <select name="tipe_cabang" class="form-control">
+			                                <option value="pusat">pusat</option>
+			                                <option value="cabang">cabang</option>
+			                            </select>
+			                        </div>
 			                        <input type="submit" class="btn btn-primary" value="Simpan" />
 			                        <input type="reset" class="btn btn-warning" value="Reset" />
 			                        <a href="<?php echo base_url('cabang'); ?>" class="btn btn-danger">Batal </a>

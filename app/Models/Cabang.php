@@ -8,7 +8,7 @@ class Cabang extends Model
 {
 	protected $table = 'cabang';
 	protected $primaryKey = 'cabang_id';
-	protected $allowedFields = ['nama_cabang', 'kepala_cabang', 'alamat_cabang', 'email', 'no_telp'];
+	protected $allowedFields = ['nama_cabang', 'kepala_cabang', 'alamat_cabang', 'email', 'no_telp', 'tipe_cabang'];
 
 	public function __construct()
     {
