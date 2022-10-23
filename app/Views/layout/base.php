@@ -123,13 +123,13 @@ $session = \Config\Services::session();
                                 <a href="<?php echo base_url(''); ?>" class="active"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
                             </li>
                             
-                            <?php if ($session->get('account_type') == "superadmin" || ($session->get('account_type') == "operator" && $session->get('tipe_cabang') == "pusat") ) { ?>
+                            <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "kepala_cabang" || ($session->get('account_type') == "operator" && $session->get('tipe_cabang') == "pusat") ) { ?>
                             <li>
                                 <a href="<?php echo base_url('penjualan/add_cabang'); ?>"><i class="fa fa-dashboard fa-fw"></i> Form Penjualan Untuk Cabang</a>
                             </li>
                             <?php } ?>
 
-                            <?php if ($session->get('account_type') == "superadmin" || ($session->get('account_type') == "operator" && $session->get('tipe_cabang') == "cabang") ) { ?>
+                            <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "kepala_cabang" || ($session->get('account_type') == "operator" && $session->get('tipe_cabang') == "cabang") ) { ?>
                             <li>
                                 <a href="<?php echo base_url('penjualan/add'); ?>"><i class="fa fa-dashboard fa-fw"></i> Form Penjualan</a>
                             </li>
