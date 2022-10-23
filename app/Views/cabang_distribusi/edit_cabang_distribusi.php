@@ -66,6 +66,13 @@ $session = \Config\Services::session();
 			                        <div class="form-group">
 			                            <label>No Telepon</label>
 			                            <input name="no_telp" class="form-control" placeholder="Isi dengan no telepon cabang" value="<?= $cabang->no_telp ?>"/> 
+			                        </div>
+			                        <div class="form-group">
+			                            <label>Tipe Cabang</label>
+			                            <select name="tipe_cabang" class="form-control">
+			                                <option <?php if ($cabang->tipe_cabang == "pusat") { echo "selected"; } ?> value="pusat">pusat</option>
+			                                <option <?php if ($cabang->tipe_cabang == "cabang") { echo "selected"; } ?> value="cabang">cabang</option>
+			                            </select>
 			                        </div>     
 			                       <input type="submit" class="btn btn-primary" value="Simpan" />
 			                       <a href="<?php echo base_url('cabang'); ?>" class="btn btn-danger">Batal </a>

@@ -59,6 +59,7 @@ class CabangDistribusi extends BaseController
                     'required' => 'Nomor telepon cabang tidak boleh kosong',
                     'integer' => 'Nomor telepon cabang harus diisi dengan angka'
                 ],
+
             ]
         );
 
@@ -73,7 +74,7 @@ class CabangDistribusi extends BaseController
                 'alamat_cabang' => $this->request->getVar('alamat_cabang'),
                 'email' => $this->request->getVar('email'),
                 'no_telp' => $this->request->getVar('no_telp'),
-             
+                'tipe_cabang' => $this->request->getVar('tipe_cabang'),
             ];
 
             $result = $this->cabang_model->insert($cabang_data);
@@ -126,6 +127,7 @@ class CabangDistribusi extends BaseController
                     'required' => 'Nomor telepon cabang tidak boleh kosong',
                     'integer' => 'Nomor telepon cabang harus diisi dengan angka'
                 ],
+
             ]
         );
 
@@ -141,7 +143,7 @@ class CabangDistribusi extends BaseController
                 'alamat_cabang' => $this->request->getVar('alamat_cabang'),
                 'email' => $this->request->getVar('email'),
                 'no_telp' => $this->request->getVar('no_telp'),
-            
+                'tipe_cabang' => $this->request->getVar('tipe_cabang'),
             ];
 
             $result = $this->cabang_model->update($cabang_id, $cabang_data);

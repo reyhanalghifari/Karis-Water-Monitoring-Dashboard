@@ -64,7 +64,7 @@ $session = \Config\Services::session();
 			                        </div>
 			                        <input type="submit" class="btn btn-primary" value="Simpan" />
 			                        <input type="reset" class="btn btn-warning" value="Reset" />
-			                        <a href="<?php echo base_url('user'); ?>" class="btn btn-danger">Batal </a>
+			                        <a href="<?php echo base_url('user-cabang'); ?>" class="btn btn-danger">Batal </a>
 			                    </form>
 			                </div>
 			                <!-- /.col-lg-6 (nested) -->
