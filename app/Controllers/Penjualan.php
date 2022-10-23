@@ -136,6 +136,7 @@ class Penjualan extends BaseController
         // Data
         $fill = false;
         $i=1;
+        $total_penjualan = 0;
         foreach($penjualan_bulanan as $row)
         {
             $pdf->Cell($w[0],6,$i,'LR',0,'L',$fill);
@@ -145,10 +146,128 @@ class Penjualan extends BaseController
             $pdf->Ln();
             $fill = !$fill;
             $i++;
+            $total_penjualan += $row->total_pembelian;
         }
 
         // Closing line
         $pdf->Cell(array_sum($w),0,'','T');
+
+        $pdf->Ln();
+
+        $pdf->Cell(40,20,'Total penjualan: Rp. '.$total_penjualan);
+
+        $pdf->Output();
+    }
+
+    public function print_laporan_mingguan($cabang_id, $tahun)
+    {
+        include APPPATH . 'ThirdParty/fpdf/fpdf.php';
+
+        $penjualan_mingguan = $this->penjualan_model->getPenjualanPerMingguByCabang($cabang_id, $tahun);
+
+        $this->response->setContentType('application/pdf');
+
+        $header = array('No', 'Tahun', 'Minggu', 'Total Penjualan Per Minggu');
+
+        $pdf = new \FPDF();
+        $pdf->AddPage();
+
+        // Colors, line width and bold font
+        $pdf->SetFillColor(128,128,96);
+        $pdf->SetTextColor(255);
+        $pdf->SetDrawColor(128,128,96);
+        $pdf->SetLineWidth(.3);
+        $pdf->SetFont('Arial','B',9);
+
+        // Header
+        $w = array(40, 35, 40, 45);
+        for($i=0;$i<count($header);$i++)
+            $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
+        $pdf->Ln();
+
+        // Color and font restoration
+        $pdf->SetFillColor(224,235,255);
+        $pdf->SetTextColor(0);
+        $pdf->SetFont('Arial','B',8);
+
+        // Data
+        $fill = false;
+        $i=1;
+        $total_penjualan = 0;
+        foreach($penjualan_mingguan as $row)
+        {
+            $pdf->Cell($w[0],6,$i,'LR',0,'L',$fill);
+            $pdf->Cell($w[1],6,$row->tahun_penjualan,'LR',0,'L',$fill);
+            $pdf->Cell($w[2],6,$row->minggu_penjualan,'LR',0,'R',$fill);
+            $pdf->Cell($w[3],6,"Rp. ".number_format($row->total_pembelian),'LR',0,'R',$fill);
+            $pdf->Ln();
+            $fill = !$fill;
+            $i++;
+            $total_penjualan += $row->total_pembelian;
+        }
+
+        // Closing line
+        $pdf->Cell(array_sum($w),0,'','T');
+
+        $pdf->Ln();
+
+        $pdf->Cell(40,20,'Total penjualan: Rp. '.$total_penjualan);
+
+        $pdf->Output();
+    }
+
+    public function print_laporan_tahunan($cabang_id)
+    {
+        include APPPATH . 'ThirdParty/fpdf/fpdf.php';
+
+        $penjualan_tahunan = $this->penjualan_model->getPenjualanPerTahunByCabang($cabang_id);
+
+        $this->response->setContentType('application/pdf');
+
+        $header = array('No', 'Tahun', 'Total Penjualan Per Tahun');
+
+        $pdf = new \FPDF();
+        $pdf->AddPage();
+
+        // Colors, line width and bold font
+        $pdf->SetFillColor(128,128,96);
+        $pdf->SetTextColor(255);
+        $pdf->SetDrawColor(128,128,96);
+        $pdf->SetLineWidth(.3);
+        $pdf->SetFont('Arial','B',9);
+
+        // Header
+        $w = array(40, 35, 50);
+        for($i=0;$i<count($header);$i++)
+            $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
+        $pdf->Ln();
+
+        // Color and font restoration
+        $pdf->SetFillColor(224,235,255);
+        $pdf->SetTextColor(0);
+        $pdf->SetFont('Arial','B',8);
+
+        // Data
+        $fill = false;
+        $i=1;
+        $total_penjualan = 0;
+        foreach($penjualan_tahunan as $row)
+        {
+            $pdf->Cell($w[0],6,$i,'LR',0,'L',$fill);
+            $pdf->Cell($w[1],6,$row->tahun_penjualan,'LR',0,'L',$fill);
+            $pdf->Cell($w[2],6,"Rp. ".number_format($row->total_pembelian),'LR',0,'R',$fill);
+            $pdf->Ln();
+            $fill = !$fill;
+            $i++;
+            $total_penjualan += $row->total_pembelian;
+        }
+
+        // Closing line
+        $pdf->Cell(array_sum($w),0,'','T');
+
+        $pdf->Ln();
+
+        $pdf->Cell(40, 20,'Total penjualan: Rp. '.number_format($total_penjualan));
 
         $pdf->Output();
     }

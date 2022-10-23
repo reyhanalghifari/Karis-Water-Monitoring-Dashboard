@@ -76,23 +76,30 @@ $session = \Config\Services::session();
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
 	                    <div class="table-responsive">
-	                            <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water-tahunan">
-	                                <thead>
-	                                    <tr>
-	                                        <th>No.</th>
-	                                        <th>Tahun</th>
-	                                        <th>Total Penjualan Per Tahun</th>
-	                                    </tr>
-	                                </thead>
-	                                <tbody>
-	                                   	<tr class="odd gradeX">
-	                                        <td>0</td>
-	                                        <td>-</td>
-	                                        <td>-</td>
-	                                    </tr>
-	                                </tbody>
-	                            </table>
-	                        </div>
+	                    	<a target="_blank" id="cetak-laporan-tahunan-btn" href="#" class="btn btn-primary">Cetak Laporan Tahunan</a>
+                        	<br />
+                        	<br />
+                        	<br />
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water-tahunan">
+                                <thead>
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>Tahun</th>
+                                        <th>Total Penjualan Per Tahun</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   	<tr class="odd gradeX">
+                                        <td>0</td>
+                                        <td>-</td>
+                                        <td>-</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="total-penjualan-tahunan" class="well">
+                        	<p><b>Total penjualan: </b></p>
+                        </div>
 	                </div>
 	                <!-- /.panel-body -->
 	            </div>
@@ -108,7 +115,7 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
-                        	<a target="_blank" href="http://localhost:8888/karis-water-monitoring/public/penjualan/laporan/print/bulanan/6/2021" class="btn btn-primary">Cetak Laporan</a>
+                        	<a target="_blank" id="cetak-laporan-bulanan-btn" href="#" class="btn btn-primary">Cetak Laporan Bulanan</a>
                         	<br />
                         	<br />
                         	<br />
@@ -131,6 +138,9 @@ $session = \Config\Services::session();
                                 </tbody>
                             </table>
                         </div>
+                        <div id="total-penjualan-bulanan"  class="well">
+                        	<p><b>Total penjualan: </b></p>
+                        </div>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -146,6 +156,10 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div class="table-responsive">
+                        	<a target="_blank" id="cetak-laporan-mingguan-btn" href="#" class="btn btn-primary">Cetak Laporan Mingguan</a>
+                        	<br />
+                        	<br />
+                        	<br />
                             <table class="table table-striped table-bordered table-hover" id="dataTables-karis-water-mingguan">
                                 <thead>
                                     <tr>
@@ -165,6 +179,9 @@ $session = \Config\Services::session();
                                 </tbody>
                             </table>
                         </div>
+                        <div id="total-penjualan-mingguan"  class="well">
+                        	<p><b>Total penjualan: </b></p>
+                        </div>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -174,27 +191,32 @@ $session = \Config\Services::session();
 
 		</div>
 
-		
+		<input type="hidden" id="base-url" value="<?php echo base_url('/'); ?>" />
     </div>
 </div>
-
 
 <!-- jQuery -->
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
 
-
-<!-- Morris Charts JavaScript -->
-<script src="<?php echo base_url('assets/js/raphael.min.js'); ?>"></script>
-<script src="<?php echo base_url('assets/js/morris.min.js'); ?>"></script>
 <script type="text/javascript">
 	var init_cabang_id = $('#cabang-id').val();
 	var init_tahun_penjualan = $('#tahun-penjualan').val();
-
+	var base_url = $('#base-url').val();
+		
 	function loadLaporanPenjualan(cabang_id, tahun_penjualan) {
+		var cetak_laporan_bulanan_url = base_url+"/penjualan/laporan/print/bulanan/"+cabang_id+"/"+tahun_penjualan;
+		var cetak_laporan_mingguan_url = base_url+"/penjualan/laporan/print/mingguan/"+cabang_id+"/"+tahun_penjualan;
+		var cetak_laporan_tahunan_url = base_url+"/penjualan/laporan/print/tahunan/"+cabang_id;
+
+		$('#cetak-laporan-bulanan-btn').attr('href', cetak_laporan_bulanan_url);
+		$('#cetak-laporan-mingguan-btn').attr('href', cetak_laporan_mingguan_url);
+		$('#cetak-laporan-tahunan-btn').attr('href', cetak_laporan_tahunan_url);
+		
 		$.get("<?php echo base_url('master/penjualan-bulanan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
 			$('#dataTables-karis-water-bulanan > tbody').empty();
 			jsonData = JSON.parse(data);
-			elements = []
+			elements = [];
+			total_penjualan = 0;
 			if (jsonData.length > 0) {
 				var row_template_bulanan = '';
 				var i = 1;
@@ -206,17 +228,22 @@ $session = \Config\Services::session();
                                     '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
                                 '</tr>';
 
+                    total_penjualan += parseInt(jsonData[elem].total_pembelian);
+
                     i++;
 				}
 				console.log(row_template_bulanan);
 				$('#dataTables-karis-water-bulanan > tbody').append(row_template_bulanan);
+				$('#total-penjualan-bulanan').empty();
+				$('#total-penjualan-bulanan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
 			}
 		});
 
 		$.get("<?php echo base_url('master/penjualan-tahunan'); ?>/"+cabang_id, function(data, status){
 			$('#dataTables-karis-water-tahunan > tbody').empty();
 			jsonData = JSON.parse(data);
-			elements = []
+			elements = [];
+			total_penjualan = 0;
 			if (jsonData.length > 0) {
 				var row_template_tahunan = '';
 				var i = 1;
@@ -227,17 +254,23 @@ $session = \Config\Services::session();
                                     '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
                                 '</tr>';
 
+                    total_penjualan += parseInt(jsonData[elem].total_pembelian);
+
                     i++;
 				}
 				console.log(row_template_tahunan);
 				$('#dataTables-karis-water-tahunan > tbody').append(row_template_tahunan);
+				$('#total-penjualan-tahunan').empty();
+				$('#total-penjualan-tahunan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
 			}
 		});
 
 		$.get("<?php echo base_url('master/penjualan-mingguan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
 			$('#dataTables-karis-water-mingguan > tbody').empty();
 			jsonData = JSON.parse(data);
-			elements = []
+			elements = [];
+			total_penjualan = 0;
+
 			if (jsonData.length > 0) {
 				var row_template_mingguan = '';
 				var i = 1;
@@ -249,10 +282,14 @@ $session = \Config\Services::session();
                                     '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
                                 '</tr>';
 
+                    total_penjualan += parseInt(jsonData[elem].total_pembelian);
+
                     i++;
 				}
 				console.log(row_template_mingguan);
 				$('#dataTables-karis-water-mingguan > tbody').append(row_template_mingguan);
+				$('#total-penjualan-mingguan').empty();
+				$('#total-penjualan-mingguan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
 			}
 		});
 	}
@@ -263,9 +300,13 @@ $session = \Config\Services::session();
 		console.log("Tombol #tampilkan-laporan-btn diklik...");
 		var cabang_id = $('#cabang-id').val();
 		var tahun_penjualan = $('#tahun-penjualan').val();
-
+		
 		loadLaporanPenjualan(cabang_id, tahun_penjualan);
 	})
+
+	// http://localhost:8888/karis-water-monitoring/public/penjualan/laporan/print/bulanan/6/2021
 </script>
 
+
 <?= $this->endSection() ?>
+

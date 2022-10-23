@@ -336,7 +336,7 @@ $session = \Config\Services::session();
 			$('#container-bulan-penjualan').show();
 			$('#container-tahun-penjualan').show();
 		} else if (periode_penjualan == "mingguan") {
-			$('#container-bulan-penjualan').show();
+			$('#container-bulan-penjualan').hide();
 			$('#container-tahun-penjualan').show();
 		} else if (periode_penjualan == "bulanan") {
 			$('#container-bulan-penjualan').hide();
