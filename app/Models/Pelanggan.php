@@ -8,7 +8,7 @@ class Pelanggan extends Model
 {
 	protected $table = 'pelanggan';
 	protected $primaryKey = 'pelanggan_id';
-	protected $allowedFields = ['nama_pelanggan', 'alamat_pelanggan', 'no_telepon', 'email'];
+	protected $allowedFields = ['nama_pelanggan', 'alamat_pelanggan', 'no_telepon', 'email', 'jenis_pelanggan'];
 
 	public function __construct()
     {

@@ -80,6 +80,7 @@ class Pelanggan extends BaseController
                 'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
                 'no_telepon' => $this->request->getVar('no_telepon'),
                 'email' => $this->request->getVar('email'),
+                'jenis_pelanggan' => $this->request->getVar('jenis_pelanggan'),
             
             ];
 
@@ -146,6 +147,7 @@ class Pelanggan extends BaseController
             'alamat_pelanggan' => $this->request->getVar('alamat_pelanggan'),
             'no_telepon' => $this->request->getVar('no_telepon'),
             'email' => $this->request->getVar('email'),
+            'jenis_pelanggan' => $this->request->getVar('jenis_pelanggan'),
             
         ];
 

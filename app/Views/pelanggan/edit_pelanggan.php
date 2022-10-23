@@ -62,6 +62,13 @@ $session = \Config\Services::session();
 			                        <div class="form-group">
 			                            <label>Email</label>
 			                            <input name="email" class="form-control" placeholder="Isi dengan email pelanggan" value="<?= $pelanggan->email ?>"/>
+			                        </div>
+			                        <div class="form-group">
+			                            <label>Jenis Pelanggan</label>
+			                            <select name="jenis_pelanggan" class="form-control">
+			                                <option <?php if ($pelanggan->jenis_pelanggan == "cabang") { echo "selected"; } ?> value="cabang">cabang</option>
+			                                <option <?php if ($pelanggan->jenis_pelanggan == "eceran") { echo "selected"; } ?> value="eceran">eceran</option>
+			                            </select>
 			                        </div>      
 			                       <input type="submit" class="btn btn-primary" value="Simpan" />
 			                       <a href="<?php echo base_url('pelanggan'); ?>" class="btn btn-danger">Batal </a>
