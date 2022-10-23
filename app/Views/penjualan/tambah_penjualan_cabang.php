@@ -62,13 +62,13 @@ $session = \Config\Services::session();
 			                            	<?php } ?>
 			                            </select>
 			                        </div>
-			                         <div class="form-group">
+			                        <!-- <div class="form-group">
 			                            <label>Jenis Transaksi</label>
 			                            <select name="jenis_transaksi" class="form-control">
 			                            	<option value="kas">kas</option>
 			                            	<option value="piutang">piutang</option>
 			                            </select>
-			                        </div>
+			                        </div> -->
 			                        <div class="form-group">
 			                            <label>Harga Saat Dibeli</label>
 			                            <input id="harga-saat-dibeli" name="harga_saat_dibeli" class="form-control" value="" />
@@ -77,6 +77,7 @@ $session = \Config\Services::session();
 			                            <label>Jumlah</label>
 			                            <input name="jumlah" class="form-control" placeholder="Isi dengan jumlah pembelian" />
 			                        </div>
+			                        <input type="hidden" name="jenis_transaksi" value="kas" />
 			                        <input type="submit" class="btn btn-primary" value="Simpan" />
 			                        <input type="reset" class="btn btn-warning" value="Reset" />
 			                        <a href="<?php echo base_url('penjualan'); ?>" class="btn btn-danger">Batal </a>
