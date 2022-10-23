@@ -73,7 +73,7 @@ class Penjualan extends BaseController
                 'pelanggan_id' => $this->request->getVar('pelanggan_id'),
                 'barang_id' => $this->request->getVar('barang_id'),
                 'tanggal_penjualan' => $this->request->getVar('tanggal_penjualan'),
-                'jenis_transaksi' => $this->request->getVar('jenis_transaksi'),
+                //'jenis_transaksi' => $this->request->getVar('jenis_transaksi'),
                 'harga_saat_dibeli' => $this->request->getVar('harga_saat_dibeli'),
                 'jumlah' => $this->request->getVar('jumlah'),
             

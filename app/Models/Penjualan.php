@@ -8,7 +8,7 @@ class Penjualan extends Model
 {
 	protected $table = 'penjualan';
 	protected $primaryKey = 'penjualan_id';
-	protected $allowedFields = ['pelanggan_id', 'barang_id', 'tanggal_penjualan', 'jenis_transaksi', 'harga_saat_dibeli', 'jumlah', 'user_id', 'cabang_id'];
+	protected $allowedFields = ['pelanggan_id', 'barang_id', 'tanggal_penjualan', /*'jenis_transaksi',*/ 'harga_saat_dibeli', 'jumlah', 'user_id', 'cabang_id'];
 
 	public function __construct()
     {
@@ -17,7 +17,7 @@ class Penjualan extends Model
 
     public function getDataPenjualan()
     {
-        $query_stmt = 'SELECT penjualan_id, nama_pelanggan, nama_barang, tanggal_penjualan, jenis_transaksi, harga_saat_dibeli, jumlah, pj.user_id, pj.cabang_id FROM penjualan pj LEFT JOIN barang br on pj.barang_id=br.barang_id LEFT JOIN pelanggan pl ON pj.pelanggan_id=pl.pelanggan_id ORDER BY tanggal_penjualan DESC';
+        $query_stmt = 'SELECT penjualan_id, nama_pelanggan, nama_barang, tanggal_penjualan, /*jenis_transaksi,*/ harga_saat_dibeli, jumlah, pj.user_id, pj.cabang_id FROM penjualan pj LEFT JOIN barang br on pj.barang_id=br.barang_id LEFT JOIN pelanggan pl ON pj.pelanggan_id=pl.pelanggan_id ORDER BY tanggal_penjualan DESC';
         $query   = $this->db->query($query_stmt);
         $result = $query->getResult();
 
@@ -26,7 +26,7 @@ class Penjualan extends Model
 
     public function getDataPenjualanByCabangID($cabang_id)
     {
-        $query_stmt = 'SELECT penjualan_id, nama_pelanggan, nama_barang, tanggal_penjualan, jenis_transaksi, harga_saat_dibeli, jumlah, pj.user_id, pj.cabang_id FROM penjualan pj LEFT JOIN barang br on pj.barang_id=br.barang_id LEFT JOIN pelanggan pl ON pj.pelanggan_id=pl.pelanggan_id WHERE pj.cabang_id IN (SELECT cabang_id from user_cabang where cabang_id='.$cabang_id.') ORDER BY tanggal_penjualan DESC';
+        $query_stmt = 'SELECT penjualan_id, nama_pelanggan, nama_barang, tanggal_penjualan, /*jenis_transaksi,*/ harga_saat_dibeli, jumlah, pj.user_id, pj.cabang_id FROM penjualan pj LEFT JOIN barang br on pj.barang_id=br.barang_id LEFT JOIN pelanggan pl ON pj.pelanggan_id=pl.pelanggan_id WHERE pj.cabang_id IN (SELECT cabang_id from user_cabang where cabang_id='.$cabang_id.') ORDER BY tanggal_penjualan DESC';
         $query   = $this->db->query($query_stmt);
         $result = $query->getResult();
 
