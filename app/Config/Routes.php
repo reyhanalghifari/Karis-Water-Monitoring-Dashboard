@@ -86,9 +86,10 @@ $routes->post('/user-cabang/add', 'UserCabang::process_add');
 $routes->get('/user-cabang/delete/(:num)', 'UserCabang::delete/$1');
 
 $routes->get('/master/barang/(:num)', 'DataMaster::getBarang/$1');
+$routes->get('/master/penjualan-tahunan/(:num)', 'DataMaster::getPenjualanPerTahun/$1');
 $routes->get('/master/penjualan-bulanan/(:num)/(:num)', 'DataMaster::getPenjualanPerBulan/$1/$2');
 $routes->get('/master/penjualan-mingguan/(:num)/(:num)', 'DataMaster::getPenjualanPerMinggu/$1/$2');
-$routes->get('/master/penjualan-tahunan/(:num)', 'DataMaster::getPenjualanPerTahun/$1');
+$routes->get('/master/penjualan-harian/(:num)/(:num)/(:num)', 'DataMaster::getPenjualanPerHari/$1/$2/$3');
 $routes->get('/master/tahun-penjualan', 'DataMaster::getTahunPenjualan');
 
 
