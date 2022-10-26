@@ -202,7 +202,7 @@ $session = \Config\Services::session();
 		});
 	}
 
-	function loadGrafikPenjualanBulanan(cabang_id, tahun_penjualan, bulan_penjualan) {
+	function loadGrafikPenjualanBulanan(cabang_id, tahun_penjualan) {
 		$('#penjualan-air-galon-per-bulan').empty("");
 		$('#container-penjualan-air-galon-per-bulan').show();
 		$('#container-penjualan-air-galon-per-minggu').hide();
@@ -241,7 +241,7 @@ $session = \Config\Services::session();
 		$('#container-penjualan-air-galon-per-bulan').hide();
 		$('#container-penjualan-air-galon-per-tahun').hide();
 
-		$.get("<?php echo base_url('master/penjualan-mingguan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
+		$.get("<?php echo base_url('master/penjualan-mingguan'); ?>/"+cabang_id+"/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
 			jsonData = JSON.parse(data);
 			elements = []
 
@@ -268,7 +268,7 @@ $session = \Config\Services::session();
 		});
 	}
 	
-	function loadGrafikPenjualanTahunan(cabang_id, tahun_penjualan, bulan_penjualan) {
+	function loadGrafikPenjualanTahunan(cabang_id) {
 		$('#penjualan-air-galon-per-tahun').empty("");
 		$('#container-penjualan-air-galon-per-tahun').show();
 		$('#container-penjualan-air-galon-per-minggu').hide();
@@ -318,7 +318,7 @@ $session = \Config\Services::session();
 		if (periode_penjualan == "harian"){
 			loadGrafikPenjualanHarian(cabang_id, tahun_penjualan, bulan_penjualan);
 		} else if (periode_penjualan == "mingguan") {
-			loadGrafikPenjualanMingguan(cabang_id, tahun_penjualan);
+			loadGrafikPenjualanMingguan(cabang_id, tahun_penjualan, bulan_penjualan);
 		} else if (periode_penjualan == "bulanan") {
 			loadGrafikPenjualanBulanan(cabang_id, tahun_penjualan);
 		} else if (periode_penjualan == "tahunan") {
@@ -336,7 +336,7 @@ $session = \Config\Services::session();
 			$('#container-bulan-penjualan').show();
 			$('#container-tahun-penjualan').show();
 		} else if (periode_penjualan == "mingguan") {
-			$('#container-bulan-penjualan').hide();
+			$('#container-bulan-penjualan').show();
 			$('#container-tahun-penjualan').show();
 		} else if (periode_penjualan == "bulanan") {
 			$('#container-bulan-penjualan').hide();
