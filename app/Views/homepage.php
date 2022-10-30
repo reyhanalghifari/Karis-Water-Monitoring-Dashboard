@@ -245,9 +245,11 @@ $session = \Config\Services::session();
 			jsonData = JSON.parse(data);
 			elements = []
 
+			i = 1;
 			if (jsonData.length > 0) {
 				for (elem in jsonData) {
-					elements.push({y:jsonData[elem].minggu_penjualan, a:jsonData[elem].total_pembelian})
+					elements.push({y:i, a:jsonData[elem].total_pembelian})
+					i++;
 				}
 
 				console.log(elements);
