@@ -107,6 +107,7 @@ class Penjualan extends BaseController
         include APPPATH . 'ThirdParty/fpdf/fpdf.php';
 
         $penjualan_bulanan = $this->penjualan_model->getPenjualanPerBulanByCabang($cabang_id, $tahun);
+        $cabang = $this->cabang_model->getCabang($cabang_id);
 
         $this->response->setContentType('application/pdf');
 
@@ -114,6 +115,23 @@ class Penjualan extends BaseController
 
         $pdf = new \FPDF();
         $pdf->AddPage();
+
+        $pdf->SetFont('Arial','B',14);
+        
+        $pdf->SetX((210-30)/2);
+
+        $pdf->Cell(40, 20, 'C.V. Karis Water');
+        $pdf->Ln(5);
+
+        $pdf->SetX((210-90)/2);
+        $pdf->Cell(40, 20, 'Laporan Penjualan Bulanan - Tahun '. $tahun);
+
+        $pdf->SetFont('Arial','B',12);
+
+
+        $pdf->Ln(10);
+        $pdf->Cell(40, 20, 'Cabang: '. $cabang->nama_cabang);
+        $pdf->Ln();
 
         // Colors, line width and bold font
         $pdf->SetFillColor(128,128,96);
@@ -163,7 +181,8 @@ class Penjualan extends BaseController
     {
         include APPPATH . 'ThirdParty/fpdf/fpdf.php';
 
-        $penjualan_mingguan = $this->penjualan_model->getPenjualanPerMingguByCabang($cabang_id, $tahun);
+        $penjualan_mingguan = $this->penjualan_model->getPenjualanPerMingguByCabangTahunan($cabang_id, $tahun);
+        $cabang = $this->cabang_model->getCabang($cabang_id);
 
         $this->response->setContentType('application/pdf');
 
@@ -171,6 +190,25 @@ class Penjualan extends BaseController
 
         $pdf = new \FPDF();
         $pdf->AddPage();
+
+        $pdf->SetFont('Arial','B',14);
+
+        $pdf->SetX((210-30)/2);
+
+        $pdf->SetFont('Arial','B',14);
+
+        $pdf->Cell(40, 20, 'C.V. Karis Water');
+        $pdf->Ln(5);
+
+        $pdf->SetX((210-90)/2);
+        $pdf->Cell(40, 20, 'Laporan Penjualan Mingguan - Tahun '. $tahun);
+
+        $pdf->SetFont('Arial','B',12);
+
+        $pdf->Ln(10);
+        $pdf->Cell(40, 20, 'Cabang: '. $cabang->nama_cabang);
+        $pdf->Ln();
+        
 
         // Colors, line width and bold font
         $pdf->SetFillColor(128,128,96);
@@ -206,6 +244,9 @@ class Penjualan extends BaseController
             $total_penjualan += $row->total_pembelian;
         }
 
+        $pdf->SetFont('Arial','B',10);
+
+
         // Closing line
         $pdf->Cell(array_sum($w),0,'','T');
 
@@ -221,13 +262,31 @@ class Penjualan extends BaseController
         include APPPATH . 'ThirdParty/fpdf/fpdf.php';
 
         $penjualan_tahunan = $this->penjualan_model->getPenjualanPerTahunByCabang($cabang_id);
+        $cabang = $this->cabang_model->getCabang($cabang_id);
 
         $this->response->setContentType('application/pdf');
 
         $header = array('No', 'Tahun', 'Total Penjualan Per Tahun');
+        $title = 'C.V Karis Water';
 
         $pdf = new \FPDF();
         $pdf->AddPage();
+
+        $pdf->SetX((210-30)/2);
+
+        $pdf->SetFont('Arial','B',14);
+
+        $pdf->Cell(40, 20, 'C.V. Karis Water');
+        $pdf->Ln(5);
+
+        $pdf->SetX((210-60)/2);
+        $pdf->Cell(40, 20, 'Laporan Penjualan Tahunan');
+
+        $pdf->SetFont('Arial','B',12);
+        
+        $pdf->Ln(10);
+        $pdf->Cell(40, 20, 'Cabang: '. $cabang->nama_cabang);
+        $pdf->Ln();
 
         // Colors, line width and bold font
         $pdf->SetFillColor(128,128,96);
