@@ -148,7 +148,7 @@ $session = \Config\Services::session();
                                     </li>
                                     <?php } ?>
                             
-                                    <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "operator") { ?>
+                                    <?php if ($session->get('account_type') == "superadmin" || $session->get('account_type') == "operator" || $session->get('account_type') == "kepala_cabang") { ?>
                                     <li>
                                         <a href="<?php echo base_url('pelanggan'); ?>">Pelanggan</a>
                                     </li>

@@ -66,8 +66,12 @@ $session = \Config\Services::session();
 			                        <div class="form-group">
 			                            <label>Jenis Pelanggan</label>
 			                            <select name="jenis_pelanggan" class="form-control">
+			                                <?php if ($session->get('tipe_cabang') == "pusat") { ?>
 			                                <option <?php if ($pelanggan->jenis_pelanggan == "cabang") { echo "selected"; } ?> value="cabang">cabang</option>
 			                                <option <?php if ($pelanggan->jenis_pelanggan == "eceran") { echo "selected"; } ?> value="eceran">eceran</option>
+			                                <?php } else { ?>
+			                                <option <?php if ($pelanggan->jenis_pelanggan == "eceran") { echo "selected"; } ?> value="eceran">eceran</option>
+			                                <?php } ?>
 			                            </select>
 			                        </div>      
 			                       <input type="submit" class="btn btn-primary" value="Simpan" />
