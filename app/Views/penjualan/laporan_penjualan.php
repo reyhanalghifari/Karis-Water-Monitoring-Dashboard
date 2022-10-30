@@ -196,32 +196,32 @@ $session = \Config\Services::session();
 </div>
 
 <!-- jQuery -->
-<script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
+        <script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
 
 <script type="text/javascript">
-	var init_cabang_id = $('#cabang-id').val();
-	var init_tahun_penjualan = $('#tahun-penjualan').val();
-	var base_url = $('#base-url').val();
-		
-	function loadLaporanPenjualan(cabang_id, tahun_penjualan) {
-		var cetak_laporan_bulanan_url = base_url+"/penjualan/laporan/print/bulanan/"+cabang_id+"/"+tahun_penjualan;
-		var cetak_laporan_mingguan_url = base_url+"/penjualan/laporan/print/mingguan/"+cabang_id+"/"+tahun_penjualan;
-		var cetak_laporan_tahunan_url = base_url+"/penjualan/laporan/print/tahunan/"+cabang_id;
+    var init_cabang_id = $('#cabang-id').val();
+    var init_tahun_penjualan = $('#tahun-penjualan').val();
+    var base_url = $('#base-url').val();
+        
+    function loadLaporanPenjualan(cabang_id, tahun_penjualan) {
+        var cetak_laporan_bulanan_url = base_url+"/penjualan/laporan/print/bulanan/"+cabang_id+"/"+tahun_penjualan;
+        var cetak_laporan_mingguan_url = base_url+"/penjualan/laporan/print/mingguan/"+cabang_id+"/"+tahun_penjualan;
+        var cetak_laporan_tahunan_url = base_url+"/penjualan/laporan/print/tahunan/"+cabang_id;
 
-		$('#cetak-laporan-bulanan-btn').attr('href', cetak_laporan_bulanan_url);
-		$('#cetak-laporan-mingguan-btn').attr('href', cetak_laporan_mingguan_url);
-		$('#cetak-laporan-tahunan-btn').attr('href', cetak_laporan_tahunan_url);
-		
-		$.get("<?php echo base_url('master/penjualan-bulanan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
-			$('#dataTables-karis-water-bulanan > tbody').empty();
-			jsonData = JSON.parse(data);
-			elements = [];
-			total_penjualan = 0;
-			if (jsonData.length > 0) {
-				var row_template_bulanan = '';
-				var i = 1;
-				for (elem in jsonData) {
-					row_template_bulanan += '<tr class="odd gradeX">' +
+        $('#cetak-laporan-bulanan-btn').attr('href', cetak_laporan_bulanan_url);
+        $('#cetak-laporan-mingguan-btn').attr('href', cetak_laporan_mingguan_url);
+        $('#cetak-laporan-tahunan-btn').attr('href', cetak_laporan_tahunan_url);
+        
+        $.get("<?php echo base_url('master/penjualan-bulanan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
+            $('#dataTables-karis-water-bulanan > tbody').empty();
+            jsonData = JSON.parse(data);
+            elements = [];
+            total_penjualan = 0;
+            if (jsonData.length > 0) {
+                var row_template_bulanan = '';
+                var i = 1;
+                for (elem in jsonData) {
+                    row_template_bulanan += '<tr class="odd gradeX">' +
                                     '<td>'+i+'</td>' +
                                     '<td>'+jsonData[elem].bulan_penjualan+'</td>' +
                                     '<td>'+jsonData[elem].tahun_penjualan+'</td>' +
@@ -231,24 +231,24 @@ $session = \Config\Services::session();
                     total_penjualan += parseInt(jsonData[elem].total_pembelian);
 
                     i++;
-				}
-				console.log(row_template_bulanan);
-				$('#dataTables-karis-water-bulanan > tbody').append(row_template_bulanan);
-				$('#total-penjualan-bulanan').empty();
-				$('#total-penjualan-bulanan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
-			}
-		});
+                }
+                console.log(row_template_bulanan);
+                $('#dataTables-karis-water-bulanan > tbody').append(row_template_bulanan);
+                $('#total-penjualan-bulanan').empty();
+                $('#total-penjualan-bulanan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
+            }
+        });
 
-		$.get("<?php echo base_url('master/penjualan-tahunan'); ?>/"+cabang_id, function(data, status){
-			$('#dataTables-karis-water-tahunan > tbody').empty();
-			jsonData = JSON.parse(data);
-			elements = [];
-			total_penjualan = 0;
-			if (jsonData.length > 0) {
-				var row_template_tahunan = '';
-				var i = 1;
-				for (elem in jsonData) {
-					row_template_tahunan += '<tr class="odd gradeX">' +
+        $.get("<?php echo base_url('master/penjualan-tahunan'); ?>/"+cabang_id, function(data, status){
+            $('#dataTables-karis-water-tahunan > tbody').empty();
+            jsonData = JSON.parse(data);
+            elements = [];
+            total_penjualan = 0;
+            if (jsonData.length > 0) {
+                var row_template_tahunan = '';
+                var i = 1;
+                for (elem in jsonData) {
+                    row_template_tahunan += '<tr class="odd gradeX">' +
                                     '<td>'+i+'</td>' +
                                     '<td>'+jsonData[elem].tahun_penjualan+'</td>' +
                                     '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
@@ -257,25 +257,25 @@ $session = \Config\Services::session();
                     total_penjualan += parseInt(jsonData[elem].total_pembelian);
 
                     i++;
-				}
-				console.log(row_template_tahunan);
-				$('#dataTables-karis-water-tahunan > tbody').append(row_template_tahunan);
-				$('#total-penjualan-tahunan').empty();
-				$('#total-penjualan-tahunan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
-			}
-		});
+                }
+                console.log(row_template_tahunan);
+                $('#dataTables-karis-water-tahunan > tbody').append(row_template_tahunan);
+                $('#total-penjualan-tahunan').empty();
+                $('#total-penjualan-tahunan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
+            }
+        });
 
-		$.get("<?php echo base_url('master/penjualan-mingguan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
-			$('#dataTables-karis-water-mingguan > tbody').empty();
-			jsonData = JSON.parse(data);
-			elements = [];
-			total_penjualan = 0;
+        $.get("<?php echo base_url('master/penjualan-mingguan-tahunan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
+            $('#dataTables-karis-water-mingguan > tbody').empty();
+            jsonData = JSON.parse(data);
+            elements = [];
+            total_penjualan = 0;
 
-			if (jsonData.length > 0) {
-				var row_template_mingguan = '';
-				var i = 1;
-				for (elem in jsonData) {
-					row_template_mingguan += '<tr class="odd gradeX">' +
+            if (jsonData.length > 0) {
+                var row_template_mingguan = '';
+                var i = 1;
+                for (elem in jsonData) {
+                    row_template_mingguan += '<tr class="odd gradeX">' +
                                     '<td>'+i+'</td>' +
                                     '<td>'+jsonData[elem].minggu_penjualan+'</td>' +
                                     '<td>'+jsonData[elem].tahun_penjualan+'</td>' +
@@ -285,26 +285,26 @@ $session = \Config\Services::session();
                     total_penjualan += parseInt(jsonData[elem].total_pembelian);
 
                     i++;
-				}
-				console.log(row_template_mingguan);
-				$('#dataTables-karis-water-mingguan > tbody').append(row_template_mingguan);
-				$('#total-penjualan-mingguan').empty();
-				$('#total-penjualan-mingguan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
-			}
-		});
-	}
+                }
+                console.log(row_template_mingguan);
+                $('#dataTables-karis-water-mingguan > tbody').append(row_template_mingguan);
+                $('#total-penjualan-mingguan').empty();
+                $('#total-penjualan-mingguan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
+            }
+        });
+    }
 
-	loadLaporanPenjualan(init_cabang_id, init_tahun_penjualan);
-	
-	$('#tampilkan-laporan-btn').click(function(){
-		console.log("Tombol #tampilkan-laporan-btn diklik...");
-		var cabang_id = $('#cabang-id').val();
-		var tahun_penjualan = $('#tahun-penjualan').val();
-		
-		loadLaporanPenjualan(cabang_id, tahun_penjualan);
-	})
+    loadLaporanPenjualan(init_cabang_id, init_tahun_penjualan);
+    
+    $('#tampilkan-laporan-btn').click(function(){
+        console.log("Tombol #tampilkan-laporan-btn diklik...");
+        var cabang_id = $('#cabang-id').val();
+        var tahun_penjualan = $('#tahun-penjualan').val();
+        
+        loadLaporanPenjualan(cabang_id, tahun_penjualan);
+    })
 
-	// http://localhost:8888/karis-water-monitoring/public/penjualan/laporan/print/bulanan/6/2021
+    // http://localhost:8888/karis-water-monitoring/public/penjualan/laporan/print/bulanan/6/2021
 </script>
 
 
