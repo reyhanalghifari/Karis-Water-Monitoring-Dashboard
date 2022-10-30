@@ -242,6 +242,5 @@ $session = \Config\Services::session();
                 $('#delete-form-button-yes').attr('href', $(this).attr('data-url'));
             });
         </script>
-
     </body>
 </html>
