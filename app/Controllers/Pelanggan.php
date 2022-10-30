@@ -19,9 +19,6 @@ class Pelanggan extends BaseController
         if ($tipe_cabang == "cabang") {
             $datapelanggan = $this->pelanggan_model->getDataPelangganEceran();
         } else if ($tipe_cabang == "pusat") {
-            $datapelanggan = $this->pelanggan_model->getDataPelangganCabang();
-        }
-        else {
             $datapelanggan = $this->pelanggan_model->getDataPelanggan();
         }
 
