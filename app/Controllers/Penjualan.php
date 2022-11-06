@@ -236,7 +236,7 @@ class Penjualan extends BaseController
         {
             $pdf->Cell($w[0],6,$i,'LR',0,'L',$fill);
             $pdf->Cell($w[1],6,$row->tahun_penjualan,'LR',0,'L',$fill);
-            $pdf->Cell($w[2],6,$row->minggu_penjualan,'LR',0,'R',$fill);
+            $pdf->Cell($w[2],6,$row->minggu_penjualan+1,'LR',0,'R',$fill);
             $pdf->Cell($w[3],6,"Rp. ".number_format($row->total_pembelian),'LR',0,'R',$fill);
             $pdf->Ln();
             $fill = !$fill;

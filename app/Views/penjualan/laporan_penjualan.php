@@ -275,9 +275,10 @@ $session = \Config\Services::session();
                 var row_template_mingguan = '';
                 var i = 1;
                 for (elem in jsonData) {
+                    var minggu_penjualan = parseInt(jsonData[elem].minggu_penjualan) + 1;
                     row_template_mingguan += '<tr class="odd gradeX">' +
                                     '<td>'+i+'</td>' +
-                                    '<td>'+jsonData[elem].minggu_penjualan+'</td>' +
+                                    '<td>'+minggu_penjualan+'</td>' +
                                     '<td>'+jsonData[elem].tahun_penjualan+'</td>' +
                                     '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
                                 '</tr>';
