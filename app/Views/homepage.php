@@ -182,7 +182,7 @@ $session = \Config\Services::session();
 			elements = []
 			if (jsonData.length > 0) {
 				for (elem in jsonData) {
-					elements.push({y:jsonData[elem].tanggal_penjualan, a:jsonData[elem].total_pembelian})
+					elements.push({total:jsonData[elem].tanggal_penjualan, penjualan:jsonData[elem].total_pembelian, jumlah_barang:jsonData[elem].jumlah})
 				}
 				console.log(elements);
 				
@@ -190,11 +190,12 @@ $session = \Config\Services::session();
 			        element: 'penjualan-air-galon-per-hari',
 			        data: elements,
 			        xkey: 'y',
-			        ykeys: ['a',],
-			        labels: ['Penjualan',],
+			        xkey: 'total',
+			        ykeys: ['penjualan', 'jumlah_barang'],
+			        labels: ['Penjualan', 'Jumlah Galon Terjual'],
 			        hideHover: 'auto',
 			        resize: true,
-			        barColors: ["#cb4b4b",]
+			        barColors: ["#cb4b4b", "#299617"]
 			    });
 			} else {
 				$("#penjualan-air-galon-per-hari").append("<p>Data tidak ditemukan...</p>");
@@ -214,19 +215,19 @@ $session = \Config\Services::session();
 			elements = []
 			if (jsonData.length > 0) {
 				for (elem in jsonData) {
-					elements.push({y:jsonData[elem].bulan_penjualan, a:jsonData[elem].total_pembelian})
+					elements.push({total:jsonData[elem].bulan_penjualan, penjualan:jsonData[elem].total_pembelian, jumlah_barang:jsonData[elem].jumlah})
 				}
 				console.log(elements);
 				
 				Morris.Bar({
 			        element: 'penjualan-air-galon-per-bulan',
 			        data: elements,
-			        xkey: 'y',
-			        ykeys: ['a',],
-			        labels: ['Penjualan',],
+			        xkey: 'total',
+			        ykeys: ['penjualan', 'jumlah_barang'],
+			        labels: ['Penjualan', 'Jumlah Galon Terjual'],
 			        hideHover: 'auto',
 			        resize: true,
-			        barColors: ["#cb4b4b",]
+			        barColors: ["#cb4b4b", "#299617"]
 			    });
 			} else {
 				$("#penjualan-air-galon-per-bulan").append("<p>Data tidak ditemukan...</p>");
@@ -248,7 +249,7 @@ $session = \Config\Services::session();
 			i = 1;
 			if (jsonData.length > 0) {
 				for (elem in jsonData) {
-					elements.push({y:i, a:jsonData[elem].total_pembelian})
+					elements.push({total:jsonData[elem].minggu_penjualan, penjualan:jsonData[elem].total_pembelian, jumlah_barang:jsonData[elem].jumlah})
 					i++;
 				}
 
@@ -257,12 +258,12 @@ $session = \Config\Services::session();
 				Morris.Bar({
 			        element: 'penjualan-air-galon-per-minggu',
 			        data: elements,
-			        xkey: 'y',
-			        ykeys: ['a',],
-			        labels: ['Penjualan',],
+			        xkey: 'total',
+			        ykeys: ['penjualan', 'jumlah_barang'],
+			        labels: ['Penjualan', 'Jumlah Galon Terjual'],
 			        hideHover: 'auto',
 			        resize: true,
-			        barColors: ["#4da74d",]
+			        barColors: ["#cb4b4b", "#299617"]
 			    });
 			} else {
 				$("#penjualan-air-galon-per-minggu").append("<p>Data tidak ditemukan...</p>");
@@ -282,18 +283,19 @@ $session = \Config\Services::session();
 			elements = []
 			if (jsonData.length > 0) {
 				for (elem in jsonData) {
-					elements.push({y:jsonData[elem].tahun_penjualan, a:jsonData[elem].total_pembelian})
+					elements.push({total:jsonData[elem].tahun_penjualan, penjualan:jsonData[elem].total_pembelian, jumlah_barang:jsonData[elem].jumlah})
 				}
 				console.log(elements);
 				
 				Morris.Bar({
 			        element: 'penjualan-air-galon-per-tahun',
 			        data: elements,
-			        xkey: 'y',
-			        ykeys: ['a',],
-			        labels: ['Penjualan',],
+			        xkey: 'total',
+			        ykeys: ['penjualan', 'jumlah_barang'],
+			        labels: ['Penjualan', 'Jumlah Galon Terjual'],
 			        hideHover: 'auto',
-			        resize: true
+			        resize: true,
+			        barColors: ["#cb4b4b", "#299617"]
 			    });
 			} else {
 				$("#penjualan-air-galon-per-tahun").append("<p>Data tidak ditemukan...</p>");
