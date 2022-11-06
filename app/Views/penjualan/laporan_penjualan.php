@@ -85,6 +85,7 @@ $session = \Config\Services::session();
                                     <tr>
                                         <th>No.</th>
                                         <th>Tahun</th>
+                                        <th>Total Galon Terjual</th>
                                         <th>Total Penjualan Per Tahun</th>
                                     </tr>
                                 </thead>
@@ -98,7 +99,8 @@ $session = \Config\Services::session();
                             </table>
                         </div>
                         <div id="total-penjualan-tahunan" class="well">
-                        	<p><b>Total penjualan: </b></p>
+                        	<p><b>Total Galon Terjual: 0</b></p>
+                            <p><b>Total Penjualan: Rp. 0</b></p>
                         </div>
 	                </div>
 	                <!-- /.panel-body -->
@@ -125,6 +127,7 @@ $session = \Config\Services::session();
                                         <th>No.</th>
                                         <th>Bulan</th>
                                         <th>Tahun</th>
+                                        <th>Total Galon Terjual</th>
                                         <th>Total Penjualan Per Bulan</th>
                                     </tr>
                                 </thead>
@@ -139,7 +142,8 @@ $session = \Config\Services::session();
                             </table>
                         </div>
                         <div id="total-penjualan-bulanan"  class="well">
-                        	<p><b>Total penjualan: </b></p>
+                        	<p><b>Total Galon Terjual: 0</b></p>
+                            <p><b>Total Penjualan: Rp. 0</b></p>
                         </div>
                     </div>
                     <!-- /.panel-body -->
@@ -164,8 +168,9 @@ $session = \Config\Services::session();
                                 <thead>
                                     <tr>
                                         <th>No.</th>
-                                        <th>Bulan</th>
+                                        <th>Minggu</th>
                                         <th>Tahun</th>
+                                        <th>Total Galon Terjual</th>
                                         <th>Total Penjualan Per Minggu</th>
                                     </tr>
                                 </thead>
@@ -180,7 +185,8 @@ $session = \Config\Services::session();
                             </table>
                         </div>
                         <div id="total-penjualan-mingguan"  class="well">
-                        	<p><b>Total penjualan: </b></p>
+                        	<p><b>Total Galon Terjual: 0</b></p>
+                            <p><b>Total Penjualan: Rp. 0</b></p>
                         </div>
                     </div>
                     <!-- /.panel-body -->
@@ -196,7 +202,7 @@ $session = \Config\Services::session();
 </div>
 
 <!-- jQuery -->
-        <script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
+<script src="<?php echo base_url('assets/js/jquery.min.js') ?>"></script>
 
 <script type="text/javascript">
     var init_cabang_id = $('#cabang-id').val();
@@ -208,6 +214,12 @@ $session = \Config\Services::session();
         var cetak_laporan_mingguan_url = base_url+"/penjualan/laporan/print/mingguan/"+cabang_id+"/"+tahun_penjualan;
         var cetak_laporan_tahunan_url = base_url+"/penjualan/laporan/print/tahunan/"+cabang_id;
 
+        function formatKursRupiah(money) {
+           return new Intl.NumberFormat('id-ID',
+             { style: 'currency', currency: 'IDR' }
+           ).format(money);
+        }
+
         $('#cetak-laporan-bulanan-btn').attr('href', cetak_laporan_bulanan_url);
         $('#cetak-laporan-mingguan-btn').attr('href', cetak_laporan_mingguan_url);
         $('#cetak-laporan-tahunan-btn').attr('href', cetak_laporan_tahunan_url);
@@ -217,6 +229,8 @@ $session = \Config\Services::session();
             jsonData = JSON.parse(data);
             elements = [];
             total_penjualan = 0;
+            total_galon_terjual = 0;
+
             if (jsonData.length > 0) {
                 var row_template_bulanan = '';
                 var i = 1;
@@ -225,17 +239,21 @@ $session = \Config\Services::session();
                                     '<td>'+i+'</td>' +
                                     '<td>'+jsonData[elem].bulan_penjualan+'</td>' +
                                     '<td>'+jsonData[elem].tahun_penjualan+'</td>' +
-                                    '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
+                                    '<td>'+jsonData[elem].jumlah+'</td>' +
+                                    '<td>Rp. '+formatKursRupiah(parseInt(jsonData[elem].total_pembelian))+'</td>' +
                                 '</tr>';
 
                     total_penjualan += parseInt(jsonData[elem].total_pembelian);
-
+                    total_galon_terjual += parseInt(jsonData[elem].jumlah);
                     i++;
                 }
                 console.log(row_template_bulanan);
                 $('#dataTables-karis-water-bulanan > tbody').append(row_template_bulanan);
                 $('#total-penjualan-bulanan').empty();
-                $('#total-penjualan-bulanan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
+
+                var total_info = '<p><b>Total Galon Terjual:</b> '+total_galon_terjual+'</p>'
+                                + '<p><b>Total Penjualan:</b> Rp. '+formatKursRupiah(parseInt(total_penjualan))+'</p>';
+                $('#total-penjualan-bulanan').append(total_info);
             }
         });
 
@@ -244,6 +262,8 @@ $session = \Config\Services::session();
             jsonData = JSON.parse(data);
             elements = [];
             total_penjualan = 0;
+            total_galon_terjual = 0;
+
             if (jsonData.length > 0) {
                 var row_template_tahunan = '';
                 var i = 1;
@@ -251,17 +271,21 @@ $session = \Config\Services::session();
                     row_template_tahunan += '<tr class="odd gradeX">' +
                                     '<td>'+i+'</td>' +
                                     '<td>'+jsonData[elem].tahun_penjualan+'</td>' +
-                                    '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
+                                    '<td>'+jsonData[elem].jumlah+'</td>' +
+                                    '<td>Rp. '+formatKursRupiah(parseInt(jsonData[elem].total_pembelian))+'</td>' +
                                 '</tr>';
 
                     total_penjualan += parseInt(jsonData[elem].total_pembelian);
-
+                    total_galon_terjual += parseInt(jsonData[elem].jumlah);
                     i++;
                 }
                 console.log(row_template_tahunan);
                 $('#dataTables-karis-water-tahunan > tbody').append(row_template_tahunan);
                 $('#total-penjualan-tahunan').empty();
-                $('#total-penjualan-tahunan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
+
+                var total_info = '<p><b>Total Galon Terjual:</b> '+total_galon_terjual+'</p>'
+                                + '<p><b>Total Penjualan:</b> Rp. '+formatKursRupiah(parseInt(total_penjualan))+'</p>';
+                $('#total-penjualan-tahunan').append(total_info);
             }
         });
 
@@ -270,6 +294,7 @@ $session = \Config\Services::session();
             jsonData = JSON.parse(data);
             elements = [];
             total_penjualan = 0;
+            total_galon_terjual = 0;
 
             if (jsonData.length > 0) {
                 var row_template_mingguan = '';
@@ -280,17 +305,21 @@ $session = \Config\Services::session();
                                     '<td>'+i+'</td>' +
                                     '<td>'+minggu_penjualan+'</td>' +
                                     '<td>'+jsonData[elem].tahun_penjualan+'</td>' +
-                                    '<td>Rp. '+jsonData[elem].total_pembelian+'</td>' +
+                                    '<td>'+jsonData[elem].jumlah+'</td>' +
+                                    '<td>Rp. '+formatKursRupiah(parseInt(jsonData[elem].total_pembelian))+'</td>' +
                                 '</tr>';
 
                     total_penjualan += parseInt(jsonData[elem].total_pembelian);
-
+                    total_galon_terjual += parseInt(jsonData[elem].jumlah);
                     i++;
                 }
                 console.log(row_template_mingguan);
                 $('#dataTables-karis-water-mingguan > tbody').append(row_template_mingguan);
                 $('#total-penjualan-mingguan').empty();
-                $('#total-penjualan-mingguan').append('<p><b>Total penjualan:</b> Rp. '+total_penjualan+'</p>');
+
+                var total_info = '<p><b>Total Galon Terjual:</b> '+total_galon_terjual+'</p>'
+                                + '<p><b>Total Penjualan:</b> Rp. '+formatKursRupiah(parseInt(total_penjualan))+'</p>';
+                $('#total-penjualan-mingguan').append(total_info);
             }
         });
     }
