@@ -72,11 +72,14 @@ $session = \Config\Services::session();
 			                        </div> -->
 			                        <div class="form-group">
 			                            <label>Harga Saat Dibeli</label>
-			                            <input id="harga-saat-dibeli" name="harga_saat_dibeli" class="form-control" value="" />
+			                            <input id="harga-saat-dibeli" name="harga_saat_dibeli" class="form-control" value="" readonly />
 			                        </div> 
 			                        <div class="form-group">
 			                            <label>Jumlah</label>
-			                            <input name="jumlah" class="form-control" placeholder="Isi dengan jumlah pembelian" />
+			                            <input id="jumlah-barang" name="jumlah" class="form-control" placeholder="Isi dengan jumlah pembelian" />
+			                        </div>
+			                        <div id="total-penjualan-form" class="well">
+			                        	<p><b>Total penjualan: Rp. 0 </b></p>
 			                        </div>
 			                        <input type="hidden" name="jenis_transaksi" value="kas" />
 			                        <input type="hidden" name="user_id" class="form-control"  value="<?= $session->get('user_id'); ?>" />
@@ -120,6 +123,13 @@ $session = \Config\Services::session();
 
 	$( "#barang-id" ).change(function(){
 		changeHargaBarang(this.value);	
+	});
+
+	$('#jumlah-barang').change(function(){
+		var harga = $('#harga-saat-dibeli').val();
+		var total_penjualan = this.value * harga;
+		$('#total-penjualan-form').empty();
+		$('#total-penjualan-form').append('<p><b>Total pembelian:</b> Rp. '+total_penjualan+'</p>');
 	});
 </script>
 
