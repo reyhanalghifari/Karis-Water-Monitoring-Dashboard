@@ -8,6 +8,7 @@ class DataMaster extends BaseController
     {
         $this->barang_model = new \App\Models\Barang();
         $this->penjualan_model = new \App\Models\Penjualan();
+        $this->cabang_model = new \App\Models\Cabang();
     }
 
     public function getBarang($barang_id)
@@ -57,5 +58,36 @@ class DataMaster extends BaseController
         $penjualan = $this->penjualan_model->getPenjualanPerHariByCabang($cabang_id, $tahun, $bulan);
 
         echo json_encode($penjualan);
+    }
+
+    public function getPenjualanTahunanAllCabang()
+    {
+
+        // ambil semua tahun
+        $list_tahun_penjualan = $this->penjualan_model->getTahunPenjualan();
+
+        // ambil semua cabang
+        $list_cabang = $this->cabang_model->getDataCabang();
+
+        // ambil data penjualan tahunan setiap cabangnya
+        $penjualan_tahunan_all_cabang = array();
+        foreach ($list_tahun_penjualan as $tahun) {
+            $row = array("tahun" => $tahun->tahun_penjualan);
+            foreach ($list_cabang as $cabang) {
+                $penjualan = $this->penjualan_model->getPenjualanPerTahunTertentuByCabang($cabang->cabang_id, $tahun->tahun_penjualan);
+
+                $nama_cabang = str_replace(" ", "-", strtolower($cabang->nama_cabang));
+                if (is_object($penjualan)){
+                    $row[$nama_cabang] = $penjualan->total_pembelian;
+                } else {
+                    $row[$nama_cabang] = 0;
+                }
+                
+            }
+
+            array_push($penjualan_tahunan_all_cabang, $row);
+        }
+
+        echo json_encode($penjualan_tahunan_all_cabang);
     }
 }
