@@ -203,7 +203,7 @@ $session = \Config\Services::session();
 					Morris.Bar({
 				        element: 'penjualan-air-galon-per-hari',
 				        data: jsonData,
-				        xkey: 'bulan',
+				        xkey: 'tanggal',
 				        ykeys: labels, // mesti ngambil dari db
 				        labels: labels, // mesti ngambil dari db
 				        hideHover: 'auto',
