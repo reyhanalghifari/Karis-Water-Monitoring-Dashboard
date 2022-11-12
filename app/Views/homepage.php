@@ -117,6 +117,8 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div id="penjualan-air-galon-per-bulan"></div>
+                        <p>Jumlah Galon Terjual:</p>
+	                    <div id="galon-terjual-per-tahun"></div>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -147,6 +149,8 @@ $session = \Config\Services::session();
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
 	                    <div id="penjualan-air-galon-per-tahun"></div>
+	                    <p>Jumlah Galon Terjual:</p>
+	                    <div id="galon-terjual-per-tahun"></div>
 	                </div>
 	                <!-- /.panel-body -->
 	            </div>
@@ -367,6 +371,28 @@ $session = \Config\Services::session();
 				    });
 				} else {
 					$("#penjualan-air-galon-per-tahun").append("<p>Data tidak ditemukan...</p>");
+				}
+			});
+
+			$.get("<?php echo base_url('master/galon-terjual-tahunan-all'); ?>/", function(data, status){
+				jsonData = JSON.parse(data);
+
+				if (jsonData.length > 0) {
+					
+					labels = getLabels(jsonData[0]);
+					
+					Morris.Bar({
+				        element: 'galon-terjual-per-tahun',
+				        data: jsonData,
+				        xkey: 'tahun',
+				        ykeys: labels, // mesti ngambil dari db
+				        labels: labels, // mesti ngambil dari db
+				        hideHover: 'auto',
+				        resize: true,
+				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
+				    });
+				} else {
+					$("#galon-terjual-per-tahun").append("<p>Data tidak ditemukan...</p>");
 				}
 			});
 		} else {

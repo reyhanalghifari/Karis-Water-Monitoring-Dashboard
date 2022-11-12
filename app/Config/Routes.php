@@ -96,6 +96,7 @@ $routes->get('/master/penjualan-harian/(:num)/(:num)/(:num)', 'DataMaster::getPe
 $routes->get('/master/penjualan-tahunan-all/', 'DataMaster::getPenjualanTahunanAllCabang/');
 $routes->get('/master/penjualan-bulanan-all/(:num)', 'DataMaster::getPenjualanBulananAllCabang/$1');
 $routes->get('/master/penjualan-harian-all/(:num)/(:num)', 'DataMaster::getPenjualanHarianAllCabang/$1/$2');
+$routes->get('/master/galon-terjual-tahunan-all/', 'DataMaster::getGalonTerjualTahunanAllCabang/');
 $routes->get('/master/tahun-penjualan', 'DataMaster::getTahunPenjualan');
 
 

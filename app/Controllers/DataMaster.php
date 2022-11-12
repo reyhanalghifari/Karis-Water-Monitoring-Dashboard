@@ -161,4 +161,35 @@ class DataMaster extends BaseController
 
         echo json_encode($penjualan_harian_all_cabang);
     }
+
+    public function getGalonTerjualTahunanAllCabang()
+    {
+
+        // ambil semua tahun
+        $list_tahun_penjualan = $this->penjualan_model->getTahunPenjualan();
+
+        // ambil semua cabang
+        $list_cabang = $this->cabang_model->getDataCabang();
+
+        // ambil data penjualan tahunan setiap cabangnya
+        $penjualan_tahunan_all_cabang = array();
+        foreach ($list_tahun_penjualan as $tahun) {
+            $row = array("tahun" => $tahun->tahun_penjualan);
+            foreach ($list_cabang as $cabang) {
+                $penjualan = $this->penjualan_model->getPenjualanPerTahunTertentuByCabang($cabang->cabang_id, $tahun->tahun_penjualan);
+
+                $nama_cabang = str_replace(" ", "-", strtolower($cabang->nama_cabang));
+                if (is_object($penjualan)){
+                    $row[$nama_cabang] = $penjualan->jumlah;
+                } else {
+                    $row[$nama_cabang] = 0;
+                }
+                
+            }
+
+            array_push($penjualan_tahunan_all_cabang, $row);
+        }
+
+        echo json_encode($penjualan_tahunan_all_cabang);
+    }
 }
