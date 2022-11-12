@@ -90,4 +90,75 @@ class DataMaster extends BaseController
 
         echo json_encode($penjualan_tahunan_all_cabang);
     }
+
+    public function getPenjualanBulananAllCabang($tahun)
+    {
+        // ambil semua cabang
+        $list_cabang = $this->cabang_model->getDataCabang();
+
+        // ambil data penjualan tahunan setiap cabangnya
+        $penjualan_bulanan_all_cabang = array();
+        for ($i = 1; $i < 13; $i++) {
+            $row = array("bulan" => $i);
+            foreach ($list_cabang as $cabang) {
+                $penjualan = $this->penjualan_model->getPenjualanPerBulanTertentuByCabang($cabang->cabang_id, $i, $tahun);
+
+                $nama_cabang = str_replace(" ", "-", strtolower($cabang->nama_cabang));
+                if (is_object($penjualan)){
+                    $row[$nama_cabang] = $penjualan->total_pembelian;
+                } else {
+                    $row[$nama_cabang] = 0;
+                }
+            }
+
+            array_push($penjualan_bulanan_all_cabang, $row);
+        }
+
+        echo json_encode($penjualan_bulanan_all_cabang);
+    }
+
+    public function getPenjualanHarianAllCabang($tahun, $bulan)
+    {
+        // ambil semua cabang
+        $list_cabang = $this->cabang_model->getDataCabang();
+
+        $lama_hari = 0;
+
+        $odd_months = [1, 3, 5, 7, 8, 10, 12];
+        $even_months = [4, 6, 9, 11];
+
+        if (in_array($bulan, $odd_months)){
+            // January, March, May, July, August, October, December
+
+            $lama_hari = 31;
+        } else if (in_array($bulan, $even_months)){
+            // April, June, September, November
+
+            $lama_hari = 30;
+        } else {
+            // February
+            
+            $lama_hari = 28;
+        }
+
+        // ambil data penjualan tahunan setiap cabangnya
+        $penjualan_harian_all_cabang = array();
+        for ($i = 1; $i <= $lama_hari; $i++) {
+            $row = array("tanggal" => $i);
+            foreach ($list_cabang as $cabang) {
+                $penjualan = $this->penjualan_model->getPenjualanPerHariTertentuByCabang($cabang->cabang_id, $i, $bulan, $tahun);
+
+                $nama_cabang = str_replace(" ", "-", strtolower($cabang->nama_cabang));
+                if (is_object($penjualan)){
+                    $row[$nama_cabang] = $penjualan->total_pembelian;
+                } else {
+                    $row[$nama_cabang] = 0;
+                }
+            }
+
+            array_push($penjualan_harian_all_cabang, $row);
+        }
+
+        echo json_encode($penjualan_harian_all_cabang);
+    }
 }

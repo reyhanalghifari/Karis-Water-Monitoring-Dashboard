@@ -171,6 +171,17 @@ $session = \Config\Services::session();
 	var init_bulan_penjualan = $("#bulan-penjualan").val();
 	var init_periode_penjualan = $('#periode-penjualan').val();
 
+	function getLabels(obj){
+		var labels = []
+		for (var key in obj) {
+			if (key != "tahun"){
+				labels.push(key)
+			}
+		}
+
+		return labels;
+	}
+
 	function loadGrafikPenjualanHarian(cabang_id, tahun_penjualan, bulan_penjualan) {
 		$('#penjualan-air-galon-per-hari').empty("");
 		$('#container-penjualan-air-galon-per-hari').show();
@@ -179,7 +190,30 @@ $session = \Config\Services::session();
 		$('#container-penjualan-air-galon-per-tahun').hide();
 
 		if (cabang_id == "all") {
-			console.log("load grafik penjualahan harian...");
+			console.log("load grafik penjualan harian all cabang...");
+			
+			$.get("<?php echo base_url('master/penjualan-harian-all'); ?>/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
+				jsonData = JSON.parse(data);
+				console.log(jsonData);
+				
+				if (jsonData.length > 0) {
+					
+					labels = getLabels(jsonData[0]);
+					
+					Morris.Bar({
+				        element: 'penjualan-air-galon-per-hari',
+				        data: jsonData,
+				        xkey: 'bulan',
+				        ykeys: labels, // mesti ngambil dari db
+				        labels: labels, // mesti ngambil dari db
+				        hideHover: 'auto',
+				        resize: true,
+				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
+				    });
+				} else {
+					$("#penjualan-air-galon-per-hari").append("<p>Data tidak ditemukan...</p>");
+				}
+			});
 		} else {
 			$.get("<?php echo base_url('master/penjualan-harian'); ?>/"+cabang_id+"/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
@@ -216,7 +250,29 @@ $session = \Config\Services::session();
 		$('#container-penjualan-air-galon-per-tahun').hide();
 
 		if (cabang_id == "all") {
-			console.log("load grafik penjualahan bulanan...");
+			console.log("load grafik penjualaan bulanan all cabang...");
+			$.get("<?php echo base_url('master/penjualan-bulanan-all'); ?>/"+tahun_penjualan, function(data, status){
+				jsonData = JSON.parse(data);
+				console.log(jsonData);
+
+				if (jsonData.length > 0) {
+					
+					labels = getLabels(jsonData[0]);
+					
+					Morris.Bar({
+				        element: 'penjualan-air-galon-per-bulan',
+				        data: jsonData,
+				        xkey: 'bulan',
+				        ykeys: labels, // mesti ngambil dari db
+				        labels: labels, // mesti ngambil dari db
+				        hideHover: 'auto',
+				        resize: true,
+				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
+				    });
+				} else {
+					$("#penjualan-air-galon-per-bulan").append("<p>Data tidak ditemukan...</p>");
+				}
+			});
 		} else {
 			$.get("<?php echo base_url('master/penjualan-bulanan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
@@ -294,21 +350,20 @@ $session = \Config\Services::session();
 		if (cabang_id == "all") {
 			$.get("<?php echo base_url('master/penjualan-tahunan-all'); ?>/", function(data, status){
 				jsonData = JSON.parse(data);
-				// console.log(jsonData);
 
 				if (jsonData.length > 0) {
 					
-					console.log(elements);
+					labels = getLabels(jsonData[0]);
 					
 					Morris.Bar({
 				        element: 'penjualan-air-galon-per-tahun',
 				        data: jsonData,
 				        xkey: 'tahun',
-				        ykeys: ['pusat', 'cabang-cibiru', 'cabang-rancaekek', 'cabang-jatinangor'], // mesti ngambil dari db
-				        labels: ['pusat', 'cabang-cibiru', 'cabang-rancaekek', 'cabang-jatinangor'], // mesti ngambil dari db
+				        ykeys: labels, // mesti ngambil dari db
+				        labels: labels, // mesti ngambil dari db
 				        hideHover: 'auto',
 				        resize: true,
-				        barColors: ["#cb4b4b", "#299617", "#29ff17", "#ff9617"]
+				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
 				    });
 				} else {
 					$("#penjualan-air-galon-per-tahun").append("<p>Data tidak ditemukan...</p>");
