@@ -71,7 +71,7 @@ $session = \Config\Services::session();
 			<div class="col-lg-12">
 			    <div class="panel panel-default">
 	                <div class="panel-heading">
-	                    Laporan Penjualan Air Galon per Tahun
+	                    Laporan Penjualan Air Galon Tahunan
 	                </div>
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
@@ -112,7 +112,7 @@ $session = \Config\Services::session();
 			<div class="col-lg-12">
 			    <div class="panel panel-default">
                     <div class="panel-heading">
-                        Laporan Penjualan Air Galon per Bulan
+                        Laporan Penjualan Air Galon Bulanan
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -155,7 +155,7 @@ $session = \Config\Services::session();
 			<div class="col-lg-12">
 			    <div class="panel panel-default">
                     <div class="panel-heading">
-                        Laporan Penjualan Air Galon per Minggu
+                        Laporan Penjualan Air Galon Mingguan
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">

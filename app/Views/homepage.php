@@ -97,7 +97,7 @@ $session = \Config\Services::session();
 			<div id="container-penjualan-air-galon-per-hari" class="col-lg-12">
 			    <div class="panel panel-default">
                     <div class="panel-heading">
-                        Grafik Penjualan Air Galon per Hari
+                        Grafik Penjualan Air Galon Harian
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -114,7 +114,7 @@ $session = \Config\Services::session();
 			<div id="container-penjualan-air-galon-per-bulan" class="col-lg-12">
 			    <div class="panel panel-default">
                     <div class="panel-heading">
-                        Grafik Penjualan Air Galon per Bulan
+                        Grafik Penjualan Air Galon Bulanan
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -131,7 +131,7 @@ $session = \Config\Services::session();
 			<div id="container-penjualan-air-galon-per-minggu" class="col-lg-12">
 			    <div class="panel panel-default">
                     <div class="panel-heading">
-                        Grafik Penjualan Air Galon per Minggu
+                        Grafik Penjualan Air Galon Mingguan
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
@@ -148,7 +148,7 @@ $session = \Config\Services::session();
 			<div id="container-penjualan-air-galon-per-tahun" class="col-lg-12">
 			    <div class="panel panel-default">
 	                <div class="panel-heading">
-	                    Grafik Penjualan Air Galon per Tahun
+	                    Grafik Penjualan Air Galon Tahunan
 	                </div>
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
