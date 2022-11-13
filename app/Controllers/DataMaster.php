@@ -327,4 +327,68 @@ class DataMaster extends BaseController
 
         echo json_encode($penjualan_harian_all_cabang);
     }
+
+    public function getGalonTerjualMingguanAllCabang($tahun, $bulan)
+    {
+        // ambil semua cabang
+        $list_cabang = $this->cabang_model->getDataCabang();
+
+        $lama_hari = 0;
+
+        // tentukan lamanya hari
+        $odd_months = [1, 3, 5, 7, 8, 10, 12];
+        $even_months = [4, 6, 9, 11];
+
+        if (in_array($bulan, $odd_months)){
+            // January, March, May, July, August, October, December
+
+            $lama_hari = 31;
+        } else if (in_array($bulan, $even_months)){
+            // April, June, September, November
+
+            $lama_hari = 30;
+        } else {
+            // February
+            
+            $lama_hari = 28;
+        }
+
+        // tentukan lamanya minggu
+        $tanggal_awal_bulan = $tahun."-".$bulan."-1";
+        $tanggal_akhir_bulan = $tahun."-".$bulan."-".$lama_hari;
+
+        // hitung awal minggu dan akhir minggu suatu bulan dengan MySQL
+        $awal_bulan = new \DateTime($tanggal_awal_bulan);
+        $minggu_awal = (int) $awal_bulan->format("W");
+
+        if ($minggu_awal >= 52){
+            $minggu_awal = 1;
+        }
+
+        $akhir_bulan = new \DateTime($tanggal_akhir_bulan);
+        $minggu_akhir = (int) $akhir_bulan->format("W");
+
+        // echo $minggu_awal." --- ".$minggu_akhir;
+
+        // ambil data penjualan tahunan setiap cabangnya
+        $penjualan_mingguan_all_cabang = array();
+
+        for ($i = $minggu_awal; $i <= $minggu_akhir; $i++) {
+            $row = array("minggu" => $i);
+            foreach ($list_cabang as $cabang) {
+                $penjualan = $this->penjualan_model->getPenjualanPerMingguTertentuByCabang($cabang->cabang_id, $tahun, $bulan, $i);
+
+                $nama_cabang = str_replace(" ", "-", strtolower($cabang->nama_cabang));
+                if (is_object($penjualan)){
+                    $row[$nama_cabang] = $penjualan->jumlah;
+                } else {
+                    $row[$nama_cabang] = 0;
+                }
+            }
+
+            array_push($penjualan_mingguan_all_cabang, $row);
+        }
+
+        echo json_encode($penjualan_mingguan_all_cabang);
+    }
 }
