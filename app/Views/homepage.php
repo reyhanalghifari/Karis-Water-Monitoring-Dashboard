@@ -102,7 +102,7 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div id="penjualan-air-galon-per-hari"></div>
-                        <p>Jumlah Galon Terjual Harian:</p>
+                        <p id="galon-terjual-info-per-hari"></p>
 	                    <div id="galon-terjual-per-hari"></div>
                     </div>
                     <!-- /.panel-body -->
@@ -119,7 +119,7 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div id="penjualan-air-galon-per-bulan"></div>
-                        <p>Jumlah Galon Terjual Bulanan:</p>
+                        <p id="galon-terjual-info-per-bulan"></p>
 	                    <div id="galon-terjual-per-bulan"></div>
                     </div>
                     <!-- /.panel-body -->
@@ -136,7 +136,7 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div id="penjualan-air-galon-per-minggu"></div>
-                        <p>Jumlah Galon Terjual Mingguan:</p>
+                        <p id="galon-terjual-info-per-minggu"></p>
 	                    <div id="galon-terjual-per-minggu"></div>
                     </div>
                     <!-- /.panel-body -->
@@ -153,7 +153,7 @@ $session = \Config\Services::session();
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
 	                    <div id="penjualan-air-galon-per-tahun"></div>
-	                    <p>Jumlah Galon Terjual Tahunan:</p>
+	                    <p id="galon-terjual-info-per-tahun"></p>
 	                    <div id="galon-terjual-per-tahun"></div>
 	                </div>
 	                <!-- /.panel-body -->
@@ -201,7 +201,7 @@ $session = \Config\Services::session();
 
 		if (cabang_id == "all") {
 			console.log("load grafik penjualan harian all cabang...");
-			
+			$('#galon-terjual-info-per-hari').append("Jumlah Galon Terjual Harian:");
 			$.get("<?php echo base_url('master/penjualan-harian-all'); ?>/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
 				console.log(jsonData);
@@ -248,6 +248,7 @@ $session = \Config\Services::session();
 				}
 			});
 		} else {
+			$('#galon-terjual-info-per-hari').empty("");
 			$.get("<?php echo base_url('master/penjualan-harian'); ?>/"+cabang_id+"/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
 				elements = []
@@ -285,6 +286,7 @@ $session = \Config\Services::session();
 
 		if (cabang_id == "all") {
 			console.log("load grafik penjualaan bulanan all cabang...");
+			$('#galon-terjual-info-per-bulan').append("Jumlah Galon Terjual Bulanan:");
 			$.get("<?php echo base_url('master/penjualan-bulanan-all'); ?>/"+tahun_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
 				console.log(jsonData);
@@ -330,6 +332,7 @@ $session = \Config\Services::session();
 				}
 			});
 		} else {
+			$('#galon-terjual-info-per-bulan').empty("");
 			$.get("<?php echo base_url('master/penjualan-bulanan'); ?>/"+cabang_id+"/"+tahun_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
 				elements = []
@@ -366,6 +369,7 @@ $session = \Config\Services::session();
 
 		if (cabang_id == "all") {
 			console.log("load grafik penjualahan mingguan...");
+			$('#galon-terjual-info-per-minggu').append("Jumlah Galon Terjual Mingguan:");
 			$.get("<?php echo base_url('master/penjualan-mingguan-all'); ?>/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
 				
@@ -410,6 +414,7 @@ $session = \Config\Services::session();
 				}
 			});
 		} else {
+			$('#galon-terjual-info-per-minggu').empty("");
 			$.get("<?php echo base_url('master/penjualan-mingguan'); ?>/"+cabang_id+"/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
 				jsonData = JSON.parse(data);
 				elements = []
@@ -449,6 +454,7 @@ $session = \Config\Services::session();
 		$('#container-penjualan-air-galon-per-hari').hide();
 
 		if (cabang_id == "all") {
+			$('#galon-terjual-info-per-tahun').append("Jumlah Galon Terjual Tahunan:");
 			$.get("<?php echo base_url('master/penjualan-tahunan-all'); ?>/", function(data, status){
 				jsonData = JSON.parse(data);
 
@@ -493,6 +499,7 @@ $session = \Config\Services::session();
 				}
 			});
 		} else {
+			$('#galon-terjual-info-per-tahun').empty("");
 			$.get("<?php echo base_url('master/penjualan-tahunan'); ?>/"+cabang_id, function(data, status){
 				jsonData = JSON.parse(data);
 				elements = []
