@@ -422,7 +422,7 @@ $session = \Config\Services::session();
 				i = 1;
 				if (jsonData.length > 0) {
 					for (elem in jsonData) {
-						elements.push({total:jsonData[elem].minggu_penjualan, penjualan:jsonData[elem].total_pembelian, jumlah_barang:jsonData[elem].jumlah})
+						elements.push({total:i, penjualan:jsonData[elem].total_pembelian, jumlah_barang:jsonData[elem].jumlah})
 						i++;
 					}
 
