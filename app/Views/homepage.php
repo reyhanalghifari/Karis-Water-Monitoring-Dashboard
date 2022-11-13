@@ -359,6 +359,27 @@ $session = \Config\Services::session();
 
 		if (cabang_id == "all") {
 			console.log("load grafik penjualahan mingguan...");
+			$.get("<?php echo base_url('master/penjualan-mingguan-all'); ?>/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
+				jsonData = JSON.parse(data);
+				
+				if (jsonData.length > 0) {
+					
+					labels = getLabels(jsonData[0]);
+					
+					Morris.Bar({
+				        element: 'penjualan-air-galon-per-minggu',
+				        data: jsonData,
+				        xkey: 'minggu',
+				        ykeys: labels, // mesti ngambil dari db
+				        labels: labels, // mesti ngambil dari db
+				        hideHover: 'auto',
+				        resize: true,
+				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
+				    });
+				} else {
+					$("#penjualan-air-galon-per-minggu").append("<p>Data tidak ditemukan...</p>");
+				}
+			});
 		} else {
 			$.get("<?php echo base_url('master/penjualan-mingguan'); ?>/"+cabang_id+"/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
 				jsonData = JSON.parse(data);

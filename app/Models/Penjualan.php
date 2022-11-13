@@ -192,4 +192,22 @@ class Penjualan extends Model
 
         return $result;
     }
+
+    public function getPenjualanPerMingguTertentuByCabang($cabang_id, $tahun, $bulan, $minggu)
+    {
+        $query_stmt = 'SELECT 
+        WEEK(tanggal_penjualan) as minggu_penjualan, 
+        MONTH(tanggal_penjualan) as bulan_penjualan, 
+        YEAR(tanggal_penjualan) as tahun_penjualan,
+        SUM(jumlah) as jumlah,
+        SUM((harga_saat_dibeli * jumlah)) as total_pembelian FROM `penjualan`
+        WHERE cabang_id='.$cabang_id.' AND YEAR(tanggal_penjualan)='.$tahun.' AND MONTH(tanggal_penjualan)='.$bulan.' AND WEEK(tanggal_penjualan)='.$minggu.'
+        GROUP BY minggu_penjualan, bulan_penjualan, tahun_penjualan
+        ORDER BY minggu_penjualan ASC;';
+
+        $query   = $this->db->query($query_stmt);
+        $result = $query->getRow();
+
+        return $result;
+    } 
 }
