@@ -102,7 +102,7 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div id="penjualan-air-galon-per-hari"></div>
-                        <p>Jumlah Galon Terjual:</p>
+                        <p>Jumlah Galon Terjual Harian:</p>
 	                    <div id="galon-terjual-per-hari"></div>
                     </div>
                     <!-- /.panel-body -->
@@ -119,7 +119,7 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div id="penjualan-air-galon-per-bulan"></div>
-                        <p>Jumlah Galon Terjual:</p>
+                        <p>Jumlah Galon Terjual Bulanan:</p>
 	                    <div id="galon-terjual-per-bulan"></div>
                     </div>
                     <!-- /.panel-body -->
@@ -136,6 +136,8 @@ $session = \Config\Services::session();
                     <!-- /.panel-heading -->
                     <div class="panel-body">
                         <div id="penjualan-air-galon-per-minggu"></div>
+                        <p>Jumlah Galon Terjual Mingguan:</p>
+	                    <div id="galon-terjual-per-minggu"></div>
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -151,7 +153,7 @@ $session = \Config\Services::session();
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
 	                    <div id="penjualan-air-galon-per-tahun"></div>
-	                    <p>Jumlah Galon Terjual:</p>
+	                    <p>Jumlah Galon Terjual Tahunan:</p>
 	                    <div id="galon-terjual-per-tahun"></div>
 	                </div>
 	                <!-- /.panel-body -->
@@ -179,8 +181,9 @@ $session = \Config\Services::session();
 
 	function getLabels(obj){
 		var labels = []
+		var blacklisted_keys = ["tahun", "bulan", "minggu", "tanggal"]
 		for (var key in obj) {
-			if (key != "tahun"){
+			if (blacklisted_keys.includes(key) == false){
 				labels.push(key)
 			}
 		}
@@ -190,6 +193,7 @@ $session = \Config\Services::session();
 
 	function loadGrafikPenjualanHarian(cabang_id, tahun_penjualan, bulan_penjualan) {
 		$('#penjualan-air-galon-per-hari').empty("");
+		$('#galon-terjual-per-hari').empty("");
 		$('#container-penjualan-air-galon-per-hari').show();
 		$('#container-penjualan-air-galon-per-minggu').hide();
 		$('#container-penjualan-air-galon-per-bulan').hide();
@@ -205,6 +209,7 @@ $session = \Config\Services::session();
 				if (jsonData.length > 0) {
 					
 					labels = getLabels(jsonData[0]);
+					console.log(labels);
 					
 					Morris.Bar({
 				        element: 'penjualan-air-galon-per-hari',
@@ -272,6 +277,7 @@ $session = \Config\Services::session();
 
 	function loadGrafikPenjualanBulanan(cabang_id, tahun_penjualan) {
 		$('#penjualan-air-galon-per-bulan').empty("");
+		$('#galon-terjual-per-bulan').empty("");
 		$('#container-penjualan-air-galon-per-bulan').show();
 		$('#container-penjualan-air-galon-per-minggu').hide();
 		$('#container-penjualan-air-galon-per-hari').hide();
@@ -352,6 +358,7 @@ $session = \Config\Services::session();
 	
 	function loadGrafikPenjualanMingguan(cabang_id, tahun_penjualan, bulan_penjualan) {
 		$('#penjualan-air-galon-per-minggu').empty("");
+		$('#galon-terjual-per-minggu').empty("");
 		$('#container-penjualan-air-galon-per-minggu').show();
 		$('#container-penjualan-air-galon-per-hari').hide();
 		$('#container-penjualan-air-galon-per-bulan').hide();
@@ -378,6 +385,28 @@ $session = \Config\Services::session();
 				    });
 				} else {
 					$("#penjualan-air-galon-per-minggu").append("<p>Data tidak ditemukan...</p>");
+				}
+			});
+
+			$.get("<?php echo base_url('master/galon-terjual-mingguan-all'); ?>/"+tahun_penjualan+"/"+bulan_penjualan, function(data, status){
+				jsonData = JSON.parse(data);
+
+				if (jsonData.length > 0) {
+					
+					labels = getLabels(jsonData[0]);
+					
+					Morris.Bar({
+				        element: 'galon-terjual-per-minggu',
+				        data: jsonData,
+				        xkey: 'minggu',
+				        ykeys: labels, // mesti ngambil dari db
+				        labels: labels, // mesti ngambil dari db
+				        hideHover: 'auto',
+				        resize: true,
+				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
+				    });
+				} else {
+					$("#galon-terjual-per-minggu").append("<p>Data tidak ditemukan...</p>");
 				}
 			});
 		} else {
@@ -413,6 +442,7 @@ $session = \Config\Services::session();
 	
 	function loadGrafikPenjualanTahunan(cabang_id) {
 		$('#penjualan-air-galon-per-tahun').empty("");
+		$('#galon-terjual-per-tahun').empty("");
 		$('#container-penjualan-air-galon-per-tahun').show();
 		$('#container-penjualan-air-galon-per-minggu').hide();
 		$('#container-penjualan-air-galon-per-bulan').hide();

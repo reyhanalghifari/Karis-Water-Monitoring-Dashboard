@@ -100,6 +100,7 @@ $routes->get('/master/penjualan-mingguan-all/(:num)/(:num)', 'DataMaster::getPen
 $routes->get('/master/galon-terjual-tahunan-all/', 'DataMaster::getGalonTerjualTahunanAllCabang/');
 $routes->get('/master/galon-terjual-bulanan-all/(:num)', 'DataMaster::getGalonTerjualBulananAllCabang/$1');
 $routes->get('/master/galon-terjual-harian-all/(:num)/(:num)', 'DataMaster::getGalonTerjualHarianAllCabang/$1/$2');
+$routes->get('/master/galon-terjual-mingguan-all/(:num)/(:num)', 'DataMaster::getGalonTerjualMingguanAllCabang/$1/$2');
 $routes->get('/master/tahun-penjualan', 'DataMaster::getTahunPenjualan');
 
 
