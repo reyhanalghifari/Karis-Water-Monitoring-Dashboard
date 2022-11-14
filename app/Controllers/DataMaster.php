@@ -207,8 +207,9 @@ class DataMaster extends BaseController
         // ambil data penjualan tahunan setiap cabangnya
         $penjualan_mingguan_all_cabang = array();
 
+        $j = 1;
         for ($i = $minggu_awal; $i <= $minggu_akhir; $i++) {
-            $row = array("minggu" => $i);
+            $row = array("minggu" => $j);
             foreach ($list_cabang as $cabang) {
                 $penjualan = $this->penjualan_model->getPenjualanPerMingguTertentuByCabang($cabang->cabang_id, $tahun, $bulan, $i);
 
@@ -221,6 +222,7 @@ class DataMaster extends BaseController
             }
 
             array_push($penjualan_mingguan_all_cabang, $row);
+            $j++;
         }
 
         echo json_encode($penjualan_mingguan_all_cabang);
@@ -373,8 +375,9 @@ class DataMaster extends BaseController
         // ambil data penjualan tahunan setiap cabangnya
         $penjualan_mingguan_all_cabang = array();
 
+        $j = 1;
         for ($i = $minggu_awal; $i <= $minggu_akhir; $i++) {
-            $row = array("minggu" => $i);
+            $row = array("minggu" => $j);
             foreach ($list_cabang as $cabang) {
                 $penjualan = $this->penjualan_model->getPenjualanPerMingguTertentuByCabang($cabang->cabang_id, $tahun, $bulan, $i);
 
@@ -387,6 +390,7 @@ class DataMaster extends BaseController
             }
 
             array_push($penjualan_mingguan_all_cabang, $row);
+            $j++;
         }
 
         echo json_encode($penjualan_mingguan_all_cabang);
