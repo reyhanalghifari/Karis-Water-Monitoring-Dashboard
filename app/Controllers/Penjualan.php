@@ -172,7 +172,7 @@ class Penjualan extends BaseController
 
         $pdf->Ln();
 
-        $pdf->Cell(40,20,'Total penjualan: Rp. '.$total_penjualan);
+        $pdf->Cell(40,20,'Total penjualan: Rp. '.number_format($total_penjualan));
 
         $pdf->Output();
     }
@@ -252,7 +252,7 @@ class Penjualan extends BaseController
 
         $pdf->Ln();
 
-        $pdf->Cell(40,20,'Total penjualan: Rp. '.$total_penjualan);
+        $pdf->Cell(40,20,'Total penjualan: Rp. '.number_format($total_penjualan));
 
         $pdf->Output();
     }
