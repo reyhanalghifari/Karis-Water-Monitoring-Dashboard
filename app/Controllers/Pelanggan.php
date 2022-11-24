@@ -100,7 +100,7 @@ class Pelanggan extends BaseController
 
         $this->validation->setRules(
             [
-                'nama_pelanggan' => 'required|alpha',
+                'nama_pelanggan' => 'required',
                 'alamat_pelanggan' => 'required',
                 'no_telepon' => 'required|integer',
                 'email' => 'required|valid_email',
@@ -110,7 +110,6 @@ class Pelanggan extends BaseController
             [   // Errors
                 'nama_pelanggan' => [
                     'required' => 'Nama pelanggan tidak boleh kosong',
-                    'alpha' => 'Nama pelanggan harus di isi dengan huruf'
                     
                 ],
                 'alamat_pelanggan' => [
