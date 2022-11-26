@@ -191,7 +191,7 @@ class Penjualan extends BaseController
 
         $this->response->setContentType('application/pdf');
 
-        $header = array('No', 'Tahun', 'Minggu', 'Total Penjualan Per Minggu');
+        $header = array('No', 'Tahun', 'Minggu', 'Total Galon Terjual', 'Total Penjualan Per Minggu');
 
         $pdf = new \FPDF();
         $pdf->AddPage();
@@ -223,7 +223,7 @@ class Penjualan extends BaseController
         $pdf->SetFont('Arial','B',9);
 
         // Header
-        $w = array(40, 35, 40, 45);
+        $w = array(35, 35, 35, 40, 45);
         for($i=0;$i<count($header);$i++)
             $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
         $pdf->Ln();
@@ -237,16 +237,20 @@ class Penjualan extends BaseController
         $fill = false;
         $i=1;
         $total_penjualan = 0;
+        $total_galon_terjual = 0;
         foreach($penjualan_mingguan as $row)
         {
             $pdf->Cell($w[0],6,$i,'LR',0,'L',$fill);
             $pdf->Cell($w[1],6,$row->tahun_penjualan,'LR',0,'L',$fill);
             $pdf->Cell($w[2],6,$row->minggu_penjualan+1,'LR',0,'R',$fill);
-            $pdf->Cell($w[3],6,"Rp. ".number_format($row->total_pembelian),'LR',0,'R',$fill);
+            $pdf->Cell($w[3],6,$row->jumlah,'LR',0,'R',$fill);
+            $pdf->Cell($w[4],6,"Rp. ".number_format($row->total_pembelian),'LR',0,'R',$fill);
             $pdf->Ln();
             $fill = !$fill;
             $i++;
             $total_penjualan += $row->total_pembelian;
+            $total_galon_terjual += $row->jumlah;
+
         }
 
         $pdf->SetFont('Arial','B',10);
@@ -258,6 +262,8 @@ class Penjualan extends BaseController
         $pdf->Ln();
 
         $pdf->Cell(40,20,'Total penjualan: Rp. '.number_format($total_penjualan));
+        $pdf->Ln(2);
+        $pdf->Cell(40,30,'Total Galon Terjual: Rp. '.$total_galon_terjual);
 
         $pdf->Output();
     }
@@ -271,7 +277,7 @@ class Penjualan extends BaseController
 
         $this->response->setContentType('application/pdf');
 
-        $header = array('No', 'Tahun', 'Total Penjualan Per Tahun');
+        $header = array('No', 'Tahun', 'Total Galon Terjual', 'Total Penjualan Per Tahun');
         $title = 'C.V Karis Water';
 
         $pdf = new \FPDF();
@@ -301,7 +307,7 @@ class Penjualan extends BaseController
         $pdf->SetFont('Arial','B',9);
 
         // Header
-        $w = array(40, 35, 50);
+        $w = array(40, 35, 40, 50);
         for($i=0;$i<count($header);$i++)
             $pdf->Cell($w[$i],7,$header[$i],1,0,'C',true);
         $pdf->Ln();
@@ -315,15 +321,18 @@ class Penjualan extends BaseController
         $fill = false;
         $i=1;
         $total_penjualan = 0;
+        $total_galon_terjual = 0;
         foreach($penjualan_tahunan as $row)
         {
             $pdf->Cell($w[0],6,$i,'LR',0,'L',$fill);
             $pdf->Cell($w[1],6,$row->tahun_penjualan,'LR',0,'L',$fill);
-            $pdf->Cell($w[2],6,"Rp. ".number_format($row->total_pembelian),'LR',0,'R',$fill);
+            $pdf->Cell($w[2],6,$row->jumlah,'LR',0,'R',$fill);
+            $pdf->Cell($w[3],6,"Rp. ".number_format($row->total_pembelian),'LR',0,'R',$fill);
             $pdf->Ln();
             $fill = !$fill;
             $i++;
             $total_penjualan += $row->total_pembelian;
+            $total_galon_terjual += $row->jumlah;
         }
 
         // Closing line
@@ -332,6 +341,8 @@ class Penjualan extends BaseController
         $pdf->Ln();
 
         $pdf->Cell(40, 20,'Total penjualan: Rp. '.number_format($total_penjualan));
+        $pdf->Ln(2);
+        $pdf->Cell(40,30,'Total Galon Terjual: Rp. '.$total_galon_terjual);
 
         $pdf->Output();
     }
