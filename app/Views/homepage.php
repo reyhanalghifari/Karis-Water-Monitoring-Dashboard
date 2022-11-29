@@ -101,7 +101,9 @@ $session = \Config\Services::session();
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <div id="penjualan-air-galon-per-hari"></div>
+                        <div id="penjualan-air-galon-per-hari-legend"></div>
+	                    <br/>
+	                    <div id="penjualan-air-galon-per-hari"></div>
                         <p id="galon-terjual-info-per-hari"></p>
 	                    <div id="galon-terjual-per-hari"></div>
                     </div>
@@ -118,7 +120,9 @@ $session = \Config\Services::session();
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <div id="penjualan-air-galon-per-bulan"></div>
+                        <div id="penjualan-air-galon-per-bulan-legend"></div>
+	                    <br/>
+	                    <div id="penjualan-air-galon-per-bulan"></div>
                         <p id="galon-terjual-info-per-bulan"></p>
 	                    <div id="galon-terjual-per-bulan"></div>
                     </div>
@@ -135,7 +139,9 @@ $session = \Config\Services::session();
                     </div>
                     <!-- /.panel-heading -->
                     <div class="panel-body">
-                        <div id="penjualan-air-galon-per-minggu"></div>
+                        <div id="penjualan-air-galon-per-minggu-legend"></div>
+	                    <br/>
+	                    <div id="penjualan-air-galon-per-minggu"></div>
                         <p id="galon-terjual-info-per-minggu"></p>
 	                    <div id="galon-terjual-per-minggu"></div>
                     </div>
@@ -152,6 +158,8 @@ $session = \Config\Services::session();
 	                </div>
 	                <!-- /.panel-heading -->
 	                <div class="panel-body">
+	                    <div id="penjualan-air-galon-per-tahun-legend"></div>
+	                    <br/>
 	                    <div id="penjualan-air-galon-per-tahun"></div>
 	                    <p id="galon-terjual-info-per-tahun"></p>
 	                    <div id="galon-terjual-per-tahun"></div>
@@ -165,6 +173,15 @@ $session = \Config\Services::session();
     </div>
 </div>
 
+<style>
+.mbox {   
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin: 10px 55px 10px 25px;
+    padding-left: 4px;
+}
+</style>
 
 <!-- jQuery -->
 <script src="<?php echo base_url('assets/js/jquery.min.js'); ?>"></script>
@@ -192,6 +209,7 @@ $session = \Config\Services::session();
 	}
 
 	function loadGrafikPenjualanHarian(cabang_id, tahun_penjualan, bulan_penjualan) {
+		$('#penjualan-air-galon-per-hari-legend').empty("");
 		$('#penjualan-air-galon-per-hari').empty("");
 		$('#galon-terjual-per-hari').empty("");
 		$('#container-penjualan-air-galon-per-hari').show();
@@ -211,7 +229,7 @@ $session = \Config\Services::session();
 					labels = getLabels(jsonData[0]);
 					console.log(labels);
 					
-					Morris.Bar({
+					var chart = Morris.Bar({
 				        element: 'penjualan-air-galon-per-hari',
 				        data: jsonData,
 				        xkey: 'tanggal',
@@ -221,6 +239,16 @@ $session = \Config\Services::session();
 				        resize: true,
 				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
 				    });
+
+				    chart.options.labels.forEach(function(label, i){
+				    	if (label == "pusat") {
+				    		label = "kantor pusat";
+				    	}
+
+					    var legendlabel=$('<span style="display: inline-block; padding-left: 15px;">'+label+'</span>')
+					    var legendItem = $('<div class="mbox"></div>').css('background-color', chart.options.barColors[i]).append(legendlabel)
+					    $('#penjualan-air-galon-per-hari-legend').append(legendItem)   
+					})
 				} else {
 					$("#penjualan-air-galon-per-hari").append("<p>Data tidak ditemukan...</p>");
 				}
@@ -277,6 +305,7 @@ $session = \Config\Services::session();
 	}
 
 	function loadGrafikPenjualanBulanan(cabang_id, tahun_penjualan) {
+		$('#penjualan-air-galon-per-bulan-legend').empty("");
 		$('#penjualan-air-galon-per-bulan').empty("");
 		$('#galon-terjual-per-bulan').empty("");
 		$('#container-penjualan-air-galon-per-bulan').show();
@@ -295,7 +324,7 @@ $session = \Config\Services::session();
 					
 					labels = getLabels(jsonData[0]);
 					
-					Morris.Bar({
+					var chart = Morris.Bar({
 				        element: 'penjualan-air-galon-per-bulan',
 				        data: jsonData,
 				        xkey: 'bulan',
@@ -305,6 +334,16 @@ $session = \Config\Services::session();
 				        resize: true,
 				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
 				    });
+
+				    chart.options.labels.forEach(function(label, i){
+				    	if (label == "pusat") {
+				    		label = "kantor pusat";
+				    	}
+
+					    var legendlabel=$('<span style="display: inline-block; padding-left: 15px;">'+label+'</span>')
+					    var legendItem = $('<div class="mbox"></div>').css('background-color', chart.options.barColors[i]).append(legendlabel)
+					    $('#penjualan-air-galon-per-bulan-legend').append(legendItem)   
+					})
 				} else {
 					$("#penjualan-air-galon-per-bulan").append("<p>Data tidak ditemukan...</p>");
 				}
@@ -360,6 +399,7 @@ $session = \Config\Services::session();
 	}
 	
 	function loadGrafikPenjualanMingguan(cabang_id, tahun_penjualan, bulan_penjualan) {
+		$('#penjualan-air-galon-per-minggu-legend').empty("");
 		$('#penjualan-air-galon-per-minggu').empty("");
 		$('#galon-terjual-per-minggu').empty("");
 		$('#container-penjualan-air-galon-per-minggu').show();
@@ -377,7 +417,7 @@ $session = \Config\Services::session();
 					
 					labels = getLabels(jsonData[0]);
 					
-					Morris.Bar({
+					var chart = Morris.Bar({
 				        element: 'penjualan-air-galon-per-minggu',
 				        data: jsonData,
 				        xkey: 'minggu',
@@ -387,6 +427,16 @@ $session = \Config\Services::session();
 				        resize: true,
 				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
 				    });
+
+				    chart.options.labels.forEach(function(label, i){
+				    	if (label == "pusat") {
+				    		label = "kantor pusat";
+				    	}
+
+					    var legendlabel=$('<span style="display: inline-block; padding-left: 15px;">'+label+'</span>')
+					    var legendItem = $('<div class="mbox"></div>').css('background-color', chart.options.barColors[i]).append(legendlabel)
+					    $('#penjualan-air-galon-per-minggu-legend').append(legendItem)   
+					})
 				} else {
 					$("#penjualan-air-galon-per-minggu").append("<p>Data tidak ditemukan...</p>");
 				}
@@ -446,12 +496,15 @@ $session = \Config\Services::session();
 	}
 	
 	function loadGrafikPenjualanTahunan(cabang_id) {
+		$('#penjualan-air-galon-per-tahun-legend').empty("");
 		$('#penjualan-air-galon-per-tahun').empty("");
 		$('#galon-terjual-per-tahun').empty("");
 		$('#container-penjualan-air-galon-per-tahun').show();
 		$('#container-penjualan-air-galon-per-minggu').hide();
 		$('#container-penjualan-air-galon-per-bulan').hide();
 		$('#container-penjualan-air-galon-per-hari').hide();
+
+		var colorArray = ["#cb4b4b", "#299617", "#baed91", "#b2cefe", "#FF7000", "#CE7777"];
 
 		if (cabang_id == "all") {
 			$('#galon-terjual-info-per-tahun').append("Jumlah Galon Terjual Tahunan:");
@@ -461,8 +514,9 @@ $session = \Config\Services::session();
 				if (jsonData.length > 0) {
 					
 					labels = getLabels(jsonData[0]);
+					console.log(labels);
 					
-					Morris.Bar({
+					var chart = Morris.Bar({
 				        element: 'penjualan-air-galon-per-tahun',
 				        data: jsonData,
 				        xkey: 'tahun',
@@ -470,8 +524,18 @@ $session = \Config\Services::session();
 				        labels: labels, // mesti ngambil dari db
 				        hideHover: 'auto',
 				        resize: true,
-				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
+				        barColors: colorArray
 				    });
+
+				    chart.options.labels.forEach(function(label, i){
+				    	if (label == "pusat") {
+				    		label = "kantor pusat";
+				    	}
+
+					    var legendlabel=$('<span style="display: inline-block; padding-left: 15px;">'+label+'</span>')
+					    var legendItem = $('<div class="mbox"></div>').css('background-color', chart.options.barColors[i]).append(legendlabel)
+					    $('#penjualan-air-galon-per-tahun-legend').append(legendItem)   
+					})
 				} else {
 					$("#penjualan-air-galon-per-tahun").append("<p>Data tidak ditemukan...</p>");
 				}
@@ -492,7 +556,7 @@ $session = \Config\Services::session();
 				        labels: labels, // mesti ngambil dari db
 				        hideHover: 'auto',
 				        resize: true,
-				        barColors: ["#cb4b4b", "#299617", "#baed91", "#b2cefe"]
+				        barColors: colorArray
 				    });
 				} else {
 					$("#galon-terjual-per-tahun").append("<p>Data tidak ditemukan...</p>");
